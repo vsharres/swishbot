@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
 const fs = require('fs');
-const { token, prefix } = require('./config/config');
+const { token, prefix } = require('./config/configs');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -39,6 +39,15 @@ client.on('message', message => {
 
     const now = Date.now();
     const timestamps = cooldowns.get(command.name);
+
+    if(command.args && !args.length){
+        let reply = `You didn't provide any arguments, ${message.author}!`;
+        if(command.usage){
+            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+        }
+        return message.channel.send(reply);
+    }
+
     const cooldownAmount = (command.cooldown || 3) * 1000;
 
     if (timestamps.has(message.author.id)) {
@@ -47,8 +56,7 @@ client.on('message', message => {
 	if (now < expirationTime) {
         const timeLeft = (expirationTime - now) / 1000;
         console.log(timeLeft);
-        return;
-		//return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+		return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
 	}
     }
 
