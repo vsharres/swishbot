@@ -29,7 +29,24 @@ module.exports = {
 
 
             }
+            else if(parsed.includes('km')){
+                parsed = parsed.substring(0,parsed.length - 1);
+
+                let amount = parseFloat(parsed);    
+                let devitos = (amount * 100000 / config.height).toFixed(7);  
+
+                return message.channel.send(`${message.author} ${amount} km is ${devitos} ${config.prefix}!`);
+            }
+            else if(parsed.includes('mi')){
+                parsed = parsed.substring(0,parsed.length - 1);
+
+                let amount = parseFloat(parsed);    
+                let devitos = (amount * 160934 / config.height).toFixed(7);  
+
+                return message.channel.send(`${message.author} ${amount} miles is ${devitos} ${config.prefix}!`);           
+            }
             else if(args[0].includes("'") || args[0].includes('"') ){
+
                 const rex = /^(?!$|.*\'[^\x22]+$)(?:([0-9]+)\')?(?:([0-9]+)\x22?)?$/;
                 const match = rex.exec(args.shift());
                 if(match){
@@ -43,7 +60,7 @@ module.exports = {
     
             }      
             else{
-                return message.channel.send(`${message.author} the proper usage would be: \`${config.prefix} ${this.name} ${this.usage}\``);
+                return message.channel.send(`${message.author} the proper usage would be: ${config.prefix} \`${this.name} ${this.usage}\``);
             }
 
         }
@@ -66,6 +83,16 @@ module.exports = {
                  devitos = (amount * 100 / config.height).toFixed(7);
     
             }
+            else if(args.includes('km')){
+                amount = parseFloat(args.shift());
+                unit = args.shift();
+                devitos = (amount * 100000 / config.height).toFixed(7);
+            }
+            else if(args.includes('mi') || args.includes('miles')){
+                amount = parseFloat(args.shift());
+                unit = args.shift();
+                devitos = (amount * 160934 / config.height).toFixed(7);
+            }
             else if(args.includes('inches')){
                  amount = parseFloat(args.shift());
                  unit = args.shift();
@@ -80,7 +107,7 @@ module.exports = {
 
             }
             else {
-                return message.channel.send(``);
+                return message.channel.send(`${message.author} the proper usage would be: ${config.prefix} \`${this.name} ${this.usage}\``);
             }
 
             return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${config.prefix}!`);
