@@ -11,39 +11,25 @@ module.exports = {
         //for the usage of having only on number on the args
         if(args.length === 1){
             let parsed = args[0];
+            let multiplier = 1;
+            let unit= "cm";
+
             if(parsed.includes('cm')){
-                parsed = parsed.substring(0,parsed.length - 1);
-
-                let amount = parseFloat(parsed);    
-                let devitos = (amount / config.height).toFixed(7);  
-
-                return message.channel.send(`${message.author} ${amount} cm is ${devitos} ${config.prefix}!`);
+                multiplier = 1;
+                unit = "cm";            
             }
             else if(parsed.includes('m')){
-                parsed = parsed.substring(0,parsed.length - 1);
-
-                let amount = parseFloat(parsed);    
-                let devitos = (amount * 100 / config.height).toFixed(7);  
-
-                return message.channel.send(`${message.author} ${amount} m is ${devitos} ${config.prefix}!`);
-
+                multiplier = 100;
+                unit = "m"; 
 
             }
             else if(parsed.includes('km')){
-                parsed = parsed.substring(0,parsed.length - 1);
-
-                let amount = parseFloat(parsed);    
-                let devitos = (amount * 100000 / config.height).toFixed(7);  
-
-                return message.channel.send(`${message.author} ${amount} km is ${devitos} ${config.prefix}!`);
+                multiplier = 100000;
+                unit = "km";
             }
             else if(parsed.includes('mi')){
-                parsed = parsed.substring(0,parsed.length - 1);
-
-                let amount = parseFloat(parsed);    
-                let devitos = (amount * 160934 / config.height).toFixed(7);  
-
-                return message.channel.send(`${message.author} ${amount} miles is ${devitos} ${config.prefix}!`);           
+                multiplier = 160934;
+                unit = "mi";          
             }
             else if(args[0].includes("'") || args[0].includes('"') ){
 
@@ -63,52 +49,47 @@ module.exports = {
                 return message.channel.send(`${message.author} the proper usage would be: ${config.prefix} \`${this.name} ${this.usage}\``);
             }
 
+            parsed = parsed.substring(0,parsed.length - unit.length);
+            let amount = parseFloat(parsed); 
+            let devitos = (amount * multiplier / config.height).toFixed(7);
+
+            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${config.prefix}!`);
+
+
         }
 
         //for more than one arg in the command, as if the unit is separate from the number
         if(args.length >= 2){
             let amount = 0;
-            let unit = "";
-            let devitos = 0.0;
+            let multiplier = 1;
+            let unit = "cm";
 
-            if(args.includes('cm')){
-                 amount = parseFloat(args.shift());
-                 unit = args.shift(); 
-                 devitos = (amount / config.height).toFixed(7);
-    
+            if(args.includes('cm')){                  
+                 multiplier = 1;
             }
             else if(args.includes('m')){
-                 amount = parseFloat(args.shift());
-                 unit = args.shift();
-                 devitos = (amount * 100 / config.height).toFixed(7);
-    
+                multiplier = 100;
             }
             else if(args.includes('km')){
-                amount = parseFloat(args.shift());
-                unit = args.shift();
-                devitos = (amount * 100000 / config.height).toFixed(7);
+                multiplier = 100000;
             }
             else if(args.includes('mi') || args.includes('miles')){
-                amount = parseFloat(args.shift());
-                unit = args.shift();
-                devitos = (amount * 160934 / config.height).toFixed(7);
+                multiplier = 160934;
             }
             else if(args.includes('inches')){
-                 amount = parseFloat(args.shift());
-                 unit = args.shift();
-                 devitos = (amount * 2.54 / config.height).toFixed(7);
-
-                
+                 multiplier = 2.54;                        
             }
             else if(args.includes('feet')){
-                 amount = parseFloat(args.shift());
-                 unit = args.shift();
-                 devitos = (amount * 2.54 / config.height).toFixed(7);
-
+                 multiplier = 30.48;
             }
             else {
                 return message.channel.send(`${message.author} the proper usage would be: ${config.prefix} \`${this.name} ${this.usage}\``);
             }
+
+            amount = parseFloat(args.shift());
+            unit = args.shift();
+
+            let devitos = (amount * multiplier / config.height).toFixed(7);
 
             return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${config.prefix}!`);
 
