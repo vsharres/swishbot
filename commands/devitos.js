@@ -17,7 +17,7 @@ module.exports = {
                 let amount = parseFloat(parsed);    
                 let devitos = (amount / config.height).toFixed(7);  
 
-                return message.channel.send(`${message.author} ${amount} cm is ${devitos} :devitos:!`);
+                return message.channel.send(`${message.author} ${amount} cm is ${devitos} ${config.prefix}!`);
             }
             else if(parsed.includes('m')){
                 parsed = parsed.substring(0,parsed.length - 1);
@@ -25,7 +25,7 @@ module.exports = {
                 let amount = parseFloat(parsed);    
                 let devitos = (amount * 100 / config.height).toFixed(7);  
 
-                return message.channel.send(`${message.author} ${amount} m is ${devitos} :devitos:!`);
+                return message.channel.send(`${message.author} ${amount} m is ${devitos} ${config.prefix}!`);
 
 
             }
@@ -37,7 +37,7 @@ module.exports = {
                     let inches = parseFloat(match[2]) ? parseFloat(match[2]) : 0;
 
                     const devitos = (((feet * 30.48) + (inches * 2.54)) / config.height).toFixed(7);    
-                    return message.channel.send(`${message.author} ${feet > 0 ? feet+"'" : ''}${inches > 0 ? inches+ '"' : ''} is ${devitos} :devitos:`);
+                    return message.channel.send(`${message.author} ${feet > 0 ? feet+"'" : ''}${inches > 0 ? inches+ '"' : ''} is ${devitos} ${config.prefix}!`);
     
                 }
     
@@ -83,7 +83,7 @@ module.exports = {
                 return message.channel.send(``);
             }
 
-            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} :devitos:`);
+            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${config.prefix}!`);
 
         }   
         
