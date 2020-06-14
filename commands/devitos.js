@@ -13,7 +13,7 @@ module.exports = {
             const amount = parseFloat(args.shift());
             const unit = args.shift();
 
-            const devitos = amount / config.height;
+            const devitos = (amount / config.height).toFixed(7);
 
 
             message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} :devitos:`);
@@ -22,7 +22,7 @@ module.exports = {
             const amount = parseFloat(args.shift());
             const unit = args.shift();
 
-            const devitos = amount * 100 / config.height;
+            const devitos = (amount * 100 / config.height).toFixed(7);
 
 
             message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} :devitos:`);
@@ -31,10 +31,10 @@ module.exports = {
             const rex = /^(\d+)'(\d+)(?:''|")$/;
             const match = rex.exec(args.shift());
             if(match){
-                const feet = parseInt(match[1],10);
-                const inches = parseInt(match[2],10);
+                const feet = parseFloat(match[1]);
+                const inches = parseFloat(match[2]);
 
-                const devitos = (feet * 30.48 + inches * 2.54) / config.height;
+                const devitos = (((feet * 30.48) + (inches * 2.54)) / config.height).toFixed(7);
 
                 message.channel.send(`${message.author} ${feet}'${inches}" is ${devitos} :devitos:`);
 

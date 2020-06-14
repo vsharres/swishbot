@@ -1,4 +1,7 @@
 const Discord = require('discord.js');
+const express = require('express');
+const path = require('path');
+const PORT = process.env.PORT || 5000;
 const fs = require('fs');
 const { token, prefix } = require('./config/config');
 
@@ -12,9 +15,6 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
 }
-
-
-
 
 
 client.once('ready', () => {
@@ -67,3 +67,8 @@ client.on('message', message => {
 });
 
 client.login(token);
+
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .get('/', (req, res) => res.render('pages/index'))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
