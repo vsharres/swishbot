@@ -48,7 +48,7 @@ client.on('message', message => {
 
     const command = client.commands.get(commandName);
 
-    if(command.admin && message.member.roles.highest.name !== configs.admin_role_name)
+    if(command.admin && !message.member.roles.has(configs.admin_role_name))
     {
         console.log(`${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_name}`);
         return;
