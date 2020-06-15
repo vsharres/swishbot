@@ -1,4 +1,5 @@
 module.exports = {
+	mongoURI: process.env.MONGO_URI,
 	prefix: process.env.COMMAND_PREFIX,
 	height: 147, // in cm
 	weight: 48, // in Kg

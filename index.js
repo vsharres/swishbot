@@ -1,6 +1,18 @@
 const Discord = require('discord.js');
+const mongoose = require('mongoose');
 const fs = require('fs');
 const { token, prefix } = require('./config/configs');
+
+const db = require('./config/configs').mongoURI;
+
+mongoose
+  .connect(
+    db,
+    { useUnifiedTopology: true,
+        useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -37,7 +49,7 @@ client.on('message', message => {
     const now = Date.now();
     const timestamps = cooldowns.get(command.name);
 
-    if(command.args && !args.length){
+    if((command.args && !args.length) || (command.attachments && message.attachments.size === 0)){
         let reply = `You didn't provide any arguments, ${message.author}!`;
         if(command.usage){
             reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
