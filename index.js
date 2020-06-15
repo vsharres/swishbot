@@ -39,11 +39,20 @@ client.on('message', message => {
     args.shift();
     const commandName = args.shift().toLowerCase();
     
-    if (!client.commands.has(commandName) ) return;
+    if (!client.commands.has(commandName) ) 
+    {
+        console.log(`Couldn't find the command ${commandName}`);
+        return;
+    }
+
 
     const command = client.commands.get(commandName);
 
-    if(command.admin && message.member.roles.highest.name !== configs.admin_role_name) return;
+    if(command.admin && message.member.roles.highest.name !== configs.admin_role_name)
+    {
+        console.log(`${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_name}`);
+        return;
+    }
 
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
