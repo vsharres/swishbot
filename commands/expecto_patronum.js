@@ -12,16 +12,18 @@ module.exports = {
         User.findById(message.member.id).then(user=>{
             if(user){
                 const attachment = new MessageAttachment(user.patronus);
-                let newMessage
                 message.channel
-                .send(attachment)
+                .send({
+                    content:'Expecto Patronum!! :wand::zap::zap:',
+                    files: [attachment]
+                })
                 .catch(err=>console.log(err));
 
             }
             else{
-                console.log(`${message.member.id} please save your patronus first with the command \`eligere_patronum\``);
+                console.log(`${message.member.id} please save your patronus first with the command \`eligere_patronum!\``);
                 message.channel
-                    .send(`${message.member.id} please save your patronus first with the command \`eligere patronum\``)
+                    .send(`${message.member.id} please save your patronus first with the command \`eligere patronum!\``)
                     .catch(err=>console.log(err));
             }
         });

@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const { token, prefix } = require('./config/configs');
+const configs = require('./config/configs');
 
 const db = require('./config/configs').mongoURI;
 
@@ -38,9 +39,11 @@ client.on('message', message => {
     args.shift();
     const commandName = args.shift().toLowerCase();
     
-    if (!client.commands.has(commandName)) return;
+    if (!client.commands.has(commandName) ) return;
 
     const command = client.commands.get(commandName);
+
+    if(command.admin && message.member.roles.highest.name !== configs.admin_role_name) return;
 
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
@@ -55,6 +58,20 @@ client.on('message', message => {
             reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
         }
         return message.channel.send(reply);
+    }
+
+    if(command.attachments && message.attachments.size === 0){
+        let reply = `You didn't provide any attachment, ${message.author}!`;
+        if(command.usage){
+            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+        }
+        return message.channel.send(reply);
+    }
+    else if(command.attachments && message.attachments.size > 0 )
+    {
+        if( message.attachments.first().width > command.attachment_size || message.attachments.first().height > command.attachment_size){
+            return message.channel.send(`${message.author} the patronus image must be smaller than ${command.attachment_size}x${command.attachment_size}!`);
+        }
     }
 
     const cooldownAmount = (command.cooldown || 3) * 1000;
