@@ -1,0 +1,3 @@
+TODO
+
+- Change so that usage messages and logs when fail to be sent as DMs, so that the chat isn't spammed with messages

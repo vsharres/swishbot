@@ -1,5 +1,6 @@
 const Stat = require('../models/Stat');
-const {stats_id} = require('../config/configs');
+const User = require('../models/User');
+const {stats_id, admin_role_name} = require('../config/configs');
 
 module.exports = {
     name: "bing!",
@@ -12,21 +13,23 @@ module.exports = {
             if(!stat)
                 return;
 
-            let bings = stat.bings;
-            bings++;
-            stat.bings = bings;
+            if(stat.binger === message.member.id || message.member.roles.has(admin_role_name)){
 
-            stat
-            .save()
-            .then(stat=> {
-                console.log(`The total of bings is ${stat.bings}`);
-                
+                let bings = stat.bings;
+                bings++;
+                stat.bings = bings;
+    
+                stat
+                .save()
+                .then(stat=> {
+                console.log(`The total of bings is ${stat.bings}`);                    
                 message.channel
                 .send(`:bellhop:!`)
                 .catch(err=>console.log(err));
-
-            })
-            .catch(err=> console.log(err));
-        });
+    
+                })
+                .catch(err=> console.log(err));
+            }      
+        });    
     },
 };
