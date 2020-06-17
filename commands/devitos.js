@@ -8,6 +8,8 @@ module.exports = {
     args: true,
     execute(message,args) {
 
+        const prefix = message.guild.emojis.cache.find(emoji => emoji.name === 'devitos').toString();
+
         //for the usage of having only on number on the args
         if(args.length === 1){
             let parsed = args[0];
@@ -40,20 +42,20 @@ module.exports = {
                     let inches = parseFloat(match[2]) ? parseFloat(match[2]) : 0;
 
                     const devitos = (((feet * 30.48) + (inches * 2.54)) / config.height).toFixed(7);    
-                    return message.channel.send(`${message.author} ${feet > 0 ? feet+"'" : ''}${inches > 0 ? inches+ '"' : ''} is ${devitos} ${config.prefix}!`);
+                    return message.channel.send(`${message.author} ${feet > 0 ? feet+"'" : ''}${inches > 0 ? inches+ '"' : ''} is ${devitos} ${prefix}!`);
     
                 }
     
             }      
             else{
-                return message.channel.send(`${message.author} the proper usage would be: ${config.prefix} \`${this.name} ${this.usage}\``);
+                return message.channel.send(`${message.author} the proper usage would be: ${prefix} \`${this.name} ${this.usage}\``);
             }
 
             parsed = parsed.substring(0,parsed.length - unit.length);
             let amount = parseFloat(parsed); 
             let devitos = (amount * multiplier / config.height).toFixed(7);
 
-            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${config.prefix}!`);
+            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${prefix}!`);
 
 
         }
@@ -83,7 +85,7 @@ module.exports = {
                  multiplier = 30.48;
             }
             else {
-                return message.channel.send(`${message.author} the proper usage would be: ${config.prefix} \`${this.name} ${this.usage}\``);
+                return message.channel.send(`${message.author} the proper usage would be: ${prefix} \`${this.name} ${this.usage}\``);
             }
 
             amount = parseFloat(args.shift());
@@ -91,7 +93,7 @@ module.exports = {
 
             let devitos = (amount * multiplier / config.height).toFixed(7);
 
-            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${config.prefix}!`);
+            return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${prefix}!`);
 
         }   
         

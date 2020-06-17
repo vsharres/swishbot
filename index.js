@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const mongoose = require('mongoose');
 const fs = require('fs');
-const { token, prefix } = require('./config/configs');
+const { command_prefix,token } = require('./config/configs');
 const configs = require('./config/configs');
 
 const db = require('./config/configs').mongoURI;
@@ -33,6 +33,7 @@ client.once('ready', () => {
 
 client.on('message', message => {
 
+    const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
     if(!message.content.startsWith(prefix)  || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
