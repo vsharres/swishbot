@@ -17,7 +17,7 @@ module.exports = {
                 {
                     member.createDM()
                     .then(channel=> {
-                        channel.send(`Hello! \nHere is the link to the google docs with the text to be sent for our lovely hosts! https://docs.google.com/forms/d/1MQAA7uw2wV_pUPtF6OUy9NiCz0vJd-LkCACT497ygK4/edit?usp=sharing`)
+                        channel.send(`Hello Swisher! \nAs a thank you gift to the hosts of Swish and Flick on their anniversary, we thought it would be fun to all leave messages on what they mean to us! If you’d like to participate, click the link below.\nhttps://docs.google.com/forms/d/1MQAA7uw2wV_pUPtF6OUy9NiCz0vJd-LkCACT497ygK4/edit?usp=sharing`)
                                 .catch(err=>console.error(err));
                 })
                     .catch(err=>console.error(err));
