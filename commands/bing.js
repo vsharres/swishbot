@@ -6,6 +6,7 @@ module.exports = {
     name: "bing!",
     description: 'Converts the provided number to devitos',
     cooldown: 1,
+    usage: '',
     args: false,
     execute(message,arg) {
 

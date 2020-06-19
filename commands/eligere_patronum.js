@@ -6,7 +6,7 @@ module.exports = {
     cooldown: 5, 
     attachments: true,
     attachment_size:500,
-    usage: `<image/gif> ${this.attachment_size}`,
+    usage: `<image/gif>`,
     args:false,
     execute(message,args) {
         const attachment = message.attachments.first();
