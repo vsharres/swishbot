@@ -59,6 +59,7 @@ module.exports = {
             parsed = parsed.substring(0,parsed.length - unit.length);
             let amount = parseFloat(parsed); 
             let devitos = (amount * multiplier / config.height).toFixed(7);
+            devitos = new Intl.NumberFormat('en-IN').format(devitos);
 
             return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${prefix}!`);
 
@@ -100,6 +101,7 @@ module.exports = {
             unit = args.shift();
 
             let devitos = (amount * multiplier / config.height).toFixed(7);
+            devitos = new Intl.NumberFormat('en-IN').format(devitos);
 
             return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${prefix}!`);
 
