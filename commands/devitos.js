@@ -16,20 +16,25 @@ module.exports = {
             let multiplier = 1;
             let unit= "cm";
 
-            if(parsed.includes('cm')){
+            if(parsed.includes('cm') || parsed.includes('centimeters')){
                 multiplier = 1;
                 unit = "cm";            
             }
-            else if(parsed.includes('m')){
+            else if(parsed.includes('m') || parsed.includes('meters')){
                 multiplier = 100;
                 unit = "m"; 
 
             }
-            else if(parsed.includes('km')){
+            else if(parsed.includes('km') || parsed.includes('kilometers')){
                 multiplier = 100000;
                 unit = "km";
             }
-            else if(parsed.includes('mi')){
+            else if(parsed.includes('yd') || parsed.includes('yards') || parsed.includes('yard')){
+                multiplier = 91.44;
+                unit =  "yd";
+
+            }
+            else if(parsed.includes('mi') || parsed.includes('miles') || parsed.includes('mile')){
                 multiplier = 160934;
                 unit = "mi";          
             }
@@ -66,22 +71,25 @@ module.exports = {
             let multiplier = 1;
             let unit = "cm";
 
-            if(args.includes('cm')){                  
+            if(args.includes('cm') || args.includes('centimeters')){                  
                  multiplier = 1;
             }
-            else if(args.includes('m')){
+            else if(args.includes('m') || args.includes('meters')){
                 multiplier = 100;
             }
-            else if(args.includes('km')){
+            else if(args.includes('km') || args.includes('kilometers')){
                 multiplier = 100000;
             }
             else if(args.includes('mi') || args.includes('miles')){
                 multiplier = 160934;
             }
-            else if(args.includes('inches')){
+            else if(args.includes('yd') || args.includes('yards') || args.includes('yard')){
+                 multiplier = 91.44;
+            }
+            else if(args.includes('inches') || args.includes('inch')){
                  multiplier = 2.54;                        
             }
-            else if(args.includes('feet')){
+            else if(args.includes('feet') || args.includes('foot')){
                  multiplier = 30.48;
             }
             else {
