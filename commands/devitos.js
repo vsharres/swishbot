@@ -16,16 +16,16 @@ module.exports = {
             let multiplier = 1;
             let unit= "cm";
 
-            if(parsed.includes('cm') || parsed.includes('centimeters')){
+            if(parsed.includes('cm') || parsed.includes('centimeters') || parsed.includes('centimeter')){
                 multiplier = 1;
                 unit = "cm";            
             }
-            else if(parsed.includes('m') || parsed.includes('meters')){
+            else if(parsed.includes('m') || parsed.includes('meters') || parsed.includes('meter')){
                 multiplier = 100;
                 unit = "m"; 
 
             }
-            else if(parsed.includes('km') || parsed.includes('kilometers')){
+            else if(parsed.includes('km') || parsed.includes('kilometers') || parsed.includes('kilometer')){
                 multiplier = 100000;
                 unit = "km";
             }
@@ -72,16 +72,16 @@ module.exports = {
             let multiplier = 1;
             let unit = "cm";
 
-            if(args.includes('cm') || args.includes('centimeters')){                  
+            if(args.includes('cm') || args.includes('centimeters') || args.includes('centimeter')){                  
                  multiplier = 1;
             }
-            else if(args.includes('m') || args.includes('meters')){
+            else if(args.includes('m') || args.includes('meters') ||args.includes('meter') ){
                 multiplier = 100;
             }
-            else if(args.includes('km') || args.includes('kilometers')){
+            else if(args.includes('km') || args.includes('kilometers') || args.includes('kilometer')){
                 multiplier = 100000;
             }
-            else if(args.includes('mi') || args.includes('miles')){
+            else if(args.includes('mi') || args.includes('miles') || args.includes('mile') ){
                 multiplier = 160934;
             }
             else if(args.includes('yd') || args.includes('yards') || args.includes('yard')){
