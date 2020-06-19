@@ -14,7 +14,9 @@ module.exports = {
             if(!stat)
                 return;
 
-            if(stat.binger === message.member.id || message.member.roles.has(admin_role_name)){
+            let roles = message.member.roles.cache.find(role => role.name === admin_role_name);
+
+            if(stat.binger === message.member.id || roles){
 
                 let bings = stat.bings;
                 bings++;

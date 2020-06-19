@@ -12,8 +12,9 @@ module.exports = {
         Stat.findById(stats_id).then(stat=> { 
             
             let reset = args.shift();
+            let roles = message.member.roles.cache.find(role => role.name === admin_role_name);
 
-            if(reset === 'reset' && message.member.roles.has(admin_role_name))
+            if(reset === 'reset' && roles)
             {
                 stat.binger = 0;
                 stat
