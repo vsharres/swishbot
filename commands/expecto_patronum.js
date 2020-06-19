@@ -12,11 +12,11 @@ module.exports = {
         User.findById(message.member.id).then(user=>{
             if(user){
                 const attachment = new MessageAttachment(user.patronus);
-                const wand = message.guild.emojis.cache.find(emoji => emoji.name === 'wand').toString();
+                let wand = message.guild.emojis.cache.find(emoji => emoji.name === 'wand');
 
                 message.channel
                 .send({
-                    content:`Expecto Patronum!! ${wand}:zap::zap:`,
+                    content:`Expecto Patronum!! ${wand? wand.toString() : ''}:zap::zap:`,
                     files: [attachment]
                 })
                 .catch(err=>console.log(err));
