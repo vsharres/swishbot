@@ -16,16 +16,16 @@ module.exports = {
 
                 message.channel
                 .send({
-                    content:`Expecto Patronum!! ${wand? wand.toString() : ''}:zap::zap:`,
+                    content:`${message.author} Expecto Patronum!! ${wand? wand.toString() : ':wand:'}:zap::zap:`,
                     files: [attachment]
                 })
                 .catch(err=>console.log(err));
 
             }
             else{
-                console.log(`${message.member.id} please save your patronus first with the command \`eligere_patronum!\``);
+                console.log(`${message.author} please save your patronus first with the command \`eligere_patronum!\``);
                 message.channel
-                    .send(`${message.member.id} please save your patronus first with the command \`eligere patronum!\``)
+                    .send(`${message.author} please save your patronus first with the command \`eligere patronum!\``)
                     .catch(err=>console.log(err));
             }
         });
