@@ -36,7 +36,7 @@ module.exports = {
                 .then(user=> {
                     console.log(`${message.author} Patronus created!`);
 
-                    message.author.chann
+                    message.channel
                     .send(`${message.author} Patronus saved!`)
                     .catch(err=>console.log(err));
                 })
