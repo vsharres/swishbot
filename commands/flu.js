@@ -8,6 +8,7 @@ module.exports = {
     execute(message,args) {
 
         args.push('Bot');
+        args.push('Hogwarts Ghosts');
 
         message.guild.members.fetch()
         .then(members=>{
