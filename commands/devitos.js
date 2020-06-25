@@ -121,6 +121,9 @@ module.exports = {
                 firstmultiplier = 30.48;
                 secondMultiplier = 2.54;              
             }
+            else {
+                return message.channel.send(`${message.author} the proper usage would be: ${prefix} \`${this.name} ${this.usage}\``);
+            }
 
             let devitos = ((firstAmount * firstmultiplier + secondAmount & secondMultiplier) / config.height).toFixed(7);
             devitos = new Intl.NumberFormat('en-IN').format(devitos);
