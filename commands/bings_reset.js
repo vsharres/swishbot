@@ -14,6 +14,7 @@ module.exports = {
                 return;
                 
             stat.bings = 0;
+            stat.binger = 0;
 
             stat
             .save()

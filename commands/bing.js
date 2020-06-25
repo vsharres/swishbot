@@ -1,5 +1,4 @@
 const Stat = require('../models/Stat');
-const User = require('../models/User');
 const {stats_id, admin_role_name} = require('../config/configs');
 
 module.exports = {

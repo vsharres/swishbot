@@ -8,8 +8,7 @@ const UserSchema = new Schema({
         required:true
     },
     patronus: {
-        type: String,
-        required: false
+        type: String
     }
 
 }, {_id:false});

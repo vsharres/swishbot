@@ -3,7 +3,7 @@ const { MessageAttachment } = require('discord.js');
 const { Mongoose } = require('mongoose');
 
 module.exports = {
-    name: 'expecto_patronum!',
+    name: 'expecto_patronum',
     desciption:'Cast the patronus spell',
     cooldown: 2,
     args:false,

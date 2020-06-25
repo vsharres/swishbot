@@ -3,7 +3,7 @@ const config = require('../config/configs');
 module.exports = {
     name: 'convert',
     description: 'Converts the provided number to devitos',
-    cooldown: 1,
+    cooldown: 20,
     usage:'<amount> <type>',
     args: true,
     execute(message,args) {
@@ -12,19 +12,18 @@ module.exports = {
 
         //for the usage of having only on number on the args
         if(args.length === 1){
-            let parsed = args[0];
+            let parsed = args.shift();
             let multiplier = 1;
             let unit= "cm";
 
-            if(parsed.includes('cm') || parsed.includes('centimeters') || parsed.includes('centimeter')){
-                multiplier = 1;
-                unit = "cm";            
-            }
-            else if(parsed.includes('m') || parsed.includes('meters') || parsed.includes('meter')){
+            if(parsed.includes('m') || parsed.includes('meters') || parsed.includes('meter')){
                 multiplier = 100;
                 unit = "m"; 
-
             }
+            else if(parsed.includes('cm') || parsed.includes('centimeters') || parsed.includes('centimeter')){
+                multiplier = 1;
+                unit = "cm";            
+            }          
             else if(parsed.includes('km') || parsed.includes('kilometers') || parsed.includes('kilometer')){
                 multiplier = 100000;
                 unit = "km";
@@ -65,46 +64,73 @@ module.exports = {
 
 
         }
-
         //for more than one arg in the command, as if the unit is separate from the number
-        if(args.length >= 2){
+        else if(args.length == 2 && !isNaN(args[0])){
             let amount = 0;
             let multiplier = 1;
             let unit = "cm";
+            amount = parseFloat(args.shift());
+            unit = args.shift();
 
-            if(args.includes('cm') || args.includes('centimeters') || args.includes('centimeter')){                  
+            if(unit == 'cm' || unit === 'centimeters' || unit === 'centimeter'){                  
                  multiplier = 1;
             }
-            else if(args.includes('m') || args.includes('meters') ||args.includes('meter') ){
+            else if(unit === 'm' || unit === 'meters' || unit === 'meter' ){
                 multiplier = 100;
             }
-            else if(args.includes('km') || args.includes('kilometers') || args.includes('kilometer')){
+            else if(unit === 'km' || unit === 'kilometers' || unit === 'kilometer'){
                 multiplier = 100000;
             }
-            else if(args.includes('mi') || args.includes('miles') || args.includes('mile') ){
+            else if(unit === 'mi' || unit === 'miles' || unit === 'mile' ){
                 multiplier = 160934;
             }
-            else if(args.includes('yd') || args.includes('yards') || args.includes('yard')){
+            else if(unit === 'yd' || unit === 'yards' || unit === 'yard'){
                  multiplier = 91.44;
             }
-            else if(args.includes('inches') || args.includes('inch')){
+            else if(unit === 'inches' || unit === 'inch'){
                  multiplier = 2.54;                        
             }
-            else if(args.includes('feet') || args.includes('foot')){
+            else if(unit === 'feet' || unit === 'foot'){
                  multiplier = 30.48;
             }
             else {
                 return message.channel.send(`${message.author} the proper usage would be: ${prefix} \`${this.name} ${this.usage}\``);
-            }
-
-            amount = parseFloat(args.shift());
-            unit = args.shift();
+            }       
 
             let devitos = (amount * multiplier / config.height).toFixed(7);
             devitos = new Intl.NumberFormat('en-IN').format(devitos);
 
             return message.channel.send(`${message.author} ${amount} ${unit} is ${devitos} ${prefix}!`);
 
+        }
+        else if(args.length > 2 && !isNaN(args[0]) && !isNaN(args[2]))
+        {
+            let firstAmount = 0;
+            let secondAmount = 0;
+            let firstmultiplier = 1;
+            let secondMultiplier = 1;
+            let firstunit = 'feet';
+            let secondunit = 'inches';
+            firstAmount = parseFloat(args.shift());
+            firstunit = args.shift();
+            secondAmount = parseFloat(args.shift());
+            secondunit = args.shift();
+
+            if( firstunit === 'feet' && secondunit === 'inches')
+            {
+                firstmultiplier = 30.48;
+                secondMultiplier = 2.54;              
+            }
+
+            let devitos = ((firstAmount * firstmultiplier + secondAmount & secondMultiplier) / config.height).toFixed(7);
+            devitos = new Intl.NumberFormat('en-IN').format(devitos);
+
+            return message.channel.send(`${message.author} ${firstAmount} ${firstunit} ${secondMultiplier} ${secondunit} is ${devitos} ${prefix}!`);
+
+
+        }
+        else {
+            return message.channel.send(`${message.author} the proper usage would be: ${prefix} \`${this.name} ${this.usage}\``);
         }   
         
     },

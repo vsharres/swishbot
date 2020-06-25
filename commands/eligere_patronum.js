@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 module.exports = {
-    name: 'eligere_patronum!',
+    name: 'eligere_patronum',
     desciption:'Choose the patronus',
     cooldown: 5, 
     attachments: true,

@@ -15,6 +15,8 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
+const Stat = require('./models/Stat');
+
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
@@ -28,7 +30,44 @@ for (const file of commandFiles) {
 
 
 client.once('ready', () => {
-	console.log('Ready!');
+    console.log('Ready!');
+});
+
+//The getter of lightninbolts
+client.on('message', message => {
+    const prefix = '\u26a1';
+    if(!message.content.startsWith(prefix)) return;
+
+    const currentTime = Date.now();
+
+    Stat.findById(configs.stats_id).then(stat=> {
+        let lastRecordingDate = stat.recording_date ? stat.recording_date : Date.now();
+        let elapsedTime = Math.abs(currentTime - lastRecordingDate);
+
+        elapsedTime = elapsedTime / 1000;
+        elapsedTime = elapsedTime / 60;
+        elapsedTime = elapsedTime/60;
+
+        if(elapsedTime > 6)
+        {
+            stat.lightnings.length = 0;   
+        }
+
+        const question =  {
+            member: message.member.id,
+            question: message.content
+        };
+
+        stat.lightnings.push(question);
+        stat.recording_date = currentTime;
+
+        stat
+        .save()
+        .then(stat=>console.log(`${stat._id} stat saved!`))
+        .catch(err=> console.log(err));      
+
+    }).catch(err=> console.log(err));
+
 });
 
 client.on('message', message => {
@@ -73,7 +112,12 @@ client.on('message', message => {
         if(command.usage){
             reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
         }
-        return message.channel.send(reply);
+        return message.member.createDM()
+        .then(channel=> {
+            channel.send(reply)
+                    .catch(err=>console.error(err));
+        })
+        .catch(err=>console.error(err));
     }
 
     if(command.attachments && message.attachments.size === 0){
@@ -81,12 +125,22 @@ client.on('message', message => {
         if(command.usage){
             reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
         }
-        return message.channel.send(reply);
+        return message.member.createDM()
+        .then(channel=> {
+            channel.send(reply)
+                    .catch(err=>console.error(err));
+        })
+        .catch(err=>console.error(err));
     }
     else if(command.attachments && message.attachments.size > 0 )
     {
         if( message.attachments.first().width > command.attachment_size || message.attachments.first().height > command.attachment_size){
-            return message.channel.send(`${message.author} the patronus image must be smaller than ${command.attachment_size}x${command.attachment_size}!`);
+            return message.member.createDM()
+            .then(channel=> {
+                channel.send(`${message.author} the patronus image must be smaller than ${command.attachment_size}x${command.attachment_size}!`)
+                        .catch(err=>console.error(err));
+        })
+            .catch(err=>console.error(err));
         }
     }
 
@@ -98,7 +152,12 @@ client.on('message', message => {
 	if (now < expirationTime) {
         const timeLeft = (expirationTime - now) / 1000;
         console.log(timeLeft);
-		return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+        return message.member.createDM()
+                    .then(channel=> {
+                        channel.send(`Hello ${message.author} please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`)
+                                .catch(err=>console.error(err));
+                })
+                    .catch(err=>console.error(err));
 	}
     }
 
@@ -108,8 +167,13 @@ client.on('message', message => {
     try {
         command.execute(message, args);
     } catch (error) {
-	console.error(error);
-	message.reply('there was an error trying to execute that command!');
+    console.error(error);
+    message.member.createDM()
+                    .then(channel=> {
+                        channel.send('there was an error trying to execute that command!')
+                                .catch(err=>console.error(err));
+                })
+                    .catch(err=>console.error(err));
     }
 
    
