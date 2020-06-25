@@ -10,7 +10,7 @@ module.exports = {
         args.push('Bot');
         args.push('Hogwarts Ghosts');
 
-        message.guild.members.fetch()
+       /* message.guild.members.fetch()
         .then(members=>{
             members.forEach(member => {              
                 let roles = member.roles.cache.find(role=> args.includes(role.name));
@@ -27,6 +27,7 @@ module.exports = {
             });          
         })
         .catch(err=>console.error(err));
+        */
 
        
     },
