@@ -10,10 +10,17 @@ module.exports = {
 
         Stat.findById(stats_id).then(stat=> {
 
-            let reply = 'These are the lightning bolts for this recording:\n';
-            stat.lightnings.forEach(bolt=> {
-                reply += `${message.guild.member(bolt.member)} asks: ${bolt.question}\n`;
-            });
+            
+                let reply = '';
+            if(stat.lightnings.length >0){
+                reply = 'These are the lightning bolts for this recording:\n';
+                stat.lightnings.forEach(bolt=> {
+                    reply += `${message.guild.member(bolt.member)} asks: ${bolt.question}\n`;
+                });
+            }
+            else{
+                reply = `${message.author} there are no lightning bolts yet, maybe ask the first one!`;
+            }    
 
             return message.channel.send(reply);
         });
