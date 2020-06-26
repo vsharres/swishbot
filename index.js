@@ -50,7 +50,8 @@ client.on('message', message => {
 
         if(elapsedTime > 6)
         {
-            stat.lightnings.length = 0;   
+            stat.lightnings.length = 0;
+            stat.recording_date = currentTime;   
         }
 
         const question =  {
@@ -59,8 +60,7 @@ client.on('message', message => {
         };
 
         stat.lightnings.push(question);
-        stat.recording_date = currentTime;
-
+        
         stat
         .save()
         .then(stat=>console.log(`${stat._id} stat saved!`))
