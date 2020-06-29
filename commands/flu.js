@@ -1,4 +1,8 @@
 
+const mia_id =0;
+const marchismo_id=0;
+const brandon_id=0; 
+
 module.exports = {
     name: "flu!",
     description: 'Sends a message to all discord members',
@@ -10,15 +14,16 @@ module.exports = {
         args.push('Bot');
         args.push('Hogwarts Ghosts');
 
-       /* message.guild.members.fetch()
+        message.guild.members.fetch()
         .then(members=>{
             members.forEach(member => {              
                 let roles = member.roles.cache.find(role=> args.includes(role.name));
+                
                 if(!roles)
                 {
                     member.createDM()
                     .then(channel=> {
-                        channel.send(`This is a correction on the previous message, the correct link for submitting the message is:\nhttps://docs.google.com/forms/d/e/1FAIpQLSd3Jh1sxna3ljo19t5LE5V498hTarbqvnNKCCKOijmoU3H8gA/viewform?usp=sf_link`)
+                        channel.send(`Hello Swisher!\nJust a reminder, we are planning a surprise thank you gift to the hosts of Swish and Flick on their anniversary. We thought it would be fun to all leave messages on what they mean to us!\nWe have had some hiccups with the google form we are using to collect answers. If you run into an issue where the form isn't working OR you need to edit or resubmit your response please privately direct message: @mia-gilli @marchismo @Brandon Seabaugh or @ViniciusHarres.`)
                                 .catch(err=>console.error(err));
                 })
                     .catch(err=>console.error(err));
@@ -26,7 +31,7 @@ module.exports = {
             });          
         })
         .catch(err=>console.error(err));
-        */
+        
 
        
     },
