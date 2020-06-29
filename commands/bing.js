@@ -2,7 +2,7 @@ const Stat = require('../models/Stat');
 const {stats_id, admin_role_name} = require('../config/configs');
 
 module.exports = {
-    name: "bing!",
+    name: "bing",
     description: 'Converts the provided number to devitos',
     cooldown: 5,
     usage: '',

@@ -6,7 +6,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 const commands = new Discord.Collection();
 
 module.exports = {
-    name: "spells?",
+    name: "spells",
     description: 'Prints all of the available commands for this user',
     cooldown: 1,
     args: false,

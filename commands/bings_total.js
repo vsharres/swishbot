@@ -2,7 +2,7 @@ const Stat = require('../models/Stat');
 const {stats_id} = require('../config/configs');
 
 module.exports = {
-    name: 'bings?',
+    name: 'bings',
     description: 'Get the total number of bings',
     cooldown: 10,
     args: false,
