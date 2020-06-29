@@ -4,7 +4,7 @@ const {stats_id} = require('../config/configs');
 module.exports = {
     name: 'bings?',
     description: 'Get the total number of bings',
-    cooldown: 1,
+    cooldown: 10,
     args: false,
     execute(message,arg) {
 

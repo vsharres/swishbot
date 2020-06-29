@@ -5,7 +5,7 @@ const {stats_id, admin_role_name, binger_gif} = require('../config/configs');
 module.exports = {
     name: "binger",
     description: 'Sets the designated binger for the recording',
-    cooldown: 2,
+    cooldown: 60,
     args: false,
     execute(message,args) { 
 

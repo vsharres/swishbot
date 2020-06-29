@@ -4,7 +4,7 @@ const {stats_id, admin_role_name} = require('../config/configs');
 module.exports = {
     name: "bing!",
     description: 'Converts the provided number to devitos',
-    cooldown: 1,
+    cooldown: 5,
     usage: '',
     args: false,
     execute(message,arg) {

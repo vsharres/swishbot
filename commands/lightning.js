@@ -4,7 +4,7 @@ const {stats_id} = require('../config/configs');
 module.exports = {
     name: "lightningbolts",
     description: 'Get all of the lightningbolt questions for this recording',
-    cooldown: 1,
+    cooldown: 10,
     args: false,
     execute(message,arg){
 

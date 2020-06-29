@@ -5,7 +5,7 @@ const { Mongoose } = require('mongoose');
 module.exports = {
     name: 'expecto_patronum',
     desciption:'Cast the patronus spell',
-    cooldown: 2,
+    cooldown: 10,
     args:false,
     execute(message,args) {
 

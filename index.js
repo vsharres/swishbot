@@ -5,6 +5,7 @@ const { command_prefix,token } = require('./config/configs');
 const configs = require('./config/configs');
 
 const db = require('./config/configs').mongoURI;
+const lightningCooldown = 6;
 
 mongoose
   .connect(
@@ -48,9 +49,9 @@ client.on('message', message => {
         elapsedTime = elapsedTime / 60;
         elapsedTime = elapsedTime/60;
 
-        if(elapsedTime > 6)
+        if(elapsedTime > lightningCooldown)
         {
-            stat.lightnings.length = 0;
+            stat.lightnings = [];
             stat.recording_date = currentTime;   
         }
 

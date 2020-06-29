@@ -18,8 +18,7 @@ module.exports = {
                 {
                     member.createDM()
                     .then(channel=> {
-                        channel.send(`This is a correction on the previous message, the correct link for submitting the message is: 
-                        https://docs.google.com/forms/d/e/1FAIpQLSd3Jh1sxna3ljo19t5LE5V498hTarbqvnNKCCKOijmoU3H8gA/viewform?usp=sf_link`)
+                        channel.send(`This is a correction on the previous message, the correct link for submitting the message is:\nhttps://docs.google.com/forms/d/e/1FAIpQLSd3Jh1sxna3ljo19t5LE5V498hTarbqvnNKCCKOijmoU3H8gA/viewform?usp=sf_link`)
                                 .catch(err=>console.error(err));
                 })
                     .catch(err=>console.error(err));
