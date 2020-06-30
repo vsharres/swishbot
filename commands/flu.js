@@ -11,6 +11,7 @@ module.exports = {
         if(message.author.id !== vini_id && message.author.id !== marchismo_id && message.author.id !== mia_id && message.author.id !== brandon_id) return;
 
         args.push('Bot');
+        args.push('Founders');
         args.push('Hogwarts Ghosts');
 
         message.guild.members.fetch()

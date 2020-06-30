@@ -9,11 +9,10 @@ module.exports = {
     execute(message,arg){
 
         Stat.findById(stats_id).then(stat=> {
-
             
-                let reply = '';
+            let reply = '';
             if(stat.lightnings.length >0){
-                reply = 'These are the lightning bolts for this recording:\n';
+                reply = 'These are the lightning bolts for this recording:\n\n';
                 stat.lightnings.forEach(bolt=> {
                     reply += `${message.guild.member(bolt.member)} asks: ${bolt.question}\n`;
                 });

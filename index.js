@@ -52,7 +52,6 @@ client.on('message', message => {
         if(elapsedTime > lightningCooldown)
         {
             stat.lightnings = [];
-            stat.recording_date = currentTime;   
         }
 
         const question =  {

@@ -24,7 +24,8 @@ module.exports = {
                     return message.channel
                     .send(`Binger successfully reset!`)
                     .catch(err=>console.log(err));
-                });
+                })
+                .catch(err=>console.log(err));
             }
 
             if(stat.binger !== 0 && stat.binger !== message.member.id) return;
@@ -48,7 +49,8 @@ module.exports = {
 
             }
         
-        });
+        })
+        .catch(err=>console.log(err));
 
 
     },
