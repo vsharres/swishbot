@@ -8,8 +8,7 @@ const StatSchema = new Schema({
         default:Date.now
     },
     binger: {
-        type:Number,
-        default:0
+        type:String
     },
     bings: {
         type: Number,

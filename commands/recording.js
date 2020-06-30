@@ -1,7 +1,5 @@
 const Stat = require('../models/Stat');
-const {stats_id} = require('../config/configs');
-
-const Delay = 6;
+const {stats_id, command_prefix, recording_delay} = require('../config/configs');
 
 module.exports = {
     name: "recording",
@@ -18,17 +16,18 @@ module.exports = {
             elapsedTime = elapsedTime / 60;
             elapsedTime = elapsedTime/60;
 
-            if(elapsedTime < Delay){
+            if(elapsedTime < recording_delay){
                 return message.channel.send(`${message.author} the start of the recording has already been set!`)
                 .catch(err=>console.log(err));
             }
             else {
                 stat.recording_date = Date.now();
-                
+                stat.binger = '';
+                const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
                 stat
                 .save()
                 .then(stat=>{
-                    return message.channel.send(`${message.author} the start of the recording has already been set!`)
+                    message.channel.send(`Recording started!\n\nWe need a volunteer to be the designated Binger:tm: for this recording!\n\nThe first person to type the command: **${prefix} binger** will be the Binger:tm:!`)
                         .catch(err=>console.log(err));
                 })
                 .catch(err=>console.log(err));

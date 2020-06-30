@@ -6,6 +6,7 @@ module.exports = {
 	binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',
 	height: 147, // in cm
 	weight: 48, // in Kg
+	recording_delay: process.env.RECORDING_DELAY,
 	mia_id:process.env.MIA_ID,
 	marchismo_id:process.env.MARCHISMO_ID,
 	brandon_id:process.env.BRANDON_ID,

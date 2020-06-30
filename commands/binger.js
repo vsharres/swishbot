@@ -1,6 +1,6 @@
 const Stat = require('../models/Stat');
 const { MessageAttachment } = require('discord.js');
-const {stats_id, admin_role_name, binger_gif} = require('../config/configs');
+const {stats_id, admin_role_name, binger_gif, command_prefix} = require('../config/configs');
 
 module.exports = {
     name: "binger",
@@ -16,31 +16,30 @@ module.exports = {
 
             if(reset === 'reset' && roles)
             {
-                stat.binger = 0;
-                stat
+                stat.binger = '';
+                return stat
                 .save()
                 .then(stat=> {
                     console.log(`Binger reset by the admin`);                    
-                    return message.channel
+                    message.channel
                     .send(`Binger successfully reset!`)
                     .catch(err=>console.log(err));
                 })
                 .catch(err=>console.log(err));
             }
 
-            if(stat.binger !== 0 && stat.binger !== message.member.id) return;
-
-            if(stat.binger === 0){
+            if(stat.binger === ''){
 
                 stat.binger = message.member.id;
-                stat
+                return stat
                 .save()
                 .then(stat=> {
                     console.log(`Binger set to the id: ${stat.binger}`);
+                    const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
                     const attachment =  new MessageAttachment(binger_gif);                  
-                    return message.channel
+                    message.channel
                     .send( {
-                        content: `${message.author} Congrats! \nYou're the designated Binger:tm: for this recording! Use your bell powers with care! \n`,
+                        content: `${message.author} Congrats!\nYou're the designated Binger:tm: for this recording! Use your bell powers with care! \n\nThe command to add another bellring is: **${prefix} bing**`,
                         files: [attachment]
                     })
                     .catch(err=>console.log(err));
