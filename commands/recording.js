@@ -9,6 +9,7 @@ module.exports = {
     args: false,
     execute(message,arg) {
 
+        const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
         Stat.findById(stats_id).then(stat=>{
 
             let elapsedTime = Math.abs(Date.now() - stat.recording_date);
@@ -23,7 +24,6 @@ module.exports = {
             else {
                 stat.recording_date = Date.now();
                 stat.binger = '';
-                const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
                 stat
                 .save()
                 .then(stat=>{

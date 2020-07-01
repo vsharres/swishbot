@@ -70,6 +70,16 @@ client.on('message', message => {
 
 });
 
+//Responding to DMs
+client.on('message',  async message => {
+    if(message.channel.type !== 'dm' || message.author.id === client.user.id) return;
+    client.users.fetch(configs.vini_id)
+        .then(user=> {
+            message.reply(`If you have any questions relating to how the bot works, please feel free to DM ${user} :smile:`);
+        })
+        .catch(err=> console.log(err));
+});
+
 client.on('message', message => {
 
     //Ignores all messages and commands send to the bot from DM
