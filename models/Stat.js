@@ -20,6 +20,10 @@ const StatSchema = new Schema({
         },
         question: {
             type:String
+        },
+        date: {
+            type: Date,
+            default:Date.now
         }
     }]
 

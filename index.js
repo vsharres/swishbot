@@ -34,7 +34,7 @@ client.once('ready', () => {
     console.log('Ready!');
 });
 
-//The getter of lightninbolts
+//Listening to lightninbolts
 client.on('message', message => {
     const prefix = '\u26a1';
     if(!message.content.startsWith(prefix)) return;
@@ -42,28 +42,32 @@ client.on('message', message => {
     const currentTime = Date.now();
 
     Stat.findById(configs.stats_id).then(stat=> {
-        let lastRecordingDate = stat.recording_date ? stat.recording_date : Date.now();
-        let elapsedTime = Math.abs(currentTime - lastRecordingDate);
 
-        elapsedTime = elapsedTime / 1000;
-        elapsedTime = elapsedTime / 60;
-        elapsedTime = elapsedTime/60;
+        if(stat.lightnings.length > 0){
+            const lastRecordingDate = stat.lightnings[stat.lightnings.length-1].recording_date;
+            let elapsedTime = Math.abs(currentTime - lastRecordingDate);
 
-        if(elapsedTime > configs.recording_delay)
-        {
-            stat.lightnings = [];
-        }
+            elapsedTime = elapsedTime / 1000;
+            elapsedTime = elapsedTime / 60;
+            elapsedTime = elapsedTime/60;
+
+            if(elapsedTime > configs.recording_delay)
+            {
+                stat.lightnings = [];
+            }
+        }   
 
         const question =  {
             member: message.member.id,
-            question: message.content
+            question: message.content,
+            recording_date:currentTime
         };
 
         stat.lightnings.push(question);
         
         stat
         .save()
-        .then(stat=>console.log(`${stat._id} stat saved!`))
+        .then(stat=>console.log(`lightning bolt question saved!`))
         .catch(err=> console.log(err));      
 
     }).catch(err=> console.log(err));
@@ -80,6 +84,7 @@ client.on('message',  async message => {
         .catch(err=> console.log(err));
 });
 
+//General commands given to the bot
 client.on('message', message => {
 
     //Ignores all messages and commands send to the bot from DM

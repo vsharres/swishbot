@@ -3,7 +3,7 @@ const config = require('../config/configs');
 module.exports = {
     name: 'convert',
     description: 'Converts the provided number to devitos',
-    cooldown: 120,
+    cooldown: 10,
     usage:'<amount> <type>',
     args: true,
     execute(message,args) {
