@@ -25,6 +25,20 @@ const StatSchema = new Schema({
             type: Date,
             default:Date.now
         }
+    }],
+    points:[{
+        gryffindor: {
+            type:Number
+        },
+        slytherin: {
+            type:Number
+        },
+        ravenclaw: {
+            type:Number
+        },
+        hufflepuff: {
+            type: Number
+        }
     }]
 
 });
