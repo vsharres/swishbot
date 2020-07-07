@@ -24,7 +24,7 @@ module.exports = {
                 stat
                 .save()
                 .then(stat=> {
-                console.log(`The total of bings is ${stat.bings}`);                    
+                console.log(`The total of bings is ${stat.bings}!`);                    
                 message.channel
                 .send(`:bellhop:!`)
                 .catch(err=>console.log(err));

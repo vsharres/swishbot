@@ -16,7 +16,7 @@ module.exports = {
 
                 message.channel
                 .send({
-                    content:`${message.author} Expecto Patronum!! ${wand? wand.toString() : ':wand:'}:zap::zap:`,
+                    content:`${message.author} Expecto Patronum!! ${wand? wand.toString() : ':zap:'}:zap::zap:`,
                     files: [attachment]
                 })
                 .catch(err=>console.log(err));

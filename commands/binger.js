@@ -39,7 +39,7 @@ module.exports = {
                     const attachment =  new MessageAttachment(binger_gif);                  
                     message.channel
                     .send( {
-                        content: `${message.author} Congrats!\nYou're the designated Binger:tm: for this recording! Use your bell powers with care! \n\nThe command to add another bellring is: **${prefix} bing**`,
+                        content: `${message.author} Congrats!\nYou're the designated Binger:tm: for this recording! Use your bell powers with care!\n\nThe command to add another bellring is: **${prefix} bing**`,
                         files: [attachment]
                     })
                     .catch(err=>console.log(err));

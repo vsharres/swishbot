@@ -37,10 +37,10 @@ module.exports = {
                 multiplier = 160934;
                 unit = "mi";          
             }
-            else if(args[0].includes("'") || args[0].includes('"') ){
+            else if(parsed.includes("'") || parsed.includes('"') ){
 
                 const rex = /^(?!$|.*\'[^\x22]+$)(?:([0-9]+)\')?(?:([0-9]+)\x22?)?$/;
-                const match = rex.exec(args.shift());
+                const match = rex.exec(parsed);
                 if(match){
                     let feet = parseFloat(match[1]) ? parseFloat(match[1]) : 0;
                     let inches = parseFloat(match[2]) ? parseFloat(match[2]) : 0;
