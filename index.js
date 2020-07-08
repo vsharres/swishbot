@@ -54,8 +54,22 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    //Only the founders can add points to houses and only in the general channel points are being awarded
-    const adminRole = reaction.message.member.roles.cache.find(role=> role.name ===configs.admin_role_name);
+    if(user.partial){
+
+        try{
+            await user.fetch();
+
+        }
+        catch(error){
+            console.log(`Something went wrong when fetching the user: ${error}`);
+            return;
+        }
+    }
+
+    //Only the founders can add points to houses and only in the general channel points are being awarded.
+    const guild = client.guilds.cache.find(guild=> guild.name === configs.guild_name);
+    if(!guild) return;
+    const adminRole = guild.roles.cache.find(role=> role.name ===configs.admin_role_name);
     const general = reaction.message.channel.name === '💬│general';
     if(!adminRole || !general) return;
 
@@ -66,6 +80,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         hufflepuff:0
     };
 
+    //CHANGE THIS
     reaction.message.member.roles.cache.forEach(role=> {
 
         if(role.name === configs.gryffindor_role){
@@ -133,7 +148,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
             }
 
             //Delete the previous message
-            reaction.message.channel.bulkDelete({messages:10});
+            hourglass_channel.bulkDelete(5)
+                .then(messages=> {
+                    console.log(`Bulk deleted ${messages.size} messages`);
+                })
+                .catch(console.error);
 
             let houses = [{
                 name:'Gryffindor 🦁',
@@ -153,7 +172,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             }
             ];
 
-            houses.sort((a,b)=> a.points > b.points);
+            houses.sort((a,b)=> b.points - a.points);
             let reply = '**House Points**\n\n';
 
             houses.forEach(house=> {

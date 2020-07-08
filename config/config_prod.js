@@ -18,5 +18,7 @@ module.exports = {
 	marchismo_id:process.env.MARCHISMO_ID,
 	brandon_id:process.env.BRANDON_ID,
 	vini_id:process.env.VINI_ID,
+	guild_name: 'swishflicktest',
+	//guild_name:'swishflickcast;,
 	token : process.env.DISCORD_TOKEN,
 };
