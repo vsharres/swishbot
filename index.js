@@ -56,7 +56,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     //Only the founders can add points to houses and only in the general channel points are being awarded
     const adminRole = reaction.message.member.roles.cache.find(role=> role.name ===configs.admin_role_name);
-    const general = reaction.message.channel.name === 'general';
+    const general = reaction.message.channel.name === '💬│general';
     if(!adminRole || !general) return;
 
     let pointsToAdd = {
