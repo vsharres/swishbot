@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 10,
     usage: '',
     args: false,
-    async execute(message,arg) {
+    execute(message,arg) {
 
         Stat.findById(stats_id).then( stat=>{
 
@@ -18,24 +18,24 @@ module.exports = {
             const huff = points.hufflepuff;
 
             let sortedPoints =[{
-                    house:`Gryffindor :lion_face:`,
+                    house:`Gryffindor 🦁`,
                     points:gryf
                 },
                 {
-                    house:`Slytherin :snake:`,
+                    house:`Slytherin 🐍`,
                     points:slyth
                 },
                 {
-                    house:`Ravenclaw :eagle:`,
+                    house:`Ravenclaw 🦅`,
                     points:raven
                 },
                 {
-                    house:`Hufflepuff :badger:`,
+                    house:`Hufflepuff 🦡`,
                     points:huff
                 }
             ];
 
-            sortedPoints.sort((a,b)=> a.points > b.points );
+            sortedPoints.sort((a,b)=> b.points - a.points );
             let reply ='This is the current tally of house points:\n\n';
 
             //Check if any house is tied

@@ -84,18 +84,18 @@ client.on('messageReactionAdd', async (reaction, user) => {
     reaction.message.member.roles.cache.forEach(role=> {
 
         if(role.name === configs.gryffindor_role){
-            if(reaction.emoji.name.toString() === configs.emoji_addpoints){
+            if(reaction.emoji.identifier === configs.emoji_addpoints){
                 pointsToAdd.gryffindor +=10;
             }
-            else if(reaction.emoji.name.toString() === configs.emoji_removepoints){
+            else if(reaction.emoji.identifier === configs.emoji_removepoints){
                 pointsToAdd.gryffindor -=10;
             }
         }
         else if(role.name === configs.ravenclaw_role){
-            if(reaction.emoji.name === configs.emoji_addpoints){
+            if(reaction.emoji.identifier  === configs.emoji_addpoints){
                 pointsToAdd.ravenclaw +=10;
             }
-            else if(reaction.emoji.name === configs.emoji_removepoints){
+            else if(reaction.emoji.identifier  === configs.emoji_removepoints){
                 pointsToAdd.ravenclaw -=10;
             }
         }
@@ -108,10 +108,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
             }
         }
         else if(role.name === configs.hufflepuff_role){
-            if(reaction.emoji.name === configs.emoji_addpoints){
+            if(reaction.emoji.identifier === configs.emoji_addpoints){
                 pointsToAdd.hufflepuff +=10;
             }
-            else if(reaction.emoji.name === configs.emoji_removepoints){
+            else if(reaction.emoji.identifier === configs.emoji_removepoints){
                 pointsToAdd.hufflepuff -=10;
             }
         }
