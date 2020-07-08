@@ -120,35 +120,35 @@ client.on('messageReactionAdd', async (reaction, user) => {
             console.log('Points saved!');
 
             if(pointsToAdd.gryffindor != 0){
-                reaction.message.channel.send(`**${pointsToAdd.gryffindor} points ${ pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor :lion_face:!**`);
+                reaction.message.channel.send(`**${pointsToAdd.gryffindor} points ${ pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor 🦁!**`);
             }
             else if(pointsToAdd.slytherin != 0){
-                reaction.message.channel.send(`**${pointsToAdd.slytherin} points ${ pointsToAdd.slytherin > 0 ? 'to' : 'from'} Slytherin :snake:!**`);
+                reaction.message.channel.send(`**${pointsToAdd.slytherin} points ${ pointsToAdd.slytherin > 0 ? 'to' : 'from'} Slytherin 🐍!**`);
             }
             else if(pointsToAdd.ravenclaw != 0){
-                reaction.message.channel.send(`**${pointsToAdd.ravenclaw} points ${ pointsToAdd.ravenclaw > 0 ? 'to' : 'from'} Ravenclaw :eagle:!**`);
+                reaction.message.channel.send(`**${pointsToAdd.ravenclaw} points ${ pointsToAdd.ravenclaw > 0 ? 'to' : 'from'} Ravenclaw 🦅!**`);
             }
             else if(pointsToAdd.hufflepuff != 0){
-                reaction.message.channel.send(`**${pointsToAdd.hufflepuff} points ${ pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff :badger:!**`);
+                reaction.message.channel.send(`**${pointsToAdd.hufflepuff} points ${ pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff 🦡!**`);
             }
 
             //Delete the previous message
             reaction.message.channel.bulkDelete({messages:10});
 
             let houses = [{
-                name:'Gryffindor :lion_face:',
+                name:'Gryffindor 🦁',
                 points: points.gryffindor
             }, 
             { 
-                name: 'Slytherin :snake:',
+                name: 'Slytherin 🐍',
                 points: points.slytherin
             },
             {
-                name: 'Ravenclaw :eagle:',
+                name: 'Ravenclaw 🦅',
                 points: points.ravenclaw
             },
             {
-                name:'Hufflepuff :badger:',
+                name:'Hufflepuff 🦡',
                 points: points.hufflepuff
             }
             ];
