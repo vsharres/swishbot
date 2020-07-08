@@ -17,12 +17,15 @@ mongoose
   .catch(err => console.log(err));
 
 const Stat = require('./models/Stat');
+const { CLIENT_RENEG_LIMIT } = require('tls');
+const { find } = require('./models/Stat');
 
-const client = new Discord.Client();
+const client = new Discord.Client({partials: ['REACTION', 'MESSAGE']});
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+let hourglass_channel; 
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -32,6 +35,137 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log('Ready!');
+
+    hourglass_channel =  client.channels.cache.find(channel=> 
+        channel.name === configs.house_points_channel
+    );
+});
+
+client.on('messageReactionAdd', async (reaction, user) => {
+
+    if(reaction.partial){
+
+        try {
+            await reaction.fetch();
+        }
+        catch(error){
+            console.log(`Something went wrong when fetching the message: ${error}`);
+            return;
+        }
+    }
+
+    //Only the founders can add points to houses and only in the general channel points are being awarded
+    const adminRole = reaction.message.member.roles.cache.find(role=> role.name ===configs.admin_role_name);
+    const general = reaction.message.channel.name === 'general';
+    if(!adminRole || !general) return;
+
+    let pointsToAdd = {
+        gryffindor: 0,
+        slytherin:0,
+        ravenclaw:0,
+        hufflepuff:0
+    };
+
+    reaction.message.member.roles.cache.forEach(role=> {
+
+        if(role.name === configs.gryffindor_role){
+            if(reaction.emoji.name.toString() === configs.emoji_addpoints){
+                pointsToAdd.gryffindor +=10;
+            }
+            else if(reaction.emoji.name.toString() === configs.emoji_removepoints){
+                pointsToAdd.gryffindor -=10;
+            }
+        }
+        else if(role.name === configs.ravenclaw_role){
+            if(reaction.emoji.name === configs.emoji_addpoints){
+                pointsToAdd.ravenclaw +=10;
+            }
+            else if(reaction.emoji.name === configs.emoji_removepoints){
+                pointsToAdd.ravenclaw -=10;
+            }
+        }
+        else if(role.name === configs.slytherin_role){
+            if(reaction.emoji.identifier === configs.emoji_addpoints){
+                pointsToAdd.slytherin +=10;
+            }
+            else if(reaction.emoji.identifier === configs.emoji_removepoints){
+                pointsToAdd.slytherin -=10;
+            }
+        }
+        else if(role.name === configs.hufflepuff_role){
+            if(reaction.emoji.name === configs.emoji_addpoints){
+                pointsToAdd.hufflepuff +=10;
+            }
+            else if(reaction.emoji.name === configs.emoji_removepoints){
+                pointsToAdd.hufflepuff -=10;
+            }
+        }
+
+    });
+
+    //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
+    if(pointsToAdd.gryffindor === 0  && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;
+
+    Stat.findById(configs.stats_id).then(stat=> {
+
+        let points = stat.points[stat.points.length-1];
+        points.gryffindor += pointsToAdd.gryffindor;
+        points.ravenclaw += pointsToAdd.ravenclaw;
+        points.slytherin += pointsToAdd.slytherin;
+        points.hufflepuff += pointsToAdd.hufflepuff;
+
+        stat
+        .save()
+        .then(stat=> {
+            console.log('Points saved!');
+
+            if(pointsToAdd.gryffindor != 0){
+                reaction.message.channel.send(`**${pointsToAdd.gryffindor} points ${ pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor :lion_face:!**`);
+            }
+            else if(pointsToAdd.slytherin != 0){
+                reaction.message.channel.send(`**${pointsToAdd.slytherin} points ${ pointsToAdd.slytherin > 0 ? 'to' : 'from'} Slytherin :snake:!**`);
+            }
+            else if(pointsToAdd.ravenclaw != 0){
+                reaction.message.channel.send(`**${pointsToAdd.ravenclaw} points ${ pointsToAdd.ravenclaw > 0 ? 'to' : 'from'} Ravenclaw :eagle:!**`);
+            }
+            else if(pointsToAdd.hufflepuff != 0){
+                reaction.message.channel.send(`**${pointsToAdd.hufflepuff} points ${ pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff :badger:!**`);
+            }
+
+            //Delete the previous message
+            reaction.message.channel.bulkDelete({messages:10});
+
+            let houses = [{
+                name:'Gryffindor :lion_face:',
+                points: points.gryffindor
+            }, 
+            { 
+                name: 'Slytherin :snake:',
+                points: points.slytherin
+            },
+            {
+                name: 'Ravenclaw :eagle:',
+                points: points.ravenclaw
+            },
+            {
+                name:'Hufflepuff :badger:',
+                points: points.hufflepuff
+            }
+            ];
+
+            houses.sort((a,b)=> a.points > b.points);
+            let reply = '**House Points**\n\n';
+
+            houses.forEach(house=> {
+                reply += `${house.name} with a total of: **${house.points}!**\n\n`;
+            });
+
+            return hourglass_channel.send(reply);
+            
+        });  
+
+    });
+
 });
 
 //Listening to lightninbolts
@@ -75,7 +209,7 @@ client.on('message', message => {
 });
 
 //Responding to DMs
-client.on('message',  async message => {
+client.on('message',  message => {
     if(message.channel.type !== 'dm' || message.author.id === client.user.id) return;
     client.users.fetch(configs.vini_id)
         .then(user=> {

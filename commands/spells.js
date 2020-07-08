@@ -15,7 +15,7 @@ module.exports = {
     description: 'Prints all of the available commands for this user',
     cooldown: 1,
     args: false,
-    execute(message,args){
+    async execute(message,args){
   
         User.findById(message.member.id).then(user=> {
             if(user)

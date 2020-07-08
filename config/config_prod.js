@@ -6,7 +6,14 @@ module.exports = {
 	binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',
 	height: 147, // in cm
 	weight: 48, // in Kg
+	house_points_channel: process.env.HOUSE_POINTS_CHANNEL,
+	gryffindor_role: process.env.GRYFFINDOR_ROLE,
+	slytherin_role: process.env.SLYTHERIN_ROLE,
+	ravenclaw_role: process.env.RAVENCLAW_ROLE,
+	hufflepuff_role: process.env.HUFFLEPUFF_ROLE,
 	recording_delay: process.env.RECORDING_DELAY,
+	emoji_addpoints:process.env.EMOJI_ADDPOINTS,
+	emoji_removepoints: process.env.EMOJI_REMOVEPOINTS,
 	mia_id:process.env.MIA_ID,
 	marchismo_id:process.env.MARCHISMO_ID,
 	brandon_id:process.env.BRANDON_ID,
