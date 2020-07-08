@@ -44,7 +44,7 @@ module.exports = {
                 //for the case when all houses are tied
                 if(gryf === slyth && slyth === raven && raven === huff){
 
-                    reply += `**All houses are tied with ${gryf} points!**`;
+                    reply += `All houses are tied with **${gryf} points!**`;
                     return message.channel.send(reply);
 
                 }
@@ -52,12 +52,12 @@ module.exports = {
                 else if((gryf=== slyth && slyth === raven) || (gryf=== slyth && slyth === huff) || (gryf === raven && raven === huff) || (slyth === raven && raven === huff))
                 {
                     if(sortedPoints[0]===sortedPoints[1]){
-                        reply += `**${sortedPoints[0].house}, ${sortedPoints[1].house}, ${sortedPoints[2].house} are tied in first place with ${sortedPoints[0].points}!**\n`;
-                        reply += `**${sortedPoints[3].house} is in second place with ${sortedPoints[3].points}!**\n`;
+                        reply += `${sortedPoints[0].house}, ${sortedPoints[1].house}, ${sortedPoints[2].house} are tied in first place with **${sortedPoints[0].points} points!**\n`;
+                        reply += `${sortedPoints[3].house} is in second place with **${sortedPoints[3].points} points!**\n`;
                     }
                     else{
-                        reply += `**${sortedPoints[0].house} is in first place with ${sortedPoints[0].points}!**\n`;
-                        reply += `**${sortedPoints[1].house}, ${sortedPoints[2].house}, ${sortedPoints[3].house} are tied in second place with ${sortedPoints[1].points}!**\n`;
+                        reply += `${sortedPoints[0].house} is in first place with **${sortedPoints[0].points} points!**\n`;
+                        reply += `${sortedPoints[1].house}, ${sortedPoints[2].house}, ${sortedPoints[3].house} are tied in second place with **${sortedPoints[1].points} points!**\n`;
                     }
 
                     return message.channel.send(reply);
@@ -65,23 +65,23 @@ module.exports = {
                 //for the case where only two houses are tied
                 else{
                     if(sortedPoints[0]===sortedPoints[1]){
-                        reply += `**${sortedPoints[0].house}, ${sortedPoints[1].house} are tied in first place with ${sortedPoints[0].points}!**\n`;
-                        reply += `**${sortedPoints[2].house} is in second place with ${sortedPoints[2].points}!**\n`;
-                        reply += `**${sortedPoints[3].house} is in third place with ${sortedPoints[3].points}!**\n`;
+                        reply += `${sortedPoints[0].house}, ${sortedPoints[1].house} are tied in first place with **${sortedPoints[0].points} points!**\n`;
+                        reply += `${sortedPoints[2].house} is in second place with **${sortedPoints[2].points} points!**\n`;
+                        reply += `${sortedPoints[3].house} is in third place with **${sortedPoints[3].points} points!**\n`;
 
                         return message.channel.send(reply);
                     }
                     else if(sortedPoints[1]===sortedPoints[2]){
-                        reply += `**${sortedPoints[0].house} is in first place with ${sortedPoints[0].points}!**\n`;
-                        reply += `**${sortedPoints[1].house}, ${sortedPoints[2].house} are tied in second place with ${sortedPoints[1].points}!**\n`;
-                        reply += `**${sortedPoints[3].house} is in third place with ${sortedPoints[3].points}!**\n`;
+                        reply += `${sortedPoints[0].house} is in first place with **${sortedPoints[0].points} points!**\n`;
+                        reply += `${sortedPoints[1].house}, ${sortedPoints[2].house} are tied in second place with **${sortedPoints[1].points} points!**\n`;
+                        reply += `${sortedPoints[3].house} is in third place with **${sortedPoints[3].points} points!**\n`;
 
                         return message.channel.send(reply);
                     }
                     else {
-                        reply += `**${sortedPoints[0].house} is in first place with ${sortedPoints[0].points}!**\n`;
-                        reply += `**${sortedPoints[1].house} is in second place with ${sortedPoints[1].points}!**\n`;
-                        reply += `**${sortedPoints[2].house}, ${sortedPoints[3].house} are tied in third place with ${sortedPoints[2].points}!**\n`;
+                        reply += `${sortedPoints[0].house} is in first place with **${sortedPoints[0].points} points!**\n`;
+                        reply += `${sortedPoints[1].house} is in second place with **${sortedPoints[1].points} points!**\n`;
+                        reply += `${sortedPoints[2].house}, ${sortedPoints[3].house} are tied in third place with **${sortedPoints[2].points} points!**\n`;
 
                         return message.channel.send(reply);
                     }
@@ -107,7 +107,7 @@ module.exports = {
                         default:
                             break;
                     }
-                    reply += `**${sortedPoints[index].house} is in ${placement} with ${sortedPoints[index].points} points!**\n`;
+                    reply += `${sortedPoints[index].house} is in ${placement} with **${sortedPoints[index].points} points!**\n`;
                     return message.channel.send(reply);
                     
                 }
