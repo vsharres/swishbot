@@ -71,7 +71,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     if(!guild) return;
     const adminRole = guild.members.cache.get(user.id).roles.cache.find(role=> role.name ===configs.admin_role_name);
     const general = reaction.message.channel.name === '💬│general';
-    if(!adminRole || !general) return;
+    if(!adminRole && !general) return;
 
     let pointsToAdd = {
         gryffindor: 0,
