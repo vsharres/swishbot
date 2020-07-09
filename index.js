@@ -69,7 +69,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
     //Only the founders can add points to houses and only in the general channel points are being awarded.
     const guild = client.guilds.cache.find(guild=> guild.name === configs.guild_name);
     if(!guild) return;
-    const adminRole = guild.members.cache.get(user.id).roles.cache.find(role=> role.name ===configs.admin_role_name);
+    const guildMember = guild.members.cache.get(user.id);
+    if(!guildMember) return;
+    const adminRole = guildMember.roles.cache.find(role=> role.name ===configs.admin_role_name);
+
     const general = reaction.message.channel.name === '💬│general';
     if(!adminRole && !general) return;
 
