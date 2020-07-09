@@ -69,7 +69,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     //Only the founders can add points to houses and only in the general channel points are being awarded.
     const guild = client.guilds.cache.find(guild=> guild.name === configs.guild_name);
     if(!guild) return;
-    const adminRole = guild.roles.cache.find(role=> role.name ===configs.admin_role_name);
+    const adminRole = guild.members.cache.get(user.id).roles.cache.find(role=> role.name ===configs.admin_role_name);
     const general = reaction.message.channel.name === '💬│general';
     if(!adminRole || !general) return;
 
@@ -134,6 +134,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         .then(stat=> {
             console.log('Points saved!');
 
+            
             if(pointsToAdd.gryffindor != 0){
                 reaction.message.channel.send(`**${pointsToAdd.gryffindor} points ${ pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor 🦁!**`);
             }
@@ -146,6 +147,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             else if(pointsToAdd.hufflepuff != 0){
                 reaction.message.channel.send(`**${pointsToAdd.hufflepuff} points ${ pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff 🦡!**`);
             }
+            
 
             //Delete the previous message
             hourglass_channel.bulkDelete(5)
