@@ -107,10 +107,10 @@ module.exports = {
                         default:
                             break;
                     }
-                    reply += `${sortedPoints[index].house} is in ${placement} with **${sortedPoints[index].points} points!**\n`;
-                    return message.channel.send(reply);
+                    reply += `${sortedPoints[index].house} is in ${placement} with **${sortedPoints[index].points} points!**\n`;         
                     
                 }
+                return message.channel.send(reply);
                 
             }
             
