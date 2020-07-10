@@ -8,7 +8,7 @@ module.exports = {
     usage: '',
     admin: true,
     args: false,
-    async execute(message, arg) {
+    async execute(message, arg, logger) {
 
         Stat.findById(stats_id).then(stat => {
             if (!stat)
@@ -27,7 +27,7 @@ module.exports = {
 
             hourglass.bulkDelete(5)
                 .then(messages => {
-                    console.log(`Bulk deleted ${messages.size} messages`);
+                    logger.log('info', `Bulk deleted ${messages.size} messages`);
                 })
                 .catch(console.error);
 
@@ -35,11 +35,11 @@ module.exports = {
                 .save()
                 .then(stat => {
                     hourglass.send(`**House Points**\n\nGryffindor 🦁 with a total of: **0!**\n\nSlytherin 🐍 with a total of: **0!**\n\nRavenclaw 🦅 with a total of: **0!**\n\nHufflepuff 🦡 with a total of: **0!**\n\n`);
-                    console.log(`A new year has begun! All house points are reset.`);
+                    logger.log('info', `A new year has begun! All house points are reset.`);
                 })
-                .catch(err => console.log(err));
+                .catch(err => logger.log('error', err));
 
         })
-            .catch(err => console.log(err));
+            .catch(err => logger.log('error', err));
     },
 };

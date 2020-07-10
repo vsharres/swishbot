@@ -7,7 +7,7 @@ module.exports = {
     description: 'Sets the designated binger for the recording',
     cooldown: 60,
     args: false,
-    execute(message, args) {
+    execute(message, args, logger) {
 
         Stat.findById(stats_id).then(stat => {
 
@@ -19,12 +19,12 @@ module.exports = {
                 return stat
                     .save()
                     .then(stat => {
-                        console.log(`Binger reset by the admin`);
+                        logger.log('info', `Binger reset by the admin`);
                         message.channel
                             .send(`Binger successfully reset!`)
-                            .catch(err => console.log(err));
+                            .catch(err => logger.log(err));
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => logger.log('error', err));
             }
 
             if (stat.binger === '') {
@@ -33,7 +33,7 @@ module.exports = {
                 return stat
                     .save()
                     .then(stat => {
-                        console.log(`Binger set to the id: ${stat.binger}`);
+                        logger.log('info', `Binger set to the id: ${stat.binger}`);
                         const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
                         const attachment = new MessageAttachment(binger_gif);
                         message.channel
@@ -41,14 +41,14 @@ module.exports = {
                                 content: `${message.author} Congrats!\nYou're the designated Binger:tm: for this recording! Use your bell powers with care!\n\nThe command to add another bellring is: **${prefix} bing**`,
                                 files: [attachment]
                             })
-                            .catch(err => console.log(err));
+                            .catch(err => logger.log('error', err));
                     });
 
 
             }
 
         })
-            .catch(err => console.log(err));
+            .catch(err => logger.log('error', err));
 
 
     },

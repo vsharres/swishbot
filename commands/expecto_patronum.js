@@ -7,7 +7,7 @@ module.exports = {
     desciption: 'Cast the patronus spell',
     cooldown: 10,
     args: false,
-    execute(message, args) {
+    execute(message, args, logger) {
 
         User.findById(message.member.id).then(user => {
             if (user) {
@@ -19,14 +19,14 @@ module.exports = {
                         content: `${message.author} Expecto Patronum!! ${wand ? wand.toString() : ':zap:'}:zap::zap:`,
                         files: [attachment]
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => logger.log('error', err));
 
             }
             else {
-                console.log(`${message.author} please save your patronus first with the command \`eligere_patronum!\``);
+                logger.log('info', `${message.author} please save your patronus first with the command \`eligere_patronum!\``);
                 message.channel
                     .send(`${message.author} please save your patronus first with the command \`eligere patronum!\``)
-                    .catch(err => console.log(err));
+                    .catch(err => logger.log('error', err));
             }
         });
     },

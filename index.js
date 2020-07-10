@@ -3,7 +3,17 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const { command_prefix, token } = require('./config/configs');
 const configs = require('./config/configs');
+const chalk = require('chalk');
+const winston = require('winston');
 const db = require('./config/configs').mongoURI;
+
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: 'log' }),
+    ],
+    format: winston.format.printf(log => `[${log.level.toUpperCase()}] - ${log.message}`),
+});
 
 mongoose
     .connect(
@@ -13,14 +23,13 @@ mongoose
             useNewUrlParser: true
         }
     )
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(err));
+    .then(() => logger.log('info', 'MongoDB Connected'))
+    .catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
 
 const Stat = require('./models/Stat');
-const { CLIENT_RENEG_LIMIT } = require('tls');
-const { find } = require('./models/Stat');
 
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
+
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
@@ -34,7 +43,7 @@ for (const file of commandFiles) {
 
 
 client.once('ready', () => {
-    console.log('Ready!');
+    logger.log('info', 'Ready!');
 
     hourglass_channel = client.channels.cache.find(channel =>
         channel.name === configs.house_points_channel
@@ -49,7 +58,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             await reaction.fetch();
         }
         catch (error) {
-            console.log(`Something went wrong when fetching the message: ${error}`);
+            logger.log('error', chalk.redBright('FATAL ERROR'), `Something went wrong when fetching the message: ${error}`);
             return;
         }
     }
@@ -61,7 +70,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         }
         catch (error) {
-            console.log(`Something went wrong when fetching the user: ${error}`);
+            logger.log('error', chalk.redBright('FATAL ERROR'), `Something went wrong when fetching the user: ${error}`);
             return;
         }
     }
@@ -135,7 +144,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         stat
             .save()
             .then(stat => {
-                console.log('Points saved!');
+                logger.log('info', 'Points saved!');
 
 
                 if (pointsToAdd.gryffindor != 0) {
@@ -155,7 +164,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
                 //Delete the previous message
                 hourglass_channel.bulkDelete(5)
                     .then(messages => {
-                        console.log(`Bulk deleted ${messages.size} messages`);
+                        logger.log('info', `Bulk deleted ${messages.size} messages`);
                     })
                     .catch(console.error);
 
@@ -224,10 +233,10 @@ client.on('message', message => {
 
         stat
             .save()
-            .then(stat => console.log(`lightning bolt question saved!`))
-            .catch(err => console.log(err));
+            .then(stat => logger.log('info', `lightning bolt question saved!`))
+            .catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
 
-    }).catch(err => console.log(err));
+    }).catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
 
 });
 
@@ -238,7 +247,7 @@ client.on('message', message => {
         .then(user => {
             message.reply(`If you have any questions relating to how the bot works, please feel free to DM ${user} :smile:`);
         })
-        .catch(err => console.log(err));
+        .catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
 });
 
 //General commands given to the bot
@@ -257,7 +266,7 @@ client.on('message', message => {
     commandName = commandName.toLowerCase();
 
     if (!client.commands.has(commandName)) {
-        console.log(`Couldn't find the command ${commandName}`);
+        logger.log('warn', chalk.yellowBright('WARNING'), `Couldn't find the command ${commandName}`);
         return;
     }
 
@@ -266,7 +275,7 @@ client.on('message', message => {
     const isAdminRole = message.member.roles.cache.some(role => role.name === configs.admin_role_name);
 
     if (command.admin && isAdminRole === false) {
-        console.log(`${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_name}`);
+        logger.log('warn', chalk.yellowBright('WARNING'), `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_name}`);
         return;
     }
 
@@ -320,7 +329,7 @@ client.on('message', message => {
 
         if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / 1000;
-            console.log(timeLeft);
+            logger.log('info', timeLeft);
             return message.member.createDM()
                 .then(channel => {
                     channel.send(`Hello ${message.author} please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`)
@@ -334,7 +343,7 @@ client.on('message', message => {
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
     try {
-        command.execute(message, args);
+        command.execute(message, args, logger);
     } catch (error) {
         console.error(error);
         message.member.createDM()
@@ -346,7 +355,9 @@ client.on('message', message => {
     }
 
 
-    console.log(message.content);
+    logger.log('info', message.content);
 });
+
+process.on('uncaughtException', error => logger.log('error', error));
 
 client.login(token);

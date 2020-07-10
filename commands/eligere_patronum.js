@@ -8,7 +8,7 @@ module.exports = {
     attachment_size: 500,
     usage: `<image/gif>`,
     args: false,
-    execute(message, args) {
+    execute(message, args, logger) {
         const attachment = message.attachments.first();
 
         User.findById(message.member.id).then(user => {
@@ -17,12 +17,12 @@ module.exports = {
                 user
                     .save()
                     .then(user => {
-                        console.log(`${message.author} Patronus updated!`);
+                        logger.log('info', `${message.author} Patronus updated!`);
                         message.channel
                             .send(`${message.author} Patronus updated!`)
-                            .catch(err => console.log(err));
+                            .catch(err => logger.log('error', err));
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => logger.log('error', err));
 
             }
             else {
@@ -34,13 +34,13 @@ module.exports = {
                 newUser
                     .save()
                     .then(user => {
-                        console.log(`${message.author} Patronus created!`);
+                        logger.log('info', `${message.author} Patronus created!`);
 
                         message.channel
                             .send(`${message.author} Patronus saved!`)
-                            .catch(err => console.log(err));
+                            .catch(err => logger.log('error', err));
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => logger.log('error', err));
 
             }
         });

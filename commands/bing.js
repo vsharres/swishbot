@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 5,
     usage: '',
     args: false,
-    execute(message, arg) {
+    execute(message, arg, logger) {
 
         Stat.findById(stats_id).then(stat => {
             if (!stat)
@@ -24,13 +24,13 @@ module.exports = {
                 stat
                     .save()
                     .then(stat => {
-                        console.log(`The total of bings is ${stat.bings}!`);
+                        logger.log('info', `The total of bings is ${stat.bings}!`);
                         message.channel
                             .send(`:bellhop:!`)
-                            .catch(err => console.log(err));
+                            .catch(err => logger.log(err));
 
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => logger.log('error', err));
             }
         });
     },

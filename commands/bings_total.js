@@ -6,7 +6,7 @@ module.exports = {
     description: 'Get the total number of bings',
     cooldown: 10,
     args: false,
-    execute(message, arg) {
+    execute(message, arg, logger) {
 
         Stat.findById(stats_id).then(stat => {
             if (!stat)
@@ -14,7 +14,7 @@ module.exports = {
 
             message.channel
                 .send(`${message.author} the total of :bellhop: so far is ${stat.bings}!`)
-                .catch(err => console.log(err));
+                .catch(err => logger.log('error', err));
 
         });
     },

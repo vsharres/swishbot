@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 1,
     admin: true,
     args: false,
-    execute(message, arg) {
+    execute(message, arg, logger) {
 
         Stat.findById(stats_id).then(stat => {
             if (!stat)
@@ -19,9 +19,9 @@ module.exports = {
             stat
                 .save()
                 .then(stat => {
-                    console.log(`The total of :bellhop: is ${stat.bings}`);
+                    logger.log('info', `The total of :bellhop: is ${stat.bings}`);
                 })
-                .catch(err => console.log(err));
+                .catch(err => logger.log('error', err));
         });
     },
 };

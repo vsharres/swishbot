@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 10,
     usage: '',
     args: false,
-    execute(message, arg) {
+    execute(message, arg, logger) {
 
         Stat.findById(stats_id).then(stat => {
 
@@ -114,6 +114,6 @@ module.exports = {
             }
 
         })
-            .catch(err => console.log(err));
+            .catch(err => logger.log('error', err));
     },
 };
