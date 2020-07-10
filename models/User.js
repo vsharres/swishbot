@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     _id: {
-        type:Number,
-        required:true
+        type: Number,
+        required: true
     },
     patronus: {
         type: String
     }
 
-}, {_id:false});
+}, { _id: false });
 
 module.exports = User = mongoose.model("users", UserSchema);

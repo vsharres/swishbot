@@ -1,4 +1,4 @@
-const {mia_id,marchismo_id,brandon_id,vini_id} = require('../config/configs');
+const { mia_id, marchismo_id, brandon_id, vini_id } = require('../config/configs');
 
 module.exports = {
     name: "flu",
@@ -6,33 +6,30 @@ module.exports = {
     cooldown: 1,
     usage: '<Roles to Exclude>',
     args: false, //Args are optional, by default only the bot does not get the message
-    execute(message,args) {
+    execute(message, args) {
 
-        if(message.author.id !== vini_id && message.author.id !== marchismo_id && message.author.id !== mia_id && message.author.id !== brandon_id) return;
+        if (message.author.id !== vini_id && message.author.id !== marchismo_id && message.author.id !== mia_id && message.author.id !== brandon_id) return;
 
         args.push('Bot');
         args.push('Founders');
         args.push('Hogwarts Ghosts');
 
         message.guild.members.fetch()
-        .then(members=>{
-            members.forEach(member => {              
-                let roles = member.roles.cache.find(role=> args.includes(role.name));
-                
-                if(!roles)
-                {
-                    member.createDM()
-                    .then(channel=> {
-                        channel.send(`Hello Swisher!\n\nJust a reminder, we are planning a surprise thank you gift to the hosts of Swish and Flick on their anniversary. We thought it would be fun to all leave messages on what they mean to us!\n\nWe have had some hiccups with the google form we are using to collect answers. If you run into an issue where the form isn't working OR you need to edit or resubmit your response please privately direct message: ${members.get(mia_id)} ${members.get(marchismo_id)} ${members.get(brandon_id)} or ${members.get(vini_id)}.\n\nIf you want to participate, click the link below. Don't forget this is supposed to be a **SURPRISE**, __please don't discuss in the general discord chat__. The deadline for submitting a message is **July 15th!**\n\nhttps://forms.gle/2EZRaUJQsymPHgEZ8`)
-                                .catch(err=>console.error(err));
-                })
-                    .catch(err=>console.error(err));
-                }               
-            });          
-        })
-        .catch(err=>console.error(err));
-        
+            .then(members => {
+                members.forEach(member => {
+                    let roles = member.roles.cache.find(role => args.includes(role.name));
 
-       
+                    if (!roles) {
+                        member.createDM()
+                            .then(channel => {
+                                channel.send(`Hello Swisher!\n\nJust a reminder, we are planning a surprise thank you gift to the hosts of Swish and Flick on their anniversary. We thought it would be fun to all leave messages on what they mean to us!\n\nWe have had some hiccups with the google form we are using to collect answers. If you run into an issue where the form isn't working OR you need to edit or resubmit your response please privately direct message: ${members.get(mia_id)} ${members.get(marchismo_id)} ${members.get(brandon_id)} or ${members.get(vini_id)}.\n\nIf you want to participate, click the link below. Don't forget this is supposed to be a **SURPRISE**, __please don't discuss in the general discord chat__. The deadline for submitting a message is **July 15th!**\n\nhttps://forms.gle/2EZRaUJQsymPHgEZ8`)
+                                    .catch(err => console.error(err));
+                            })
+                            .catch(err => console.error(err));
+                    }
+                });
+            })
+            .catch(err => console.error(err));
+
     },
 };

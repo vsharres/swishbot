@@ -1,4 +1,0 @@
-TODO
-
-C̶h̶a̶n̶g̶e̶ s̶o̶ t̶h̶a̶t̶ u̶s̶a̶g̶e̶ m̶e̶s̶s̶a̶g̶e̶s̶ a̶n̶d̶ l̶o̶g̶s̶ w̶h̶e̶n̶ f̶a̶i̶l̶ t̶o̶ b̶e̶ s̶e̶n̶t̶ a̶s̶ D̶M̶s̶,̶ s̶o̶ t̶h̶a̶t̶ t̶h̶e̶ c̶h̶a̶t̶ i̶s̶n̶'̶t̶ s̶p̶a̶m̶m̶e̶d̶ w̶i̶t̶h̶ m̶e̶s̶s̶a̶g̶e̶s̶
-Make the command to list all of the possible commands

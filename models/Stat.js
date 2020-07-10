@@ -4,37 +4,37 @@ const Schema = mongoose.Schema;
 
 const StatSchema = new Schema({
     recording_date: {
-        type:Date,
-        default:Date.now
+        type: Date,
+        default: Date.now
     },
     binger: {
-        type:String
+        type: String
     },
     bings: {
         type: Number,
         default: 0
     },
-    lightnings:[{
+    lightnings: [{
         member: {
-            type:String
+            type: String
         },
         question: {
-            type:String
+            type: String
         },
         date: {
             type: Date,
-            default:Date.now
+            default: Date.now
         }
     }],
-    points:[{
+    points: [{
         gryffindor: {
-            type:Number
+            type: Number
         },
         slytherin: {
-            type:Number
+            type: Number
         },
         ravenclaw: {
-            type:Number
+            type: Number
         },
         hufflepuff: {
             type: Number
