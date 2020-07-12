@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const { command_prefix, token } = require('./config/configs');
 const configs = require('./config/configs');
-const chalk = require('chalk');
 const winston = require('winston');
 const db = require('./config/configs').mongoURI;
+const adjectives = require('./config/adjetives');
 
 const logger = winston.createLogger({
     transports: [
@@ -24,9 +24,10 @@ mongoose
         }
     )
     .then(() => logger.log('info', 'MongoDB Connected'))
-    .catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
+    .catch(err => logger.log('error', err));
 
 const Stat = require('./models/Stat');
+const { config } = require('process');
 
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
@@ -34,20 +35,15 @@ client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-let hourglass_channel;
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
 
-
 client.once('ready', () => {
     logger.log('info', 'Ready!');
 
-    hourglass_channel = client.channels.cache.find(channel =>
-        channel.name === configs.house_points_channel
-    );
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
@@ -58,7 +54,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             await reaction.fetch();
         }
         catch (error) {
-            logger.log('error', chalk.redBright('FATAL ERROR'), `Something went wrong when fetching the message: ${error}`);
+            logger.log('error', `Something went wrong when fetching the message: ${error}`);
             return;
         }
     }
@@ -70,7 +66,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         }
         catch (error) {
-            logger.log('error', chalk.redBright('FATAL ERROR'), `Something went wrong when fetching the user: ${error}`);
+            logger.log('error', `Something went wrong when fetching the user: ${error}`);
             return;
         }
     }
@@ -78,10 +74,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
     //Only the founders can add points to houses and only in the general channel points are being awarded.
     const guildMember = reaction.message.guild.members.cache.get(user.id);
     if (!guildMember) return;
-    const adminRole = guildMember.roles.cache.some(role => role.name === configs.admin_role_name);
+    const adminRole = guildMember.roles.cache.has(configs.admin_role_id);
     if (!adminRole) return;
 
-    const general = reaction.message.channel.name === '💬│general';
+    const general = reaction.message.channel.id === configs.general_channel_id;
     if (!general) return;
 
 
@@ -92,119 +88,93 @@ client.on('messageReactionAdd', async (reaction, user) => {
         hufflepuff: 0
     };
 
-    //CHANGE THIS
-    reaction.message.member.roles.cache.forEach(role => {
-
-        if (role.name === configs.gryffindor_role) {
-            if (reaction.emoji.identifier === configs.emoji_addpoints) {
-                pointsToAdd.gryffindor += 10;
-            }
-            else if (reaction.emoji.identifier === configs.emoji_removepoints) {
-                pointsToAdd.gryffindor -= 10;
-            }
+    const emoji = reaction.emoji.toString();
+    if (reaction.message.member.roles.cache.has(configs.gryffindor_role)) {
+        if (emoji === configs.emoji_addpoints) {
+            pointsToAdd.gryffindor += 10;
         }
-        else if (role.name === configs.ravenclaw_role) {
-            if (reaction.emoji.identifier === configs.emoji_addpoints) {
+        else if (emoji === configs.emoji_removepoints) {
+            pointsToAdd.gryffindor -= 10;
+        }
+    }
+    else {
+        if (reaction.message.member.roles.cache.has(configs.ravenclaw_role)) {
+            if (emoji === configs.emoji_addpoints) {
                 pointsToAdd.ravenclaw += 10;
             }
-            else if (reaction.emoji.identifier === configs.emoji_removepoints) {
+            else if (emoji === configs.emoji_removepoints) {
                 pointsToAdd.ravenclaw -= 10;
             }
         }
-        else if (role.name === configs.slytherin_role) {
-            if (reaction.emoji.identifier === configs.emoji_addpoints) {
-                pointsToAdd.slytherin += 10;
+        else {
+            if (reaction.message.member.roles.cache.has(configs.slytherin_role)) {
+                if (emoji === configs.emoji_addpoints) {
+                    pointsToAdd.slytherin += 10;
+                }
+                else if (emoji === configs.emoji_removepoints) {
+                    pointsToAdd.slytherin -= 10;
+                }
             }
-            else if (reaction.emoji.identifier === configs.emoji_removepoints) {
-                pointsToAdd.slytherin -= 10;
+            else {
+
+                if (reaction.message.member.roles.cache.has(configs.hufflepuff_role)) {
+                    if (emoji === configs.emoji_addpoints) {
+                        pointsToAdd.hufflepuff += 10;
+                    }
+                    else if (emoji === configs.emoji_removepoints) {
+                        pointsToAdd.hufflepuff -= 10;
+                    }
+                }
+
             }
         }
-        else if (role.name === configs.hufflepuff_role) {
-            if (reaction.emoji.identifier === configs.emoji_addpoints) {
-                pointsToAdd.hufflepuff += 10;
+        //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
+        if (pointsToAdd.gryffindor === 0 && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;
+
+        Stat.findById(configs.stats_id).then(stat => {
+
+            let points = stat.points[stat.points.length - 1];
+
+            points.gryffindor += pointsToAdd.gryffindor;
+            if (points.gryffindor <= 0) points.gryffindor = 0;
+            points.ravenclaw += pointsToAdd.ravenclaw;
+            if (points.ravenclaw <= 0) points.ravenclaw = 0;
+            points.slytherin += pointsToAdd.slytherin;
+            if (points.slytherin <= 0) points.slytherin = 0;
+            points.hufflepuff += pointsToAdd.hufflepuff;
+            if (points.hufflepuff <= 0) points.hufflepuff = 0;
+
+            stat
+                .save()
+                .then(() => {
+                    logger.log('info', 'Points saved!');
+
+                })
+                .catch(err => logger.log('error', err));
+
+            if (pointsToAdd.gryffindor != 0) {
+                reaction.message.channel.send(`**${Math.abs(pointsToAdd.gryffindor)} points ${pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor 🦁!**`);
             }
-            else if (reaction.emoji.identifier === configs.emoji_removepoints) {
-                pointsToAdd.hufflepuff -= 10;
+            else if (pointsToAdd.slytherin != 0) {
+                reaction.message.channel.send(`**${Math.abs(pointsToAdd.slytherin)} points ${pointsToAdd.slytherin > 0 ? 'to' : 'from'} Slytherin 🐍!**`);
             }
-        }
+            else if (pointsToAdd.ravenclaw != 0) {
+                reaction.message.channel.send(`**${Math.abs(pointsToAdd.ravenclaw)} points ${pointsToAdd.ravenclaw > 0 ? 'to' : 'from'} Ravenclaw 🦅!**`);
+            }
+            else if (pointsToAdd.hufflepuff != 0) {
+                reaction.message.channel.send(`**${Math.abs(pointsToAdd.hufflepuff)} points ${pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff 🦡!**`);
+            }
 
-    });
+            printPoints(reaction.message, points);
 
-    //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
-    if (pointsToAdd.gryffindor === 0 && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;
+        });
 
-    Stat.findById(configs.stats_id).then(stat => {
-
-        let points = stat.points[stat.points.length - 1];
-        points.gryffindor += pointsToAdd.gryffindor;
-        points.ravenclaw += pointsToAdd.ravenclaw;
-        points.slytherin += pointsToAdd.slytherin;
-        points.hufflepuff += pointsToAdd.hufflepuff;
-
-        stat
-            .save()
-            .then(stat => {
-                logger.log('info', 'Points saved!');
-
-
-                if (pointsToAdd.gryffindor != 0) {
-                    reaction.message.channel.send(`**${pointsToAdd.gryffindor} points ${pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor 🦁!**`);
-                }
-                else if (pointsToAdd.slytherin != 0) {
-                    reaction.message.channel.send(`**${pointsToAdd.slytherin} points ${pointsToAdd.slytherin > 0 ? 'to' : 'from'} Slytherin 🐍!**`);
-                }
-                else if (pointsToAdd.ravenclaw != 0) {
-                    reaction.message.channel.send(`**${pointsToAdd.ravenclaw} points ${pointsToAdd.ravenclaw > 0 ? 'to' : 'from'} Ravenclaw 🦅!**`);
-                }
-                else if (pointsToAdd.hufflepuff != 0) {
-                    reaction.message.channel.send(`**${pointsToAdd.hufflepuff} points ${pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff 🦡!**`);
-                }
-
-
-                //Delete the previous message
-                hourglass_channel.bulkDelete(5)
-                    .then(messages => {
-                        logger.log('info', `Bulk deleted ${messages.size} messages`);
-                    })
-                    .catch(console.error);
-
-                let houses = [{
-                    name: 'Gryffindor 🦁',
-                    points: points.gryffindor
-                },
-                {
-                    name: 'Slytherin 🐍',
-                    points: points.slytherin
-                },
-                {
-                    name: 'Ravenclaw 🦅',
-                    points: points.ravenclaw
-                },
-                {
-                    name: 'Hufflepuff 🦡',
-                    points: points.hufflepuff
-                }
-                ];
-
-                houses.sort((a, b) => b.points - a.points);
-                let reply = '**House Points**\n\n';
-
-                houses.forEach(house => {
-                    reply += `${house.name} with a total of: **${house.points}!**\n\n`;
-                });
-
-                return hourglass_channel.send(reply);
-
-            });
-
-    });
-
+    }
 });
 
-//Listening to lightninbolts
-client.on('message', message => {
-    const prefix = '\u26a1';
-    if (!message.content.startsWith(prefix)) return;
+//Listening to lightningbolts
+client.on('message', async message => {
+    if (!message.content.startsWith('⚡')) return;
 
     const currentTime = Date.now();
 
@@ -229,14 +199,45 @@ client.on('message', message => {
             recording_date: currentTime
         };
 
+        let points = stat.points[stat.points.length - 1];
         stat.lightnings.push(question);
+        const house = message.member.roles.cache.find(role => {
+            if (role.id === configs.gryffindor_role) {
+                points.gryffindor += 10;
+                return true;
+            }
+            else if (role.id === configs.slytherin_role) {
+                points.slytherin += 10;
+                return true;
+            }
+            else if (role.id === configs.ravenclaw_role) {
+                points.ravenclaw += 10;
+                return true;
+            }
+            else if (role.id === configs.hufflepuff_role) {
+                points.hufflepuff += 10;
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
 
         stat
             .save()
-            .then(stat => logger.log('info', `lightning bolt question saved!`))
-            .catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
+            .then(() => logger.log('info', `lightning bolt question saved!`))
+            .catch(err => logger.log('error', err));
 
-    }).catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
+        const index = Math.floor(Math.random() * adjectives.good.length);
+        const adjective = adjectives.good[index];
+        const regex = /\b[aeiou]\w*/;
+        const match = regex.exec(adjective);
+
+        printPoints(message, points);
+
+        return message.reply(`what ${match ? 'an' : 'a'} ${adjective} question! **10 points** to ${house.name}!`);
+
+    }).catch(err => logger.log('error', err));
 
 });
 
@@ -247,7 +248,7 @@ client.on('message', message => {
         .then(user => {
             message.reply(`If you have any questions relating to how the bot works, please feel free to DM ${user} :smile:`);
         })
-        .catch(err => logger.log('error', chalk.redBright('FATAL ERROR'), err));
+        .catch(err => logger.log('error', err));
 });
 
 //General commands given to the bot
@@ -256,26 +257,26 @@ client.on('message', message => {
     //Ignores all messages and commands send to the bot from DM
     if (!message.guild) return;
 
-    const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    //const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
+    if (!message.content.startsWith(command_prefix) || message.author.bot) return;
 
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(command_prefix.length).split(/ +/);
     args.shift();
     let commandName = args.shift();
     if (!commandName) return;
     commandName = commandName.toLowerCase();
 
     if (!client.commands.has(commandName)) {
-        logger.log('warn', chalk.yellowBright('WARNING'), `Couldn't find the command ${commandName}`);
+        logger.log('warn', `Couldn't find the command ${commandName}`);
         return;
     }
 
 
     const command = client.commands.get(commandName);
-    const isAdminRole = message.member.roles.cache.some(role => role.name === configs.admin_role_name);
+    const isAdminRole = message.member.roles.cache.has(configs.admin_role_id);
 
     if (command.admin && isAdminRole === false) {
-        logger.log('warn', chalk.yellowBright('WARNING'), `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_name}`);
+        logger.log('warn', `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_id}`);
         return;
     }
 
@@ -289,7 +290,7 @@ client.on('message', message => {
     if ((command.args && !args.length) || (command.attachments && message.attachments.size === 0)) {
         let reply = `You didn't provide any arguments, ${message.author}!`;
         if (command.usage) {
-            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+            reply += `\nThe proper usage would be: \`${command_prefix}${command.name} ${command.usage}\``;
         }
         return message.member.createDM()
             .then(channel => {
@@ -302,7 +303,7 @@ client.on('message', message => {
     if (command.attachments && message.attachments.size === 0) {
         let reply = `You didn't provide any attachment, ${message.author}!`;
         if (command.usage) {
-            reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+            reply += `\nThe proper usage would be: \`${command_prefix}${command.name} ${command.usage}\``;
         }
         return message.member.createDM()
             .then(channel => {
@@ -357,6 +358,46 @@ client.on('message', message => {
 
     logger.log('info', message.content);
 });
+
+async function printPoints(message, points) {
+    //Delete the previous message
+    const hourglass_channel = message.guild.channels.cache.get(configs.house_points_channel);
+    if (hourglass_channel) {
+        hourglass_channel.bulkDelete(1)
+            .then(messages => {
+                logger.log('info', `Bulk deleted ${messages.size} messages`);
+            })
+            .catch(console.error);
+
+    }
+
+    let houses = [{
+        name: 'Gryffindor 🦁',
+        points: points.gryffindor
+    },
+    {
+        name: 'Slytherin 🐍',
+        points: points.slytherin
+    },
+    {
+        name: 'Ravenclaw 🦅',
+        points: points.ravenclaw
+    },
+    {
+        name: 'Hufflepuff 🦡',
+        points: points.hufflepuff
+    }
+    ];
+
+    houses.sort((a, b) => b.points - a.points);
+    let reply = '**House Points**\n\n';
+
+    houses.forEach(house => {
+        reply += `${house.name} with a total of: **${house.points}!**\n\n`;
+    });
+
+    return await hourglass_channel.send(reply);
+}
 
 process.on('uncaughtException', error => logger.log('error', error));
 
