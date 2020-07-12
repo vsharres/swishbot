@@ -9,7 +9,6 @@ module.exports = {
     args: false,
     execute(message, arg, logger) {
 
-        const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
         Stat.findById(stats_id).then(stat => {
 
             let elapsedTime = Math.abs(Date.now() - stat.recording_date);
@@ -27,7 +26,7 @@ module.exports = {
                 stat
                     .save()
                     .then(stat => {
-                        message.channel.send(`Recording started!\n\nWe need a volunteer to be the designated Binger:tm: for this recording!\n\nThe first person to type the command: **${prefix} binger** will be the Binger:tm:!`)
+                        message.channel.send(`Recording started!\n\nWe need a volunteer to be the designated Binger:tm: for this recording!\n\nThe first person to type the command: **${command_prefix} binger** will be the Binger:tm:!`)
                             .catch(err => logger.log('error', err));
                     })
                     .catch(err => logger.log('error', err));

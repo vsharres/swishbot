@@ -19,7 +19,7 @@ module.exports = {
 
         User.findById(message.member.id).then(user => {
             if (user) {
-                let reply = `the available commands are: \n`;
+                let reply = `the available commands are: \n\n`;
 
                 commands.each(command => reply += `${command.name ? `name: ${command.name}` : ''} ${command.usage ? `usage: ${command.usage}` : ''}\n`);
 

@@ -21,15 +21,15 @@ module.exports = {
                 hufflepuff: 0
             });
 
-            const hourglass = message.guild.channels.cache.find(channel =>
-                channel.name === house_points_channel
-            );
+            const hourglass = message.guild.channels.cache.get(house_points_channel);
 
-            hourglass.bulkDelete(5)
-                .then(messages => {
-                    logger.log('info', `Bulk deleted ${messages.size} messages`);
-                })
-                .catch(console.error);
+            if (hourglass) {
+                hourglass.bulkDelete(5)
+                    .then(messages => {
+                        logger.log('info', `Bulk deleted ${messages.size} messages`);
+                    })
+                    .catch(console.error);
+            }
 
             stat
                 .save()

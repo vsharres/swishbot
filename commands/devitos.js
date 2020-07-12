@@ -8,7 +8,7 @@ module.exports = {
     args: true,
     execute(message, args) {
 
-        const prefix = message.guild.emojis.cache.find(emoji => emoji.name === 'devitos').toString();
+        const prefix = config.command_prefix;
 
         //for the usage of having only on number on the args
         if (args.length === 1) {

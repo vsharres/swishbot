@@ -1,5 +1,5 @@
 const Stat = require('../models/Stat');
-const { stats_id, admin_role_name } = require('../config/configs');
+const { stats_id, admin_role_id } = require('../config/configs');
 
 module.exports = {
     name: "bing",
@@ -13,9 +13,9 @@ module.exports = {
             if (!stat)
                 return;
 
-            let roles = message.member.roles.cache.find(role => role.name === admin_role_name);
+            const role = message.member.roles.cache.get(admin_role_id);
 
-            if (stat.binger === message.member.id || roles) {
+            if (stat.binger === message.member.id || role) {
 
                 let bings = stat.bings;
                 bings++;

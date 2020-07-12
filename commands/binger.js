@@ -1,6 +1,6 @@
 const Stat = require('../models/Stat');
 const { MessageAttachment } = require('discord.js');
-const { stats_id, admin_role_name, binger_gif, command_prefix } = require('../config/configs');
+const { stats_id, admin_role_id, binger_gif, command_prefix } = require('../config/configs');
 
 module.exports = {
     name: "binger",
@@ -11,10 +11,10 @@ module.exports = {
 
         Stat.findById(stats_id).then(stat => {
 
-            let reset = args.shift();
-            let roles = message.member.roles.cache.find(role => role.name === admin_role_name);
+            const reset = args.shift();
+            const role = message.member.roles.cache.get(admin_role_id);
 
-            if (reset === 'reset' && roles) {
+            if (reset === 'reset' && role) {
                 stat.binger = '';
                 return stat
                     .save()
