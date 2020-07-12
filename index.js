@@ -89,87 +89,89 @@ client.on('messageReactionAdd', async (reaction, user) => {
     };
 
     const emoji = reaction.emoji.toString();
-    if (reaction.message.member.roles.cache.has(configs.gryffindor_role)) {
-        if (emoji === configs.emoji_addpoints) {
-            pointsToAdd.gryffindor += 10;
+    reaction.message.member.roles.cache.find(role => {
+        if (role.id === configs.gryffindor_role) {
+            if (emoji === configs.emoji_addpoints) {
+                pointsToAdd.gryffindor += 10;
+            }
+            else if (emoji === configs.emoji_removepoints) {
+                pointsToAdd.gryffindor -= 10;
+            }
+            return true;
         }
-        else if (emoji === configs.emoji_removepoints) {
-            pointsToAdd.gryffindor -= 10;
+        else if (role.id === configs.slytherin_role) {
+            if (emoji === configs.emoji_addpoints) {
+                pointsToAdd.slytherin += 10;
+            }
+            else if (emoji === configs.emoji_removepoints) {
+                pointsToAdd.slytherin -= 10;
+            }
+            return true;
         }
-    }
-    else {
-        if (reaction.message.member.roles.cache.has(configs.ravenclaw_role)) {
+        else if (role.id === configs.ravenclaw_role) {
             if (emoji === configs.emoji_addpoints) {
                 pointsToAdd.ravenclaw += 10;
             }
             else if (emoji === configs.emoji_removepoints) {
                 pointsToAdd.ravenclaw -= 10;
             }
+            return true;
         }
-        else {
-            if (reaction.message.member.roles.cache.has(configs.slytherin_role)) {
-                if (emoji === configs.emoji_addpoints) {
-                    pointsToAdd.slytherin += 10;
-                }
-                else if (emoji === configs.emoji_removepoints) {
-                    pointsToAdd.slytherin -= 10;
-                }
+        else if (role.id === configs.hufflepuff_role) {
+            if (emoji === configs.emoji_addpoints) {
+                pointsToAdd.hufflepuff += 10;
             }
-            else {
-
-                if (reaction.message.member.roles.cache.has(configs.hufflepuff_role)) {
-                    if (emoji === configs.emoji_addpoints) {
-                        pointsToAdd.hufflepuff += 10;
-                    }
-                    else if (emoji === configs.emoji_removepoints) {
-                        pointsToAdd.hufflepuff -= 10;
-                    }
-                }
-
+            else if (emoji === configs.emoji_removepoints) {
+                pointsToAdd.hufflepuff -= 10;
             }
+            return true;
         }
-        //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
-        if (pointsToAdd.gryffindor === 0 && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;
+        return false;
 
-        Stat.findById(configs.stats_id).then(stat => {
+    });
 
-            let points = stat.points[stat.points.length - 1];
+    //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
+    if (pointsToAdd.gryffindor === 0 && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;
 
-            points.gryffindor += pointsToAdd.gryffindor;
-            if (points.gryffindor <= 0) points.gryffindor = 0;
-            points.ravenclaw += pointsToAdd.ravenclaw;
-            if (points.ravenclaw <= 0) points.ravenclaw = 0;
-            points.slytherin += pointsToAdd.slytherin;
-            if (points.slytherin <= 0) points.slytherin = 0;
-            points.hufflepuff += pointsToAdd.hufflepuff;
-            if (points.hufflepuff <= 0) points.hufflepuff = 0;
+    Stat.findById(configs.stats_id).then(stat => {
 
-            stat
-                .save()
-                .then(() => {
-                    logger.log('info', 'Points saved!');
+        let points = stat.points[stat.points.length - 1];
 
-                })
-                .catch(err => logger.log('error', err));
+        points.gryffindor += pointsToAdd.gryffindor;
+        if (points.gryffindor <= 0) points.gryffindor = 0;
+        points.ravenclaw += pointsToAdd.ravenclaw;
+        if (points.ravenclaw <= 0) points.ravenclaw = 0;
+        points.slytherin += pointsToAdd.slytherin;
+        if (points.slytherin <= 0) points.slytherin = 0;
+        points.hufflepuff += pointsToAdd.hufflepuff;
+        if (points.hufflepuff <= 0) points.hufflepuff = 0;
 
-            if (pointsToAdd.gryffindor != 0) {
-                reaction.message.channel.send(`**${Math.abs(pointsToAdd.gryffindor)} points ${pointsToAdd.gryffindor > 0 ? 'to' : 'from'} Gryffindor 🦁!**`);
-            }
-            else if (pointsToAdd.slytherin != 0) {
-                reaction.message.channel.send(`**${Math.abs(pointsToAdd.slytherin)} points ${pointsToAdd.slytherin > 0 ? 'to' : 'from'} Slytherin 🐍!**`);
-            }
-            else if (pointsToAdd.ravenclaw != 0) {
-                reaction.message.channel.send(`**${Math.abs(pointsToAdd.ravenclaw)} points ${pointsToAdd.ravenclaw > 0 ? 'to' : 'from'} Ravenclaw 🦅!**`);
-            }
-            else if (pointsToAdd.hufflepuff != 0) {
-                reaction.message.channel.send(`**${Math.abs(pointsToAdd.hufflepuff)} points ${pointsToAdd.hufflepuff > 0 ? 'to' : 'from'} Hufflepuff 🦡!**`);
-            }
+        stat
+            .save()
+            .then(() => {
+                logger.log('info', 'Points saved!');
 
-            printPoints(reaction.message, points);
+            })
+            .catch(err => logger.log('error', err));
 
-        });
+        if (pointsToAdd.gryffindor != 0) {
+            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.gryffindor)} points** ${pointsToAdd.gryffindor > 0 ? 'to Gryffindor 🦁!' : 'from Gryffindor 🦁'}`);
+        }
+        else if (pointsToAdd.slytherin != 0) {
+            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.slytherin)} points** ${pointsToAdd.slytherin > 0 ? 'to Slytherin 🐍!' : 'from Slytherin 🐍'}`);
+        }
+        else if (pointsToAdd.ravenclaw != 0) {
+            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.ravenclaw)} points** ${pointsToAdd.ravenclaw > 0 ? 'to Ravenclaw 🦅!' : 'from Ravenclaw 🦅'}`);
+        }
+        else if (pointsToAdd.hufflepuff != 0) {
+            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.hufflepuff)} points** ${pointsToAdd.hufflepuff > 0 ? 'to Hufflepuff 🦡!' : 'from Hufflepuff 🦡'}`);
+        }
 
-    }
+        printPoints(reaction.message, points);
+
+    });
+
+
 });
 
 //Listening to lightningbolts
@@ -218,10 +220,10 @@ client.on('message', async message => {
                 points.hufflepuff += 10;
                 return true;
             }
-            else {
-                return false;
-            }
+            return false;
         });
+
+
 
         stat
             .save()
@@ -396,7 +398,7 @@ async function printPoints(message, points) {
         reply += `${house.name} with a total of: **${house.points}!**\n\n`;
     });
 
-    return await hourglass_channel.send(reply);
+    return hourglass_channel.send(reply);
 }
 
 process.on('uncaughtException', error => logger.log('error', error));
