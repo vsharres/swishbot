@@ -7,16 +7,15 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Vinicius Harres",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^4.1.0",
     "discord.js": "^12.2.0",
     "mongoose": "^5.9.19",
     "winston": "^3.3.3"
   },
   "jshintConfig": {
-    "esversion": 8
+    "esversion": 10
   },
   "devDependencies": {
     "eslint": "^7.4.0",
