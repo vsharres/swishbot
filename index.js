@@ -33,6 +33,7 @@ const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
+const avatar_cooldown = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -46,6 +47,78 @@ client.once('ready', () => {
 
 });
 
+//Special action to the hosts
+client.on('message', async message => {
+
+    const chance = Math.random();
+    let attachment;
+    let stat;
+    let points;
+
+    try {
+
+        switch (message.author.id) {
+            case configs.megan_id:
+                if (chance > 1 / configs.message_chance) return;
+
+                stat = await Stat.findById(configs.stats_id);
+                points = stat.points[stat.points.length - 1];
+
+                points.slytherin += 20;
+                attachment = new Discord.MessageAttachment(configs.snape_emoji);
+
+                message.reply({ content: `as you're the best example of a good one of us (these are pretty rare!), **20 points** to Slytherin 🐍!`, files: [attachment] });
+                break;
+            case configs.tiff_id:
+                if (chance > 1 / configs.message_chance) return;
+
+                stat = await Stat.findById(configs.stats_id);
+                points = stat.points[stat.points.length - 1];
+
+                points.gryffindor += 20;
+                attachment = new Discord.MessageAttachment(configs.dumbly_emoji);
+
+                message.reply({ content: `for being my favorite person in the best house, **20 points** to Gryffindor 🦁! (from your man, Dumbly)`, files: [attachment] });
+                break;
+
+            case configs.katie_id:
+                if (chance > 1 / configs.message_chance) return;
+                stat = await Stat.findById(configs.stats_id);
+                points = stat.points[stat.points.length - 1];
+
+                points.hufflepuff += 20;
+                attachment = new Discord.MessageAttachment(configs.lupin_emoji);
+                message.reply({ content: `to my fellow master of snacks, **20 points** to Hufflepuff 🦡!`, files: [attachment] });
+
+                break;
+
+            case configs.sarah_id:
+                if (chance > 1 / configs.message_chance) return;
+
+                stat = await Stat.findById(configs.stats_id);
+                points = stat.points[stat.points.length - 1];
+
+                points.ravenclaw += 20;
+                attachment = new Discord.MessageAttachment(configs.neville_emoji);
+                message.reply({ content: `in honor of not quitting the pod, the hottest thing to come out of Hogwarts would like to award you **20 points** to Ravenclaw 🦅!`, files: [attachment] });
+
+                break;
+
+            default:
+                return;
+        }
+
+        stat.save();
+        printPoints(message, points);
+    }
+    catch (err) {
+        logger.log('error', err);
+        return;
+    }
+
+});
+
+//Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
 
     if (reaction.partial) {
@@ -365,12 +438,15 @@ async function printPoints(message, points) {
     //Delete the previous message
     const hourglass_channel = message.guild.channels.cache.get(configs.house_points_channel);
     if (hourglass_channel) {
-        hourglass_channel.bulkDelete(1)
+        hourglass_channel.bulkDelete(4)
             .then(messages => {
                 logger.log('info', `Bulk deleted ${messages.size} messages`);
             })
             .catch(console.error);
-
+    }
+    else {
+        logger.log('error', 'Couldn\'t find the hourglass channel, check Id');
+        return;
     }
 
     let houses = [{
@@ -399,6 +475,12 @@ async function printPoints(message, points) {
     });
 
     return hourglass_channel.send(reply);
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 }
 
 process.on('uncaughtException', error => logger.log('error', error));
