@@ -146,13 +146,22 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     //Only the founders can add points to houses and only in the general channel points are being awarded.
     const guildMember = reaction.message.guild.members.cache.get(user.id);
-    if (!guildMember) return;
+    if (!guildMember) {
+
+        logger.log('info', 'reaction not from a guild member');
+        return;
+    }
     const adminRole = guildMember.roles.cache.has(configs.admin_role_id);
-    if (!adminRole) return;
+    if (!adminRole) {
+        logger.log('info', 'reaction not from a admin');
+        return;
+    }
 
     const general = reaction.message.channel.id === configs.general_channel_id;
-    if (!general) return;
-
+    if (!general) {
+        logger.log('info', 'reaction not in the general chat');
+        return;
+    }
 
     let pointsToAdd = {
         gryffindor: 0,
