@@ -254,7 +254,6 @@ client.on('message', async message => {
     if (!message.content.startsWith('⚡')) return;
 
     const currentTime = Date.now();
-
     Stat.findById(configs.stats_id).then(stat => {
 
         if (stat.lightnings.length > 0) {
@@ -269,51 +268,17 @@ client.on('message', async message => {
             }
         }
 
-        const isFirstQuestion = !stat.lightnings.some(bolt => bolt.member === message.member.id);
-
         const question = {
             member: message.member.id,
             question: message.content,
             recording_date: currentTime
         };
 
-        let points = stat.points[stat.points.length - 1];
         stat.lightnings.push(question);
         stat
             .save()
             .then(() => logger.log('info', `lightning bolt question saved!`))
             .catch(err => logger.log('error', err));
-
-        if (isFirstQuestion) {
-            const house = message.member.roles.cache.find(role => {
-                if (role.id === configs.gryffindor_role) {
-                    points.gryffindor += 10;
-                    return true;
-                }
-                else if (role.id === configs.slytherin_role) {
-                    points.slytherin += 10;
-                    return true;
-                }
-                else if (role.id === configs.ravenclaw_role) {
-                    points.ravenclaw += 10;
-                    return true;
-                }
-                else if (role.id === configs.hufflepuff_role) {
-                    points.hufflepuff += 10;
-                    return true;
-                }
-                return false;
-            });
-
-            const index = Math.floor(Math.random() * adjectives.good.length);
-            const adjective = adjectives.good[index];
-            const regex = /\b[aeiou]\w*/;
-            const match = regex.exec(adjective);
-
-            printPoints(message, points);
-
-            return message.reply(`what ${match ? 'an' : 'a'} ${adjective} question! **10 points** to ${house.name}!`);
-        }
 
     }).catch(err => logger.log('error', err));
 

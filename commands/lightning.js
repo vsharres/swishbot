@@ -15,7 +15,7 @@ module.exports = {
 
                 reply = 'These are the lightning bolts for this recording:\n\n';
 
-                let number_batches = Math.floor(stat.lightnings.length / 10) + 1;
+                const number_batches = Math.floor(stat.lightnings.length / 10) + 1;
 
                 for (let index = 0; index < number_batches; index++) {
                     let end = 10 * (index + 1);

@@ -27,6 +27,7 @@ module.exports = {
                 hourglass.bulkDelete(5)
                     .then(messages => {
                         logger.log('info', `Bulk deleted ${messages.size} messages`);
+                        hourglass.send(`**House Points**\n\nGryffindor 🦁 with a total of: **0!**\n\nSlytherin 🐍 with a total of: **0!**\n\nRavenclaw 🦅 with a total of: **0!**\n\nHufflepuff 🦡 with a total of: **0!**\n\n`);
                     })
                     .catch(console.error);
             }
@@ -34,7 +35,6 @@ module.exports = {
             stat
                 .save()
                 .then(stat => {
-                    hourglass.send(`**House Points**\n\nGryffindor 🦁 with a total of: **0!**\n\nSlytherin 🐍 with a total of: **0!**\n\nRavenclaw 🦅 with a total of: **0!**\n\nHufflepuff 🦡 with a total of: **0!**\n\n`);
                     logger.log('info', `A new year has begun! All house points are reset.`);
                 })
                 .catch(err => logger.log('error', err));
