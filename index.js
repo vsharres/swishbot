@@ -258,7 +258,7 @@ client.on('message', async message => {
     Stat.findById(configs.stats_id).then(stat => {
 
         if (stat.lightnings.length > 0) {
-            const lastRecordingDate = stat.lightnings[stat.lightnings.length - 1].recording_date;
+            const lastRecordingDate = stat.lightnings[stat.lightnings.length - 1].date;
             let elapsedTime = Math.abs(currentTime - lastRecordingDate);
             elapsedTime = elapsedTime / 1000;
             elapsedTime = elapsedTime / 60;

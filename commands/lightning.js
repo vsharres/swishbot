@@ -24,7 +24,7 @@ module.exports = {
                     }
 
                     for (let bolt = 10 * index; bolt < end; bolt++) {
-                        reply += `${message.guild.member(stat.lightnings[bolts].member)} asks: ${stat.lightnings[bolts].question}\n`;
+                        reply += `${message.guild.member(stat.lightnings[bolt].member)} asks: ${stat.lightnings[bolt].question}\n`;
                     }
 
                     message.channel.send(reply);
