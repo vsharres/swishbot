@@ -2,7 +2,7 @@ const Stat = require('../models/Stat');
 const { stats_id, house_points_channel } = require('../config/configs');
 
 module.exports = {
-    name: "points_reset",
+    name: "reset_points",
     description: '',
     cooldown: 10,
     usage: '',

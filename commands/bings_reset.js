@@ -2,7 +2,7 @@ const Stat = require('../models/Stat');
 const { stats_id } = require('../config/configs');
 
 module.exports = {
-    name: 'bings_reset',
+    name: 'reset_bings',
     description: 'Resets the number of bings',
     cooldown: 1,
     admin: true,

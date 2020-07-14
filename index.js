@@ -27,13 +27,11 @@ mongoose
     .catch(err => logger.log('error', err));
 
 const Stat = require('./models/Stat');
-const { config } = require('process');
 
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
-const avatar_cooldown = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -147,19 +145,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
     //Only the founders can add points to houses and only in the general channel points are being awarded.
     const guildMember = reaction.message.guild.members.cache.get(user.id);
     if (!guildMember) {
-
-        logger.log('info', 'reaction not from a guild member');
         return;
     }
     const adminRole = guildMember.roles.cache.has(configs.admin_role_id);
     if (!adminRole) {
-        logger.log('info', 'reaction not from a admin');
         return;
     }
 
     const general = reaction.message.channel.id === configs.general_channel_id;
     if (!general) {
-        logger.log('info', 'reaction not in the general chat');
         return;
     }
 
@@ -237,22 +231,21 @@ client.on('messageReactionAdd', async (reaction, user) => {
             .catch(err => logger.log('error', err));
 
         if (pointsToAdd.gryffindor != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.gryffindor)} points** ${pointsToAdd.gryffindor > 0 ? 'to Gryffindor 🦁!' : 'from Gryffindor 🦁'}`);
+            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.gryffindor > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.gryffindor)} points** ${pointsToAdd.gryffindor > 0 ? 'to Gryffindor 🦁!' : 'from Gryffindor 🦁'}`);
         }
         else if (pointsToAdd.slytherin != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.slytherin)} points** ${pointsToAdd.slytherin > 0 ? 'to Slytherin 🐍!' : 'from Slytherin 🐍'}`);
+            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.slytherin > 0 ? 'gives to' : 'takes from'}${reaction.message.member} **${Math.abs(pointsToAdd.slytherin)} points** ${pointsToAdd.slytherin > 0 ? 'to Slytherin 🐍!' : 'from Slytherin 🐍'}`);
         }
         else if (pointsToAdd.ravenclaw != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.ravenclaw)} points** ${pointsToAdd.ravenclaw > 0 ? 'to Ravenclaw 🦅!' : 'from Ravenclaw 🦅'}`);
+            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.ravenclaw > 0 ? 'gives to' : 'takes from'}${reaction.message.member} **${Math.abs(pointsToAdd.ravenclaw)} points** ${pointsToAdd.ravenclaw > 0 ? 'to Ravenclaw 🦅!' : 'from Ravenclaw 🦅'}`);
         }
         else if (pointsToAdd.hufflepuff != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${reaction.message.member} **${Math.abs(pointsToAdd.hufflepuff)} points** ${pointsToAdd.hufflepuff > 0 ? 'to Hufflepuff 🦡!' : 'from Hufflepuff 🦡'}`);
+            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.hufflepuff > 0 ? 'gives to' : 'takes from'}${reaction.message.member} **${Math.abs(pointsToAdd.hufflepuff)} points** ${pointsToAdd.hufflepuff > 0 ? 'to Hufflepuff 🦡!' : 'from Hufflepuff 🦡'}`);
         }
 
         printPoints(reaction.message, points);
 
     });
-
 
 });
 
@@ -267,15 +260,16 @@ client.on('message', async message => {
         if (stat.lightnings.length > 0) {
             const lastRecordingDate = stat.lightnings[stat.lightnings.length - 1].recording_date;
             let elapsedTime = Math.abs(currentTime - lastRecordingDate);
-
             elapsedTime = elapsedTime / 1000;
             elapsedTime = elapsedTime / 60;
             elapsedTime = elapsedTime / 60;
 
-            if (elapsedTime > configs.recording_delay) {
+            if (elapsedTime > parseInt(configs.recording_delay)) {
                 stat.lightnings = [];
             }
         }
+
+        const isFirstQuestion = !stat.lightnings.some(bolt => bolt.member === message.member.id);
 
         const question = {
             member: message.member.id,
@@ -285,41 +279,41 @@ client.on('message', async message => {
 
         let points = stat.points[stat.points.length - 1];
         stat.lightnings.push(question);
-        const house = message.member.roles.cache.find(role => {
-            if (role.id === configs.gryffindor_role) {
-                points.gryffindor += 10;
-                return true;
-            }
-            else if (role.id === configs.slytherin_role) {
-                points.slytherin += 10;
-                return true;
-            }
-            else if (role.id === configs.ravenclaw_role) {
-                points.ravenclaw += 10;
-                return true;
-            }
-            else if (role.id === configs.hufflepuff_role) {
-                points.hufflepuff += 10;
-                return true;
-            }
-            return false;
-        });
-
-
-
         stat
             .save()
             .then(() => logger.log('info', `lightning bolt question saved!`))
             .catch(err => logger.log('error', err));
 
-        const index = Math.floor(Math.random() * adjectives.good.length);
-        const adjective = adjectives.good[index];
-        const regex = /\b[aeiou]\w*/;
-        const match = regex.exec(adjective);
+        if (isFirstQuestion) {
+            const house = message.member.roles.cache.find(role => {
+                if (role.id === configs.gryffindor_role) {
+                    points.gryffindor += 10;
+                    return true;
+                }
+                else if (role.id === configs.slytherin_role) {
+                    points.slytherin += 10;
+                    return true;
+                }
+                else if (role.id === configs.ravenclaw_role) {
+                    points.ravenclaw += 10;
+                    return true;
+                }
+                else if (role.id === configs.hufflepuff_role) {
+                    points.hufflepuff += 10;
+                    return true;
+                }
+                return false;
+            });
 
-        printPoints(message, points);
+            const index = Math.floor(Math.random() * adjectives.good.length);
+            const adjective = adjectives.good[index];
+            const regex = /\b[aeiou]\w*/;
+            const match = regex.exec(adjective);
 
-        return message.reply(`what ${match ? 'an' : 'a'} ${adjective} question! **10 points** to ${house.name}!`);
+            printPoints(message, points);
+
+            return message.reply(`what ${match ? 'an' : 'a'} ${adjective} question! **10 points** to ${house.name}!`);
+        }
 
     }).catch(err => logger.log('error', err));
 
@@ -354,7 +348,6 @@ client.on('message', message => {
         logger.log('warn', `Couldn't find the command ${commandName}`);
         return;
     }
-
 
     const command = client.commands.get(commandName);
     const isAdminRole = message.member.roles.cache.has(configs.admin_role_id);

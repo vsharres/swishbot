@@ -12,16 +12,29 @@ module.exports = {
 
             let reply = '';
             if (stat.lightnings.length > 0) {
+
                 reply = 'These are the lightning bolts for this recording:\n\n';
-                stat.lightnings.forEach(bolt => {
-                    reply += `${message.guild.member(bolt.member)} asks: ${bolt.question}\n`;
-                });
+
+                let number_batches = Math.floor(stat.lightnings.length / 10) + 1;
+
+                for (let index = 0; index < number_batches; index++) {
+                    let end = 10 * (index + 1);
+                    if (index === number_batches - 1) {
+                        end = stat.lightnings.length;
+                    }
+
+                    for (let bolt = 10 * index; bolt < end; bolt++) {
+                        reply += `${message.guild.member(stat.lightnings[bolts].member)} asks: ${stat.lightnings[bolts].question}\n`;
+                    }
+
+                    message.channel.send(reply);
+                    reply = '';
+                }
             }
             else {
                 reply = `${message.author} there are no lightning bolts yet, maybe ask the first one!`;
             }
 
-            return message.channel.send(reply);
         });
     },
 };
