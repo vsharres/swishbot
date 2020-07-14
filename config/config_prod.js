@@ -2,7 +2,7 @@ module.exports = {
 	mongoURI: process.env.MONGO_URI,
 	stats_id: process.env.STATS_ID,
 	command_prefix: process.env.COMMAND_PREFIX,
-	admin_role_id: process.env.ADMIN_ROLE_NAME,
+	admin_role_id: process.env.ADMIN_ROLE_ID,
 	general_channel_id: process.env.GENERAL_CHANNEL_ID,
 	binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',
 	dumbly_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_17.png',
