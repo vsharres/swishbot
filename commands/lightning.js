@@ -1,5 +1,5 @@
 const Stat = require('../models/Stat');
-const { stats_id } = require('../config/configs');
+const { stats_id, recording_delay } = require('../config/configs');
 
 module.exports = {
     name: "lightningbolts",
@@ -19,7 +19,7 @@ module.exports = {
                 elapsedTime = elapsedTime / 60;
                 elapsedTime = elapsedTime / 60;
 
-                if (elapsedTime > parseInt(configs.recording_delay)) {
+                if (elapsedTime > parseInt(recording_delay)) {
                     return message.channel.send(`${message.author} there are no lightning bolts yet, maybe ask the first one!`);
                 }
                 reply = 'These are the lightning bolts for this recording:\n\n';
