@@ -7,13 +7,6 @@ const StatSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    binger: {
-        type: String
-    },
-    bings: {
-        type: Number,
-        default: 0
-    },
     lightnings: [{
         member: {
             type: String

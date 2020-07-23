@@ -11,7 +11,7 @@ module.exports = {
 
         Stat.findById(stats_id).then(stat => {
 
-            let elapsedTime = Math.abs(Date.now() - stat.recording_date);
+            let elapsedTime = Date.now() - stat.recording_date;
             elapsedTime = elapsedTime / 1000;
             elapsedTime = elapsedTime / 60;
             elapsedTime = elapsedTime / 60;
@@ -26,11 +26,10 @@ module.exports = {
                 stat
                     .save()
                     .then(stat => {
-                        message.channel.send(`Recording started!\n\nWe need a volunteer to be the designated Binger:tm: for this recording!\n\nThe first person to type the command: **${command_prefix} binger** will be the Binger:tm:!`)
+                        message.channel.send(`Recording started!`)
                             .catch(err => logger.log('error', err));
                     })
                     .catch(err => logger.log('error', err));
-
             }
 
         })
