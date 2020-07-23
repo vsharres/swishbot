@@ -230,18 +230,20 @@ client.on('messageReactionAdd', async (reaction, user) => {
             })
             .catch(err => logger.log('error', err));
 
-        if (pointsToAdd.gryffindor != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.gryffindor > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.gryffindor)} points** ${pointsToAdd.gryffindor > 0 ? 'to Gryffindor 🦁!' : 'from Gryffindor 🦁'}`);
-        }
-        else if (pointsToAdd.slytherin != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.slytherin > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.slytherin)} points** ${pointsToAdd.slytherin > 0 ? 'to Slytherin 🐍!' : 'from Slytherin 🐍'}`);
-        }
-        else if (pointsToAdd.ravenclaw != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.ravenclaw > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.ravenclaw)} points** ${pointsToAdd.ravenclaw > 0 ? 'to Ravenclaw 🦅!' : 'from Ravenclaw 🦅'}`);
-        }
-        else if (pointsToAdd.hufflepuff != 0) {
-            reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.hufflepuff > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.hufflepuff)} points** ${pointsToAdd.hufflepuff > 0 ? 'to Hufflepuff 🦡!' : 'from Hufflepuff 🦡'}`);
-        }
+        /*
+    if (pointsToAdd.gryffindor != 0) {
+        reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.gryffindor > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.gryffindor)} points** ${pointsToAdd.gryffindor > 0 ? 'to Gryffindor 🦁!' : 'from Gryffindor 🦁'}`);
+    }
+    else if (pointsToAdd.slytherin != 0) {
+        reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.slytherin > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.slytherin)} points** ${pointsToAdd.slytherin > 0 ? 'to Slytherin 🐍!' : 'from Slytherin 🐍'}`);
+    }
+    else if (pointsToAdd.ravenclaw != 0) {
+        reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.ravenclaw > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.ravenclaw)} points** ${pointsToAdd.ravenclaw > 0 ? 'to Ravenclaw 🦅!' : 'from Ravenclaw 🦅'}`);
+    }
+    else if (pointsToAdd.hufflepuff != 0) {
+        reaction.message.channel.send(`> ${reaction.message.content}\n${guildMember} ${pointsToAdd.hufflepuff > 0 ? 'gives to' : 'takes from'} ${reaction.message.member} **${Math.abs(pointsToAdd.hufflepuff)} points** ${pointsToAdd.hufflepuff > 0 ? 'to Hufflepuff 🦡!' : 'from Hufflepuff 🦡'}`);
+    }
+    */
 
         printPoints(reaction.message, points);
 
