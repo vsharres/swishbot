@@ -13,6 +13,15 @@ module.exports = {
             let reply = '';
             if (stat.lightnings.length > 0) {
 
+                const lastRecordingDate = stat.lightnings[stat.lightnings.length - 1].date;
+                let elapsedTime = Math.abs(currentTime - lastRecordingDate);
+                elapsedTime = elapsedTime / 1000;
+                elapsedTime = elapsedTime / 60;
+                elapsedTime = elapsedTime / 60;
+
+                if (elapsedTime > parseInt(configs.recording_delay)) {
+                    return message.channel.send(`${message.author} there are no lightning bolts yet, maybe ask the first one!`);
+                }
                 reply = 'These are the lightning bolts for this recording:\n\n';
 
                 const number_batches = Math.floor(stat.lightnings.length / 10) + 1;
@@ -32,7 +41,7 @@ module.exports = {
                 }
             }
             else {
-                reply = `${message.author} there are no lightning bolts yet, maybe ask the first one!`;
+                message.channel.send(`${message.author} there are no lightning bolts yet, maybe ask the first one!`);
             }
 
         });
