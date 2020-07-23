@@ -14,7 +14,7 @@ module.exports = {
             if (stat.lightnings.length > 0) {
 
                 const lastRecordingDate = stat.lightnings[stat.lightnings.length - 1].date;
-                let elapsedTime = Math.abs(currentTime - lastRecordingDate);
+                let elapsedTime = Math.abs(Date.now - lastRecordingDate);
                 elapsedTime = elapsedTime / 1000;
                 elapsedTime = elapsedTime / 60;
                 elapsedTime = elapsedTime / 60;
