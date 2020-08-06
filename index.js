@@ -46,6 +46,7 @@ client.once('ready', () => {
 });
 
 //Special action to the hosts
+/** 
 client.on('message', async message => {
 
     const chance = Math.random();
@@ -115,6 +116,7 @@ client.on('message', async message => {
     }
 
 });
+*/
 
 //Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
@@ -264,7 +266,10 @@ client.on('message', async message => {
         stat.lightnings.push(question);
         stat
             .save()
-            .then(() => logger.log('info', `lightning bolt question saved!`))
+            .then(() => {
+                logger.log('info', `lightning bolt question saved!`);
+                message.reply(`Your lightning bolt question was saved!`);
+            })
             .catch(err => logger.log('error', err));
 
     }).catch(err => logger.log('error', err));
