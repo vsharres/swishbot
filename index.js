@@ -5,7 +5,6 @@ const { command_prefix, token } = require('./config/configs');
 const configs = require('./config/configs');
 const winston = require('winston');
 const db = require('./config/configs').mongoURI;
-const adjectives = require('./config/adjetives');
 
 const logger = winston.createLogger({
     transports: [
@@ -144,13 +143,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    //Only the founders can add points to houses and only in the general channel points are being awarded.
+    //Only the founders and the head pupil can add points to houses and only in the general channel points are being awarded.
     const guildMember = reaction.message.guild.members.cache.get(user.id);
     if (!guildMember) {
         return;
     }
     const adminRole = guildMember.roles.cache.has(configs.admin_role_id);
-    if (!adminRole) {
+    const headRole = guildMember.roles.cache.has(configs.head_pupil_id);
+
+    if (adminRole === false && headRole === false) {
         return;
     }
 
@@ -308,8 +309,9 @@ client.on('message', message => {
 
     const command = client.commands.get(commandName);
     const isAdminRole = message.member.roles.cache.has(configs.admin_role_id);
+    const isITRole = message.member.roles.cache.has(configs.hogwarts_IT_id);
 
-    if (command.admin && isAdminRole === false) {
+    if (command.admin && (isAdminRole === false || isITRole === false)) {
         logger.log('warn', `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_id}`);
         return;
     }

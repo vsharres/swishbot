@@ -14,6 +14,7 @@ module.exports = {
         if (args.length === 1) {
             let parsed = args.shift();
             let multiplier = 1;
+            //Need to replace the regex so that . can be parsed out
             let unit = parsed.replace(/[0-9]/g, '');
 
             //for the special case of using ' or "
