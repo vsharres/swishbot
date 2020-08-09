@@ -311,7 +311,7 @@ client.on('message', message => {
     const isAdminRole = message.member.roles.cache.has(configs.admin_role_id);
     const isITRole = message.member.roles.cache.has(configs.hogwarts_IT_id);
 
-    if (command.admin && (isAdminRole === false || isITRole === false)) {
+    if (command.admin && (isAdminRole === false && isITRole === false)) {
         logger.log('warn', `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_id}`);
         return;
     }
