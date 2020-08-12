@@ -424,7 +424,7 @@ async function printPoints(message, points) {
     ];
 
     const gryf = houses[0].points;
-    const slyth = hosues[1].points;
+    const slyth = houses[1].points;
     const raven = houses[2].points;
     const huff = houses[4].points;
 
