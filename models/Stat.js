@@ -6,6 +6,15 @@ const StatSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    head_pupils: [{
+        member: {
+            type: String
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        },
+    }],
     lightnings: [{
         member: {
             type: String

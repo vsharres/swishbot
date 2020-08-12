@@ -3,9 +3,10 @@ const { stats_id, command_prefix, recording_delay } = require('../config/configs
 
 module.exports = {
     name: "recording",
-    description: 'Start the recording, prompting the chat for volunteers to be the designater binger',
+    description: 'Start the recording, prompting the chat for volunteers to be the head pupil',
     cooldown: 30,
     usage: '',
+    admin: true,
     args: false,
     execute(message, arg, logger) {
 
@@ -22,7 +23,6 @@ module.exports = {
             }
             else {
                 stat.recording_date = Date.now();
-                stat.binger = '';
                 stat
                     .save()
                     .then(stat => {

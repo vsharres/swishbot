@@ -143,7 +143,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    //Only the founders and the head pupil can add points to houses and only in the general channel points are being awarded.
+    //Only the founders and the head pupil can add points to houses.
     const guildMember = reaction.message.guild.members.cache.get(user.id);
     if (!guildMember) {
         return;
@@ -152,11 +152,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
     const headRole = guildMember.roles.cache.has(configs.head_pupil_id);
 
     if (adminRole === false && headRole === false) {
-        return;
-    }
-
-    const general = reaction.message.channel.id === configs.general_channel_id;
-    if (!general) {
         return;
     }
 
@@ -432,7 +427,7 @@ async function printPoints(message, points) {
     let reply = '**House Points**\n\n';
 
     houses.forEach(house => {
-        reply += `${house.name} with a total of: **${house.points}!**\n\n`;
+        reply += `${house.name} with a total of **${house.points}!**\n\n`;
     });
 
     return hourglass_channel.send(reply);
