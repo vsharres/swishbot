@@ -9,7 +9,7 @@ module.exports = {
     cooldown: 10,
     usage: '<house> <amount>',
     args: true,
-    admin: true,
+    head_pupil: true,
     execute(message, args, logger) {
 
         if (args.length !== 2 && !isNaN(args[0])) {

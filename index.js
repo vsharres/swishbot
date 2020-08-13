@@ -312,6 +312,12 @@ client.on('message', message => {
         return;
     }
 
+    const headRole = message.member.roles.cache.has(configs.head_pupil_id);
+    if (command.head_pupil && (headRole === false && isAdminRole === false && isITRole === false)) {
+        logger.log('warn', `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.head_pupil_id}`);
+        return;
+    }
+
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new Discord.Collection());
     }
