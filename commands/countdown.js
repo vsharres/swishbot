@@ -5,7 +5,7 @@ const { stats_id, fletcher_id } = require('../config/configs');
 module.exports = {
     name: "countdown",
     description: 'Counts down until the next recording',
-    cooldown: 30,
+    cooldown: 3600,
     usage: '',
     execute(message, args, logger) {
 
@@ -26,7 +26,7 @@ module.exports = {
 
             //lolz
             if (message.author.id === fletcher_id) {
-                time_to_recording += randomNumber(-10, 10) * 1000 * 60 * 60;
+                time_to_recording += 2000 * 60 * 60;
             }
 
             message.member.createDM()
@@ -44,4 +44,4 @@ module.exports = {
 
 function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
-};
+}
