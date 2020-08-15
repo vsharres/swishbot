@@ -169,22 +169,9 @@ client.on('message', async message => {
     const currentTime = Date.now();
     Stat.findById(configs.stats_id).then(stat => {
 
-        if (stat.lightnings.length > 0) {
-            const lastRecordingDate = stat.lightnings[stat.lightnings.length - 1].date;
-            let elapsedTime = Math.abs(currentTime - lastRecordingDate);
-            elapsedTime = elapsedTime / 1000;
-            elapsedTime = elapsedTime / 60;
-            elapsedTime = elapsedTime / 60;
-
-            if (elapsedTime > parseInt(configs.recording_delay)) {
-                stat.lightnings = [];
-            }
-        }
-
         const question = {
             member: message.member.id,
             question: message.content,
-            recording_date: currentTime
         };
 
         stat.lightnings.push(question);
@@ -200,23 +187,12 @@ client.on('message', async message => {
 
 });
 
-//Responding to DMs
-client.on('message', message => {
-    if (message.channel.type !== 'dm' || message.author.id === client.user.id) return;
-    client.users.fetch(configs.vini_id)
-        .then(user => {
-            message.reply(`If you have any questions relating to how the bot works, please feel free to DM ${user} :smile:`);
-        })
-        .catch(err => logger.log('error', err));
-});
-
 //General commands given to the bot
 client.on('message', message => {
 
     //Ignores all messages and commands send to the bot from DM
     if (!message.guild) return;
 
-    //const prefix = message.guild.emojis.cache.find(emoji => emoji.name === command_prefix).toString();
     if (!message.content.startsWith(command_prefix) || message.author.bot) return;
 
     const args = message.content.slice(command_prefix.length).split(/ +/);
@@ -230,9 +206,15 @@ client.on('message', message => {
         return;
     }
 
+    const isDMChannel = message.channel.type === 'dm';
     const command = client.commands.get(commandName);
     const isAdminRole = message.member.roles.cache.has(configs.admin_role_id);
     const isITRole = message.member.roles.cache.has(configs.hogwarts_IT_id);
+
+    if (command.dm && !isDMChannel) {
+        logger.log('warn', `The command can only be executed as a DM to the bot`);
+        return;
+    }
 
     if (command.admin && (isAdminRole === false && isITRole === false)) {
         logger.log('warn', `${message.author} does not have the necessary role to execute this command. The necessary role is ${configs.admin_role_id}`);

@@ -30,5 +30,6 @@ module.exports = {
 	marchismo_id: process.env.MARCHISMO_ID,
 	brandon_id: process.env.BRANDON_ID,
 	vini_id: process.env.VINI_ID,
+	fletcher_id: process.env.FLETCHER_ID,
 	token: process.env.DISCORD_TOKEN,
 };

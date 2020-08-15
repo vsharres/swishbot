@@ -1,37 +1,33 @@
 const Stat = require('../models/Stat');
-const { stats_id, command_prefix, recording_delay } = require('../config/configs');
+const moment = require('moment-timezone');
+const { stats_id } = require('../config/configs');
 
 module.exports = {
     name: "recording",
     description: 'Start the recording, prompting the chat for volunteers to be the head pupil',
     cooldown: 30,
-    usage: '',
+    usage: '<date> <time>',
     admin: true,
-    args: false,
-    execute(message, arg, logger) {
+    args: true,
+    execute(message, args, logger) {
+
+        const date_string = moment.tz(args.join(' '), "DD MMM YYYY hh:mm aa", 'America/New_York');
+
+        if (!date_string.isValid()) {
+            return;
+        }
 
         Stat.findById(stats_id).then(stat => {
 
-            let elapsedTime = Date.now() - stat.recording_date;
-            elapsedTime = elapsedTime / 1000;
-            elapsedTime = elapsedTime / 60;
-            elapsedTime = elapsedTime / 60;
-
-            if (elapsedTime < recording_delay) {
-                return message.channel.send(`${message.author} the start of the recording has already been set!`)
-                    .catch(err => logger.log('error', err));
-            }
-            else {
-                stat.recording_date = Date.now();
-                stat
-                    .save()
-                    .then(stat => {
-                        message.channel.send(`Recording started!`)
-                            .catch(err => logger.log('error', err));
-                    })
-                    .catch(err => logger.log('error', err));
-            }
-
+            stat.recording_date = date_string.toDate();
+            stat.lightnings = [];
+            stat
+                .save()
+                .then(() => {
+                    message.reply(`New recording set to ${date_string}`);
+                    logger.log('info', `New recording set to ${date_string}`);
+                })
+                .catch(err => logger.log('error', err));
         })
             .catch(err => logger.log('error', err));
     },
