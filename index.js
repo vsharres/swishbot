@@ -71,9 +71,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    //Only the founders and the head pupil can add points to houses.
+    //Only the founders and the head pupil can add points to houses. The head pupil can't give points to itself.
     const guildMember = reaction.message.guild.members.cache.get(user.id);
-    if (!guildMember) {
+    if (!guildMember || reaction.message.author === user.id) {
         return;
     }
     const adminRole = guildMember.roles.cache.has(configs.admin_role_id);
@@ -166,11 +166,10 @@ client.on('messageReactionAdd', async (reaction, user) => {
 client.on('message', async message => {
     if (!message.content.startsWith('⚡')) return;
 
-    const currentTime = Date.now();
     Stat.findById(configs.stats_id).then(stat => {
 
         const question = {
-            member: message.member.id,
+            member: message.author.id,
             question: message.content,
         };
 
@@ -188,7 +187,7 @@ client.on('message', async message => {
 });
 
 //General commands given to the bot
-client.on('message', message => {
+client.on('message', async message => {
 
     //Ignores all messages and commands send to the bot from DM
     if (!message.guild) return;
@@ -307,5 +306,9 @@ client.on('message', message => {
 });
 
 process.on('uncaughtException', error => logger.log('error', error));
+
+process.on('unhandledRejection', error => {
+    logger.log('error', error);
+});
 
 client.login(token);
