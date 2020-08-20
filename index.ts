@@ -14,6 +14,7 @@ import Lightning from './commands/lightning';
 import Points from './commands/points';
 import ResetPoints from './commands/points_reset';
 import Recording from './commands/recording';
+import Snape from './commands/snape';
 
 const logger = winston.createLogger({
     transports: [
@@ -51,6 +52,7 @@ commands.set(Lightning.name, Lightning);
 commands.set(Points.name, Points);
 commands.set(ResetPoints.name, ResetPoints);
 commands.set(Recording.name, Recording);
+commands.set(Snape.name, Snape);
 
 
 client.once('ready', () => {
