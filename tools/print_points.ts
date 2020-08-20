@@ -10,7 +10,7 @@ async function printPoints(message: Message, points: any, logger: Logger) {
         if (hourglass_channel) {
             hourglass_channel.bulkDelete(4)
                 .then(messages => {
-                    return logger.log('info', `Bulk deleted ${messages.size} messages`);
+                    logger.log('info', `Bulk deleted ${messages.size} messages`);
                 })
                 .catch(error => { return logger.log('error', error) });
         }
