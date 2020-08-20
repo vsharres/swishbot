@@ -17,6 +17,7 @@ async function printPoints(message: Message, points: any, logger: Logger) {
         else {
             return logger.log('error', 'Couldn\'t find the hourglass channel, check Id');
         }
+
         let houses = [{
             house: 'Gryffindor 🦁',
             points: points.gryffindor

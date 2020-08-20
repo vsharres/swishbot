@@ -48,7 +48,7 @@ function printPoints(message, points, logger) {
                 if (hourglass_channel) {
                     hourglass_channel.bulkDelete(4)
                         .then(function (messages) {
-                        return logger.log('info', "Bulk deleted " + messages.size + " messages");
+                        logger.log('info', "Bulk deleted " + messages.size + " messages");
                     })
                         .catch(function (error) { return logger.log('error', error); });
                 }
