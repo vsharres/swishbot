@@ -19,6 +19,7 @@
     "mongoose": "^5.9.19",
     "winston": "^3.3.3"
   },
+  "heroku-run-build-script": true,
   "jshintConfig": {
     "esversion": 10
   },
