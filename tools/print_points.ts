@@ -1,21 +1,22 @@
-const config = require('../config/configs');
+import { Configs } from '../config/configs';
+import { Message, TextChannel } from 'discord.js'
+import { Logger } from 'winston';
 
-module.exports = {
-    async printPoints(message, points, logger) {
-        //Delete the previous message
-        const hourglass_channel = message.guild.channels.cache.get(config.house_points_channel);
+async function printPoints(message: Message, points: any, logger: Logger) {
+    //Delete the previous message
+    if (Configs.house_points_channel !== undefined && message.guild) {
+        const hourglass_channel = <TextChannel>message.guild.channels.cache.get(Configs.house_points_channel);
+
         if (hourglass_channel) {
             hourglass_channel.bulkDelete(4)
                 .then(messages => {
-                    logger.log('info', `Bulk deleted ${messages.size} messages`);
+                    return logger.log('info', `Bulk deleted ${messages.size} messages`);
                 })
-                .catch(console.error);
+                .catch(error => { return logger.log('error', error) });
         }
         else {
-            logger.log('error', 'Couldn\'t find the hourglass channel, check Id');
-            return;
+            return logger.log('error', 'Couldn\'t find the hourglass channel, check Id');
         }
-
         let houses = [{
             house: 'Gryffindor 🦁',
             points: points.gryffindor
@@ -49,7 +50,8 @@ module.exports = {
             if (gryf === slyth && slyth === raven && raven === huff) {
 
                 reply += `All houses are tied with **${gryf} points!**`;
-                return hourglass_channel.send(reply);
+                return hourglass_channel.send(reply)
+                    .catch(error => logger.log('error', error));
 
             }
             //for the case with 3 houses tied
@@ -63,7 +65,8 @@ module.exports = {
                     reply += `${houses[1].house}, ${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[1].points} points!**\n\n`;
                 }
 
-                return hourglass_channel.send(reply);
+                return hourglass_channel.send(reply)
+                    .catch(error => logger.log('error', error));
             }
             //for the case where only two houses are tied
             else {
@@ -71,28 +74,32 @@ module.exports = {
                     reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} points!**\n`;
                     reply += `${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[2].points} points!**\n`;
 
-                    return hourglass_channel.send(reply);
+                    return hourglass_channel.send(reply)
+                        .catch(error => logger.log('error', error));
                 }
                 else if (houses[0] === houses[1]) {
                     reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} points!**\n`;
                     reply += `${houses[2].house} is in second place with **${houses[2].points} points!**\n`;
                     reply += `${houses[3].house} is in third place with **${houses[3].points} points!**\n\n`;
 
-                    return hourglass_channel.send(reply);
+                    return hourglass_channel.send(reply)
+                        .catch(error => logger.log('error', error));
                 }
                 else if (houses[1] === houses[2]) {
                     reply += `${houses[0].house} is in first place with **${houses[0].points} points!**\n`;
                     reply += `${houses[1].house}, ${houses[2].house} are tied in second place with **${houses[1].points} points!**\n`;
                     reply += `${houses[3].house} is in third place with **${houses[3].points} points!**\n\n`;
 
-                    return hourglass_channel.send(reply);
+                    return hourglass_channel.send(reply)
+                        .catch(error => logger.log('error', error));
                 }
                 else {
                     reply += `${houses[0].house} is in first place with **${houses[0].points} points!**\n`;
                     reply += `${houses[1].house} is in second place with **${houses[1].points} points!**\n`;
                     reply += `${houses[2].house}, ${houses[3].house} are tied in third place with **${houses[2].points} points!**\n\n`;
 
-                    return hourglass_channel.send(reply);
+                    return hourglass_channel.send(reply)
+                        .catch(error => logger.log('error', error));
                 }
             }
         }
@@ -120,8 +127,14 @@ module.exports = {
 
             }
             reply += '\n';
-            return hourglass_channel.send(reply);
+            return hourglass_channel.send(reply)
+                .catch(error => logger.log('error', error));
 
         }
     }
-};
+
+
+
+}
+
+export { printPoints }

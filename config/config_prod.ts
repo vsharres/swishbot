@@ -1,0 +1,37 @@
+import { Keys } from './configs';
+
+export const keys: Keys = {
+	mongoURI: process.env.MONGO_URI ? process.env.MONGO_URI : '',
+	stats_id: process.env.STATS_ID ? process.env.STATS_ID : '',
+	command_prefix: process.env.COMMAND_PREFIX ? process.env.COMMAND_PREFIX : '',
+	admin_role_id: process.env.ADMIN_ROLE_ID ? process.env.ADMIN_ROLE_ID : '',
+	head_pupil_id: process.env.HEAD_PUPIL ? process.env.HEAD_PUPIL : '',
+	hogwarts_IT_id: process.env.HOGWARTS_IT ? process.env.HOGWARTS_IT : '',
+	general_channel_id: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
+	binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',
+	dumbly_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_17.png',
+	lupin_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_44.png',
+	snape_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_2.png',
+	neville_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_19.png',
+	height: 147, // in cm
+	weight: 48, // in Kg
+	house_points_channel: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
+	gryffindor_role: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
+	slytherin_role: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
+	ravenclaw_role: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',
+	hufflepuff_role: process.env.HUFFLEPUFF_ROLE ? process.env.HUFFLEPUFF_ROLE : '',
+	recording_delay: process.env.RECORDING_DELAY ? process.env.RECORDING_DELAY : '',
+	message_chance: process.env.MESSAGE_CHANCE ? process.env.MESSAGE_CHANCE : '',
+	emoji_addpoints: process.env.EMOJI_ADDPOINTS ? process.env.EMOJI_ADDPOINTS : '',
+	emoji_removepoints: process.env.EMOJI_REMOVEPOINTS ? process.env.EMOJI_REMOVEPOINTS : '',
+	tiff_id: process.env.TIFF_ID ? process.env.TIFF_ID : '',
+	megan_id: process.env.MEGAN_ID ? process.env.MEGAN_ID : '',
+	katie_id: process.env.KATIE_ID ? process.env.KATIE_ID : '',
+	sarah_id: process.env.SARAH_ID ? process.env.SARAH_ID : '',
+	mia_id: process.env.MIA_ID ? process.env.MIA_ID : '',
+	marchismo_id: process.env.MARCHISMO_ID ? process.env.MARCHISMO_ID : '',
+	brandon_id: process.env.BRANDON_ID ? process.env.BRANDON_ID : '',
+	vini_id: process.env.VINI_ID ? process.env.VINI_ID : '',
+	fletcher_id: process.env.FLETCHER_ID ? process.env.FLETCHER_ID : '',
+	token: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : '',
+}

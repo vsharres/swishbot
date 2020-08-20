@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Document, model, Schema, Types } from 'mongoose';
 
 const StatSchema = new Schema({
     recording_date: {
@@ -40,5 +39,28 @@ const StatSchema = new Schema({
 
 });
 
-const Stat = mongoose.model("stats", StatSchema);
-module.exports = Stat;
+export interface Houses {
+    gryffindor: number;
+    slytherin: number;
+    ravenclaw: number;
+    hufflepuff: number;
+}
+
+export interface Lightning {
+    member: string;
+    question: string;
+}
+
+export interface HeadPupil {
+    member: string;
+    date: string;
+}
+
+interface IStatSchema extends Document {
+    recording_date: Date;
+    head_pupils: HeadPupil[];
+    lightnings: Lightning[];
+    points: Houses[]
+}
+
+export default model<IStatSchema>("stats", StatSchema);
