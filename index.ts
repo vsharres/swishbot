@@ -92,8 +92,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
     const guildMember = guild.members.cache.get(user.id);
 
-    if (!guildMember || reaction.message.author.id === user.id) {
-        logger.log('error', `error getting the guildmemers or the member reacter on his own message`);
+    //No reactions on your own message
+    if (reaction.message.author.id === user.id) {
+        return;
+    }
+
+    if (!guildMember) {
+        logger.log('error', `error getting the guildmemers`);
         return;
     }
     const adminRole = guildMember.roles.cache.has(Configs.admin_role_id);
