@@ -48,6 +48,7 @@ export class Snape extends Command {
             switch (house) {
                 case 'gryffindor':
                     points.gryffindor -= amount;
+                    if (points.gryffindor <= 0) points.gryffindor = 0;
                     break;
                 case 'slytherin':
                     points.slytherin += amount;
@@ -56,14 +57,17 @@ export class Snape extends Command {
                     break;
                 case 'ravenclaw':
                     points.ravenclaw -= amount;
+                    if (points.ravenclaw <= 0) points.ravenclaw = 0;
                     name = 'Ravenclaw 🦅';
                     break;
                 case 'hufflepuff':
                     points.hufflepuff -= amount;
+                    if (points.hufflepuff <= 0) points.hufflepuff = 0;
                     name = 'Hufflepuff 🦡';
                     break;
                 default:
                     points.gryffindor -= amount;
+                    if (points.gryffindor <= 0) points.gryffindor = 0;
                     break;
             }
 

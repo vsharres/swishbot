@@ -43,7 +43,7 @@ const commands = new Discord.Collection<string, Command>();
 const cooldowns = new Discord.Collection<string, Discord.Collection<string, number>>();
 
 //const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.ts') && !file.endsWith('command.ts'));
-
+//TODO: Need to figure out a way to dynamically get the command files
 commands.set(Countdown.name, Countdown);
 commands.set(Devitos.name, Devitos);
 commands.set(Dumbly.name, Dumbly);
