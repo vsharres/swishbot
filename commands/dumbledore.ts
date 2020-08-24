@@ -8,7 +8,7 @@ import { Command } from './command';
 export class Dumbly extends Command {
 
     constructor() {
-        super("dumbly", '', 10, '<house> <points>', true, true, true);
+        super("dumbly", '', 10, '<house> <points>', true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {
