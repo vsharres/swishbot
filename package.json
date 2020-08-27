@@ -5,6 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "start": "tsc && node build/index.js",
+    "deploy": "tsc && git push",
     "build": "tsc",
     "tsc": "tsc"
   },
