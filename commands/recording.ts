@@ -24,7 +24,6 @@ export class Recording extends Command {
 
             if (!stat) return;
 
-
             stat.recording_date = new Date(zoned);
             stat.lightnings = new Array<Lightning>();
             stat
