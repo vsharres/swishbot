@@ -124,7 +124,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         return;
     }
 
-    member.roles.cache.find(role => {
+    member.roles.cache.each(role => {
         if (role.id === Configs.gryffindor_role) {
             if (emoji === Configs.emoji_addpoints) {
                 pointsToAdd.gryffindor += 10;
