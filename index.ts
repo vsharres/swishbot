@@ -117,51 +117,41 @@ client.on('messageReactionAdd', async (reaction, user) => {
         hufflepuff: 0
     };
 
-    const emoji = reaction.emoji.toString();
-
     const member = reaction.message.member;
     if (!member) {
         return;
     }
 
+    let points = 0;
+
+    const emoji = reaction.emoji.toString();
+    if (emoji === Configs.emoji_addpoints) {
+        points = 10;
+    }
+    else if (emoji === Configs.emoji_removepoints) {
+        points = -10;
+    }
+    else {
+        return;
+    }
+
     member.roles.cache.each(role => {
-        if (role.id === Configs.gryffindor_role) {
-            if (emoji === Configs.emoji_addpoints) {
-                pointsToAdd.gryffindor += 10;
-            }
-            else if (emoji === Configs.emoji_removepoints) {
-                pointsToAdd.gryffindor -= 10;
-            }
-            return true;
+
+        switch (role.id) {
+            case Configs.gryffindor_role:
+                pointsToAdd.gryffindor += points;
+                break;
+            case Configs.slytherin_role:
+                pointsToAdd.slytherin += points;
+                break;
+            case Configs.ravenclaw_role:
+                pointsToAdd.ravenclaw += points;
+                break;
+            case Configs.hufflepuff_role:
+                pointsToAdd.hufflepuff += points;
+                break;
+
         }
-        else if (role.id === Configs.slytherin_role) {
-            if (emoji === Configs.emoji_addpoints) {
-                pointsToAdd.slytherin += 10;
-            }
-            else if (emoji === Configs.emoji_removepoints) {
-                pointsToAdd.slytherin -= 10;
-            }
-            return true;
-        }
-        else if (role.id === Configs.ravenclaw_role) {
-            if (emoji === Configs.emoji_addpoints) {
-                pointsToAdd.ravenclaw += 10;
-            }
-            else if (emoji === Configs.emoji_removepoints) {
-                pointsToAdd.ravenclaw -= 10;
-            }
-            return true;
-        }
-        else if (role.id === Configs.hufflepuff_role) {
-            if (emoji === Configs.emoji_addpoints) {
-                pointsToAdd.hufflepuff += 10;
-            }
-            else if (emoji === Configs.emoji_removepoints) {
-                pointsToAdd.hufflepuff -= 10;
-            }
-            return true;
-        }
-        return false;
 
     });
 
