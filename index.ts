@@ -197,6 +197,15 @@ client.on('message', async message => {
             return;
         }
 
+        let elapsed_time = Date.now() - stat.recording_date.getTime();
+        elapsed_time = elapsed_time / 1000;
+        elapsed_time = elapsed_time / 60;
+        elapsed_time = elapsed_time / 60;
+
+        if (elapsed_time > parseFloat(Configs.recording_delay)) {
+            stat.lightnings = [];
+        }
+
         const question = {
             member: message.author.id,
             question: message.content,
