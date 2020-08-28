@@ -204,6 +204,7 @@ client.on('message', async message => {
 
         if (elapsed_time > parseFloat(Configs.recording_delay)) {
             stat.lightnings = [];
+            stat.recording_date = new Date();
         }
 
         const question = {
