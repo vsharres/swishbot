@@ -72,6 +72,7 @@ export class Snape extends Command {
             }
 
             stat.points[stat.points.length - 1] = points;
+            const cups = stat.house_cups;
 
             stat
                 .save()
@@ -85,7 +86,7 @@ export class Snape extends Command {
                 })
                 .catch(err => logger.log('error', err));
 
-            printPoints(message, points, logger);
+            printPoints(message, points, cups, logger);
         })
             .catch(err => logger.log('error', err));
     }

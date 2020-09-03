@@ -8,11 +8,7 @@ const StatSchema = new Schema({
     head_pupils: [{
         member: {
             type: String
-        },
-        date: {
-            type: Date,
-            default: Date.now
-        },
+        }
     }],
     lightnings: [{
         member: {
@@ -22,6 +18,20 @@ const StatSchema = new Schema({
             type: String
         },
     }],
+    house_cups: {
+        gryffindor: {
+            type: Number
+        },
+        slytherin: {
+            type: Number
+        },
+        ravenclaw: {
+            type: Number
+        },
+        hufflepuff: {
+            type: Number
+        }
+    },
     points: [{
         gryffindor: {
             type: Number
@@ -60,6 +70,7 @@ interface IStatSchema extends Document {
     recording_date: Date;
     head_pupils: HeadPupil[];
     lightnings: Lightning[];
+    house_cups: Houses;
     points: Houses[]
 }
 

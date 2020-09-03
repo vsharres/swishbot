@@ -24,7 +24,36 @@ export class PointsReset extends Command {
                 hufflepuff: 0
             });
 
-            printPoints(message, stat.points[stat.points.length - 1], logger);
+            const points = stat.points[stat.points.length - 1];
+
+            let cups = [
+                { name: 'Gryffindor', points: points.gryffindor },
+                { name: 'Slytherin', points: points.slytherin },
+                { name: 'Hufflepuff', points: points.ravenclaw },
+                { name: 'Ravenclaw', points: points.hufflepuff }
+            ];
+
+            cups.sort((a, b) => a.points - b.points);
+            let new_cup = stat.house_cups;
+
+            switch (cups[0].name) {
+                case 'Gryffindor':
+                    new_cup.gryffindor++;
+                    break;
+                case 'Slytherin':
+                    new_cup.slytherin++;
+                    break;
+                case 'Hufflepuff':
+                    new_cup.hufflepuff++;
+                    break;
+                case 'Ravenclaw':
+                    new_cup.ravenclaw++;
+                    break;
+
+            }
+            stat.house_cups = new_cup;
+
+            printPoints(message, stat.points[stat.points.length - 1], new_cup, logger);
 
             stat
                 .save()

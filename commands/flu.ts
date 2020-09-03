@@ -43,4 +43,4 @@ export class Flu extends Command {
     }
 };
 
-export default new Flu()
+export default new Flu();

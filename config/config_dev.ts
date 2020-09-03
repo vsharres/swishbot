@@ -10,9 +10,9 @@ export const keys: Keys = {
     general_channel_id: '715802939549286420',
     binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',
     dumbly_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_17.png',
-    lupin_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_44.png',
+    trelawney_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_25.png',
     snape_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_2.png',
-    neville_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_19.png',
+    cedric_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_35.png',
     height: 147, // in cm
     weight: 48, // in Kg
     house_points_channel: '736821189439258704',

@@ -11,9 +11,9 @@ interface Keys {
   general_channel_id: string,
   binger_gif: string,
   dumbly_emoji: string,
-  lupin_emoji: string,
+  trelawney_emoji: string,
   snape_emoji: string,
-  neville_emoji: string,
+  cedric_emoji: string,
   height: number, // in cm
   weight: number, // in Kg
   house_points_channel: string,

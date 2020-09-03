@@ -15,6 +15,7 @@ import Points from './commands/points';
 import ResetPoints from './commands/points_reset';
 import Recording from './commands/recording';
 import Snape from './commands/snape';
+import Cups from './commands/cups';
 
 const logger = winston.createLogger({
     transports: [
@@ -50,6 +51,7 @@ commands.set(Dumbly.name, Dumbly);
 commands.set(Flue.name, Flue);
 commands.set(Lightning.name, Lightning);
 commands.set(Points.name, Points);
+commands.set(Cups.name, Cups);
 commands.set(ResetPoints.name, ResetPoints);
 commands.set(Recording.name, Recording);
 commands.set(Snape.name, Snape);
@@ -163,6 +165,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
 
+        const cups = stat.house_cups;
         let points = stat.points[stat.points.length - 1];
         points.gryffindor += pointsToAdd.gryffindor;
         if (points.gryffindor <= 0) points.gryffindor = 0;
@@ -181,7 +184,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             })
             .catch(err => logger.log('error', err));
 
-        printPoints(reaction.message, points, logger);
+        printPoints(reaction.message, points, cups, logger);
 
     });
 

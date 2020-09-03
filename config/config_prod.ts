@@ -9,10 +9,10 @@ export const keys: Keys = {
 	hogwarts_IT_id: process.env.HOGWARTS_IT ? process.env.HOGWARTS_IT : '',
 	general_channel_id: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
 	binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',
-	dumbly_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_17.png',
-	lupin_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_44.png',
-	snape_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_2.png',
-	neville_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/boywholived_19.png',
+	dumbly_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_17.png',
+	trelawney_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_25.png',
+	snape_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
+	cedric_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_35.png',
 	height: 147, // in cm
 	weight: 48, // in Kg
 	house_points_channel: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',

@@ -19,8 +19,9 @@ export class Points extends Command {
             }
 
             const points = stat.points[stat.points.length - 1];
+            const cups = stat.house_cups;
 
-            return printPoints(message, points, logger);
+            return printPoints(message, points, cups, logger);
 
         })
             .catch(err => logger.log('error', err));
