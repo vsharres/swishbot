@@ -52,40 +52,40 @@ export class Cups extends Command {
                 //for the case when all houses are tied
                 if (gryf_cups === slyth_cups && slyth_cups === raven_cups && raven_cups === huff_cups) {
 
-                    reply += `All houses are tied with **${gryf_cups} cups**\n\n`;
+                    reply += `All houses are tied with **${gryf_cups} cups!**\n\n`;
 
                 }
                 //for the case with 3 houses tied
                 else if ((gryf_cups === slyth_cups && slyth_cups === raven_cups) || (gryf_cups === slyth_cups && slyth_cups === huff_cups) || (gryf_cups === raven_cups && raven_cups === huff_cups) || (slyth_cups === raven_cups && raven_cups === huff_cups)) {
                     if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[1].value === sorted_cups[2].value) {
                         reply += `${sorted_cups[0].house}, ${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in first place with **${sorted_cups[0].value} cups!**\n`;
-                        reply += `${sorted_cups[3].house} is in second place with **${sorted_cups[3].value} cups**\n\n`;
+                        reply += `${sorted_cups[3].house} is in second place with **${sorted_cups[3].value} cups!**\n\n`;
                     }
                     else {
                         reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
-                        reply += `${sorted_cups[1].house}, ${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[1].value} cups**\n\n`;
+                        reply += `${sorted_cups[1].house}, ${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[1].value} cups!**\n\n`;
                     }
                 }
                 //for the case where only two sorted_cups are tied
                 else {
                     if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[2].value === sorted_cups[3].value) {
                         reply += `${sorted_cups[0].house}, ${sorted_cups[1].house} are tied in first place with **${sorted_cups[0].value} cups!**\n`;
-                        reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[2].value} cups**\n\n`;
+                        reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[2].value} cups!**\n\n`;
                     }
                     else if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[1].value !== sorted_cups[2].value && sorted_cups[1].value !== sorted_cups[3].value) {
                         reply += `${sorted_cups[0].house}, ${sorted_cups[1].house} are tied in first place with **${sorted_cups[0].value} cups!**\n`;
-                        reply += `${sorted_cups[2].house} is in second place with **${sorted_cups[2].value} cups**\n`;
-                        reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cups**\n\n`;
+                        reply += `${sorted_cups[2].house} is in second place with **${sorted_cups[2].value} cups!**\n`;
+                        reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cups!**\n\n`;
                     }
                     else if (sorted_cups[0].value !== sorted_cups[1].value && sorted_cups[1].value === sorted_cups[2].value && sorted_cups[2].value !== sorted_cups[3].value) {
                         reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
-                        reply += `${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in second place with **${sorted_cups[1].value} cups**\n`;
-                        reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cups**\n\n`;
+                        reply += `${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in second place with **${sorted_cups[1].value} cups!**\n`;
+                        reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cups!**\n\n`;
                     }
                     else {
                         reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
-                        reply += `${sorted_cups[1].house} is in second place with **${sorted_cups[1].value} cups**\n`;
-                        reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in third place with **${sorted_cups[2].value} cups**\n\n`;
+                        reply += `${sorted_cups[1].house} is in second place with **${sorted_cups[1].value} cups!**\n`;
+                        reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in third place with **${sorted_cups[2].value} cups!**\n\n`;
                     }
                 }
             }
