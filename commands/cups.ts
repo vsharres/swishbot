@@ -53,6 +53,12 @@ export class Cups extends Command {
                 if (gryf_cups === slyth_cups && slyth_cups === raven_cups && raven_cups === huff_cups) {
 
                     reply += `All houses are tied with **${gryf_cups} cups!**\n\n`;
+                    return message.channel.send(reply)
+                        .then(() => {
+                            const end_time = Date.now();
+                            logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                        })
+                        .catch(error => logger.log('error', error));
 
                 }
                 //for the case with 3 houses tied
@@ -60,10 +66,22 @@ export class Cups extends Command {
                     if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[1].value === sorted_cups[2].value) {
                         reply += `${sorted_cups[0].house}, ${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in first place with **${sorted_cups[0].value} cups!**\n`;
                         reply += `${sorted_cups[3].house} is in second place with **${sorted_cups[3].value} cups!**\n\n`;
+                        return message.channel.send(reply)
+                            .then(() => {
+                                const end_time = Date.now();
+                                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                            })
+                            .catch(error => logger.log('error', error));
                     }
                     else {
                         reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
                         reply += `${sorted_cups[1].house}, ${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[1].value} cups!**\n\n`;
+                        return message.channel.send(reply)
+                            .then(() => {
+                                const end_time = Date.now();
+                                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                            })
+                            .catch(error => logger.log('error', error));
                     }
                 }
                 //for the case where only two sorted_cups are tied
@@ -71,21 +89,45 @@ export class Cups extends Command {
                     if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[2].value === sorted_cups[3].value) {
                         reply += `${sorted_cups[0].house}, ${sorted_cups[1].house} are tied in first place with **${sorted_cups[0].value} cups!**\n`;
                         reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[2].value} cups!**\n\n`;
+                        return message.channel.send(reply)
+                            .then(() => {
+                                const end_time = Date.now();
+                                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                            })
+                            .catch(error => logger.log('error', error));
                     }
                     else if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[1].value !== sorted_cups[2].value && sorted_cups[1].value !== sorted_cups[3].value) {
                         reply += `${sorted_cups[0].house}, ${sorted_cups[1].house} are tied in first place with **${sorted_cups[0].value} cups!**\n`;
                         reply += `${sorted_cups[2].house} is in second place with **${sorted_cups[2].value} cups!**\n`;
                         reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cups!**\n\n`;
+                        return message.channel.send(reply)
+                            .then(() => {
+                                const end_time = Date.now();
+                                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                            })
+                            .catch(error => logger.log('error', error));
                     }
                     else if (sorted_cups[0].value !== sorted_cups[1].value && sorted_cups[1].value === sorted_cups[2].value && sorted_cups[2].value !== sorted_cups[3].value) {
                         reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
                         reply += `${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in second place with **${sorted_cups[1].value} cups!**\n`;
                         reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cups!**\n\n`;
+                        return message.channel.send(reply)
+                            .then(() => {
+                                const end_time = Date.now();
+                                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                            })
+                            .catch(error => logger.log('error', error));
                     }
                     else {
                         reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
                         reply += `${sorted_cups[1].house} is in second place with **${sorted_cups[1].value} cups!**\n`;
                         reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in third place with **${sorted_cups[2].value} cups!**\n\n`;
+                        return message.channel.send(reply)
+                            .then(() => {
+                                const end_time = Date.now();
+                                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                            })
+                            .catch(error => logger.log('error', error));
                     }
                 }
             }
@@ -94,9 +136,7 @@ export class Cups extends Command {
                 reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cups!**\n`;
                 reply += `${sorted_cups[1].house} is in second place with **${sorted_cups[1].value} cups!**\n`;
                 reply += `${sorted_cups[2].house} is in third place with **${sorted_cups[2].value} cups!**\n`;
-                reply += `${sorted_cups[3].house} is in fourth place with **${sorted_cups[3].value} cups!**\n`;
-                reply += '\n\n';
-
+                reply += `${sorted_cups[3].house} is in fourth place with **${sorted_cups[3].value} cups!**\n\n`;
             }
 
             return message.channel.send(reply)
