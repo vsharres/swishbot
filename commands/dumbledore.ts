@@ -66,7 +66,6 @@ export class Dumbly extends Command {
             }
 
             stat.points[stat.points.length - 1] = points;
-            const cups = stat.house_cups;
 
             stat
                 .save()
@@ -80,7 +79,7 @@ export class Dumbly extends Command {
                 })
                 .catch(err => logger.log('error', err));
 
-            printPoints(message, points, cups, logger);
+            printPoints(message, points, logger);
         })
             .catch(err => logger.log('error', err));
     }

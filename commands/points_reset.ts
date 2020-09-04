@@ -17,13 +17,6 @@ export class PointsReset extends Command {
             if (!stat)
                 return;
 
-            stat.points.push({
-                gryffindor: 0,
-                slytherin: 0,
-                ravenclaw: 0,
-                hufflepuff: 0
-            });
-
             const points = stat.points[stat.points.length - 1];
 
             let cups = [
@@ -33,27 +26,39 @@ export class PointsReset extends Command {
                 { name: 'Ravenclaw', points: points.hufflepuff }
             ];
 
-            cups.sort((a, b) => a.points - b.points);
-            let new_cup = stat.house_cups;
+            cups.sort((a, b) => b.points - a.points);
+            if (cups[0].points !== cups[1].points) {
+                let new_cup = stat.house_cups;
 
-            switch (cups[0].name) {
-                case 'Gryffindor':
-                    new_cup.gryffindor++;
-                    break;
-                case 'Slytherin':
-                    new_cup.slytherin++;
-                    break;
-                case 'Hufflepuff':
-                    new_cup.hufflepuff++;
-                    break;
-                case 'Ravenclaw':
-                    new_cup.ravenclaw++;
-                    break;
+                switch (cups[0].name) {
+                    case 'Gryffindor':
+                        new_cup.gryffindor++;
+                        break;
+                    case 'Slytherin':
+                        new_cup.slytherin++;
+                        break;
+                    case 'Hufflepuff':
+                        new_cup.hufflepuff++;
+                        break;
+                    case 'Ravenclaw':
+                        new_cup.ravenclaw++;
+                        break;
 
+                }
+                stat.house_cups = new_cup;
             }
-            stat.house_cups = new_cup;
+            else {
+                logger.log('warn', `There was a tie between ${cups[0].name} and ${cups[1].name}`);
+            }
 
-            printPoints(message, stat.points[stat.points.length - 1], new_cup, logger);
+            stat.points.push({
+                gryffindor: 0,
+                slytherin: 0,
+                ravenclaw: 0,
+                hufflepuff: 0
+            });
+
+            printPoints(message, stat.points[stat.points.length - 1], logger);
 
             stat
                 .save()

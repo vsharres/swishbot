@@ -165,7 +165,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
 
-        const cups = stat.house_cups;
         let points = stat.points[stat.points.length - 1];
         points.gryffindor += pointsToAdd.gryffindor;
         if (points.gryffindor <= 0) points.gryffindor = 0;
@@ -184,7 +183,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             })
             .catch(err => logger.log('error', err));
 
-        printPoints(reaction.message, points, cups, logger);
+        printPoints(reaction.message, points, logger);
 
     });
 
