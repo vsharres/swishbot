@@ -51,7 +51,7 @@ async function printPoints(message: Message, points: Houses, logger: Logger) {
             //for the case when all houses are tied
             if (gryf_points === slyth_points && slyth_points === raven_points && raven_points === huff_points) {
 
-                reply += `All houses are tied with **${gryf_points} points!**\n`;
+                reply += `All houses are tied with **${gryf_points} point${gryf_points === 1 ? '' : 's'}!**\n`;
                 return hourglass_channel.send(reply)
                     .catch(error => logger.log('error', error));
 
@@ -62,14 +62,14 @@ async function printPoints(message: Message, points: Houses, logger: Logger) {
                 (gryf_points === raven_points && raven_points === huff_points) ||
                 (slyth_points === raven_points && raven_points === huff_points)) {
                 if (houses[0].points === houses[1].points && houses[1].points === houses[2].points) {
-                    reply += `${houses[0].house}, ${houses[1].house}, ${houses[2].house} are tied in first place with **${houses[0].points} points!**\n`;
-                    reply += `${houses[3].house} is in second place with **${houses[3].points} points!**\n\n`;
+                    reply += `${houses[0].house}, ${houses[1].house}, ${houses[2].house} are tied in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[3].house} is in second place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
                     return hourglass_channel.send(reply)
                         .catch(error => logger.log('error', error));
                 }
                 else {
-                    reply += `${houses[0].house} is in first place with **${houses[0].points} points!**\n`;
-                    reply += `${houses[1].house}, ${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[1].points} points!**\n\n`;
+                    reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[1].house}, ${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n\n`;
                     return hourglass_channel.send(reply)
                         .catch(error => logger.log('error', error));
                 }
@@ -77,39 +77,39 @@ async function printPoints(message: Message, points: Houses, logger: Logger) {
             //for the case where only two houses are tied
             else {
                 if (houses[0].points === houses[1].points && houses[2].points === houses[3].points) {
-                    reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} points!**\n`;
-                    reply += `${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[2].points} points!**\n\n`;
+                    reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n\n`;
                     return hourglass_channel.send(reply)
                         .catch(error => logger.log('error', error));
                 }
                 else if (houses[0].points === houses[1].points && houses[1].points !== houses[2].points && houses[1].points !== houses[3].points) {
-                    reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} points!**\n`;
-                    reply += `${houses[2].house} is in second place with **${houses[2].points} points!**\n`;
-                    reply += `${houses[3].house} is in third place with **${houses[3].points} points!**\n\n`;
+                    reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[2].house} is in second place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[3].house} is in third place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
                     return hourglass_channel.send(reply)
                         .catch(error => logger.log('error', error));
                 }
                 else if (houses[0].points !== houses[1].points && houses[1].points === houses[2].points && houses[2].points !== houses[3].points) {
-                    reply += `${houses[0].house} is in first place with **${houses[0].points} points!**\n`;
-                    reply += `${houses[1].house}, ${houses[2].house} are tied in second place with **${houses[1].points} points!**\n`;
-                    reply += `${houses[3].house} is in third place with **${houses[3].points} points!**\n\n`;
+                    reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[1].house}, ${houses[2].house} are tied in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[3].house} is in third place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
                     return hourglass_channel.send(reply)
                         .catch(error => logger.log('error', error));
                 }
                 else {
-                    reply += `${houses[0].house} is in first place with **${houses[0].points} points!**\n`;
-                    reply += `${houses[1].house} is in second place with **${houses[1].points} points!**\n`;
-                    reply += `${houses[2].house}, ${houses[3].house} are tied in third place with **${houses[2].points} points!**\n\n`;
+                    reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
+                    reply += `${houses[2].house}, ${houses[3].house} are tied in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n\n`;
                     return hourglass_channel.send(reply)
                         .catch(error => logger.log('error', error));
                 }
             }
         }
         else {
-            reply += `${houses[0].house} is in first place with **${houses[0].points} points!**\n`;
-            reply += `${houses[1].house} is in second place with **${houses[1].points} points!**\n`;
-            reply += `${houses[2].house} is in third place with **${houses[2].points} points!**\n`;
-            reply += `${houses[3].house} is in fourth place with **${houses[3].points} points!**\n\n`;
+            reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+            reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
+            reply += `${houses[2].house} is in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
+            reply += `${houses[3].house} is in fourth place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
         }
 
         return hourglass_channel.send(reply)
