@@ -6,16 +6,6 @@ import winston from 'winston';
 import { printPoints } from './tools/print_points';
 import Stat from './models/Stat';
 import { Command } from './commands/command';
-import Countdown from './commands/countdown';
-import Devitos from './commands/devitos';
-import Dumbly from './commands/dumbledore';
-import Flue from './commands/flu';
-import Lightning from './commands/lightning';
-import Points from './commands/points';
-import ResetPoints from './commands/points_reset';
-import Recording from './commands/recording';
-import Snape from './commands/snape';
-import Cups from './commands/cups';
 
 const logger = winston.createLogger({
     transports: [
@@ -43,19 +33,16 @@ const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 const commands = new Discord.Collection<string, Command>();
 const cooldowns = new Discord.Collection<string, Discord.Collection<string, number>>();
 
-//const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.ts') && !file.endsWith('command.ts'));
-//TODO: Need to figure out a way to dynamically get the command files
-commands.set(Countdown.name, Countdown);
-commands.set(Devitos.name, Devitos);
-commands.set(Dumbly.name, Dumbly);
-commands.set(Flue.name, Flue);
-commands.set(Lightning.name, Lightning);
-commands.set(Points.name, Points);
-commands.set(Cups.name, Cups);
-commands.set(ResetPoints.name, ResetPoints);
-commands.set(Recording.name, Recording);
-commands.set(Snape.name, Snape);
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.ts') && !file.endsWith('command.ts'));
 
+commandFiles.forEach((file) => {
+    import(`./commands/${file}`)
+        .then((module) => {
+            const command = module.default;
+            commands.set(command.name, command);
+        });
+
+});
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');

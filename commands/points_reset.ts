@@ -17,40 +17,6 @@ export class PointsReset extends Command {
             if (!stat)
                 return;
 
-            const points = stat.points[stat.points.length - 1];
-
-            let cups = [
-                { name: 'Gryffindor', points: points.gryffindor },
-                { name: 'Slytherin', points: points.slytherin },
-                { name: 'Hufflepuff', points: points.ravenclaw },
-                { name: 'Ravenclaw', points: points.hufflepuff }
-            ];
-
-            cups.sort((a, b) => b.points - a.points);
-            if (cups[0].points !== cups[1].points) {
-                let new_cup = stat.house_cups;
-
-                switch (cups[0].name) {
-                    case 'Gryffindor':
-                        new_cup.gryffindor++;
-                        break;
-                    case 'Slytherin':
-                        new_cup.slytherin++;
-                        break;
-                    case 'Hufflepuff':
-                        new_cup.hufflepuff++;
-                        break;
-                    case 'Ravenclaw':
-                        new_cup.ravenclaw++;
-                        break;
-
-                }
-                stat.house_cups = new_cup;
-            }
-            else {
-                logger.log('warn', `There was a tie between ${cups[0].name} and ${cups[1].name}`);
-            }
-
             stat.points.push({
                 gryffindor: 0,
                 slytherin: 0,

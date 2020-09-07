@@ -14,7 +14,7 @@ export class Cups extends Command {
 
         const start_time = Date.now();
 
-        Stat.findById(Configs.stats_id).then(stat => {
+        Stat.findById(Configs.stats_id).then((stat) => {
             if (!stat) {
                 return logger.log('error', 'Error getting the stat, check the stat id');
             }

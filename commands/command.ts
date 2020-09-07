@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { Logger } from 'winston';
 
-export abstract class Command {
+export class Command {
     name: string;
     description: string;
     cooldown: number;

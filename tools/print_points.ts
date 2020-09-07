@@ -57,7 +57,10 @@ async function printPoints(message: Message, points: Houses, logger: Logger) {
 
             }
             //for the case with 3 houses tied
-            else if ((gryf_points === slyth_points && slyth_points === raven_points) || (gryf_points === slyth_points && slyth_points === huff_points) || (gryf_points === raven_points && raven_points === huff_points) || (slyth_points === raven_points && raven_points === huff_points)) {
+            else if ((gryf_points === slyth_points && slyth_points === raven_points) ||
+                (gryf_points === slyth_points && slyth_points === huff_points) ||
+                (gryf_points === raven_points && raven_points === huff_points) ||
+                (slyth_points === raven_points && raven_points === huff_points)) {
                 if (houses[0].points === houses[1].points && houses[1].points === houses[2].points) {
                     reply += `${houses[0].house}, ${houses[1].house}, ${houses[2].house} are tied in first place with **${houses[0].points} points!**\n`;
                     reply += `${houses[3].house} is in second place with **${houses[3].points} points!**\n\n`;
