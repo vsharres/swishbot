@@ -1,6 +1,3 @@
-import * as DevKeys from './config_dev'
-import * as ProdKeys from './config_prod'
-
 interface Keys {
   mongoURI: string,
   stats_id: string,
@@ -40,8 +37,10 @@ interface Keys {
 let Configs: Keys;
 
 if (process.env.NODE_ENV === "production") {
+  const ProdKeys = require(`./config_prod`);
   Configs = ProdKeys.keys;
 } else {
+  const DevKeys = require(`./config_dev`);
   Configs = DevKeys.keys;
 }
 
