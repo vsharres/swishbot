@@ -14,7 +14,7 @@ export const keys: Keys = {
 	snape_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
 	cedric_emoji: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_35.png',
 	height: 147, // in cm
-	weight: 48, // in Kg
+	weight: 48000, // in g
 	house_points_channel: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
 	gryffindor_role: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
 	slytherin_role: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
