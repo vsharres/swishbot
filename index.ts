@@ -32,7 +32,7 @@ const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
 const commands = new Discord.Collection<string, Command>();
 const cooldowns = new Discord.Collection<string, Discord.Collection<string, number>>();
-let commandFiles;
+let commandFiles: string[];
 
 if (process.env.NODE_ENV === "production") {
     commandFiles = fs.readdirSync('./build/commands').filter(file => !file.includes('command'));

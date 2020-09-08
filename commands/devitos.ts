@@ -24,7 +24,7 @@ export class Devitos extends Command {
 
             let unit = parsed.replace(/[0-9]/g, '');
             //for the special case of using ' or "
-            const rex = /^(?!$|.*\'[^\x22]+$)(?:([0-9]+)\')?(?:([0-9]+)\x22?)?$/;
+            const rex = /^(?!$|.*\'[^\x22]+$)(?:(\d+(?:.\d+)?)\')?(?:(\d+(?:.\d+)?)\x22?)?$/;
             const match = rex.exec(parsed);
             if (match) {
                 let feet = parseFloat(match[1]) ? parseFloat(match[1]) : 0;
@@ -47,13 +47,25 @@ export class Devitos extends Command {
                 case 'meter':
                     multiplier = 100;
                     break;
+                case 'metres':
+                    multiplier = 100;
+                    break;
+                case 'metre':
+                    multiplier = 100;
+                    break;
                 case 'cm':
                     multiplier = 1;
                     break;
                 case 'centimeters':
                     multiplier = 1;
                     break;
+                case 'centimetres':
+                    multiplier = 1;
+                    break;
                 case 'centimeter':
+                    multiplier = 1;
+                    break;
+                case 'centimetre':
                     multiplier = 1;
                     break;
                 case 'km':
@@ -63,6 +75,12 @@ export class Devitos extends Command {
                     multiplier = 100000;
                     break;
                 case 'kilometer':
+                    multiplier = 100000;
+                    break;
+                case 'kilometres':
+                    multiplier = 100000;
+                    break;
+                case 'kilometre':
                     multiplier = 100000;
                     break;
                 case 'yd':
@@ -121,6 +139,12 @@ export class Devitos extends Command {
                 case 'centimeter':
                     multiplier = 1;
                     break;
+                case 'centimetres':
+                    multiplier = 1;
+                    break;
+                case 'centimetre':
+                    multiplier = 1;
+                    break;
                 case 'm':
                     multiplier = 100;
                     break;
@@ -130,6 +154,12 @@ export class Devitos extends Command {
                 case 'meters':
                     multiplier = 100;
                     break;
+                case 'metre':
+                    multiplier = 100;
+                    break;
+                case 'metres':
+                    multiplier = 100;
+                    break;
                 case 'km':
                     multiplier = 100000;
                     break;
@@ -137,6 +167,12 @@ export class Devitos extends Command {
                     multiplier = 100000;
                     break;
                 case 'kilometers':
+                    multiplier = 100000;
+                    break;
+                case 'kilometre':
+                    multiplier = 100000;
+                    break;
+                case 'kilometres':
                     multiplier = 100000;
                     break;
                 case 'mi':
@@ -180,7 +216,7 @@ export class Devitos extends Command {
             return message.channel.send(`${message.author.toString()} ${amount} ${unit} is ${string_devitos} ${Configs.command_prefix}!`);
 
         }
-        else if (args.length === 3) {
+        else if (args.length === 4 && !isNaN(parseFloat(args[0])) && !isNaN(parseFloat(args[2]))) {
             let firstAmount = 0;
             let secondAmount = 0;
             let firstmultiplier = 1;
