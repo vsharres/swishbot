@@ -32,17 +32,18 @@ const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
 const commands = new Discord.Collection<string, Command>();
 const cooldowns = new Discord.Collection<string, Discord.Collection<string, number>>();
+let commandFiles;
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.ts') && !file.endsWith('command.ts'));
+if (process.env.NODE_ENV === "production") {
+    commandFiles = fs.readdirSync('./build/commands').filter(file => !file.includes('command'));
+} else {
+    commandFiles = fs.readdirSync('./commands').filter(file => !file.includes('command'));
+}
 
-commandFiles.forEach((file) => {
-    import(`./commands/${file}`)
-        .then((module) => {
-            const command = module.default;
-            commands.set(command.name, command);
-        });
-
-});
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`)
+    commands.set(command.default.name, command.default);
+}
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');
