@@ -16,6 +16,7 @@ export const keys: Keys = {
 	height: 147, // in cm
 	weight: 48000, // in g
 	house_points_channel: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
+	trophy_room_channel: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
 	gryffindor_role: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
 	slytherin_role: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
 	ravenclaw_role: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',

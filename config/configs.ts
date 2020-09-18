@@ -14,6 +14,7 @@ interface Keys {
   height: number, // in cm
   weight: number, // in Kg
   house_points_channel: string,
+  trophy_room_channel: string,
   gryffindor_role: string,
   slytherin_role: string,
   ravenclaw_role: string,

@@ -1,8 +1,9 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Logger } from 'winston';
 import { Command } from './command';
+import { printcups } from '../tools/print_cups';
 
 export class Award extends Command {
 
@@ -16,6 +17,10 @@ export class Award extends Command {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.name} ${this.usage}\``)
                 .catch(err => logger.log('error', err));
         }
+
+        const guild = message.guild;
+        if (!guild) return;
+        const trophy_channel = <TextChannel>guild.channels.cache.get(Configs.trophy_room_channel);
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -54,6 +59,8 @@ export class Award extends Command {
 
             stat.house_cups = cups;
 
+            printcups(trophy_channel, cups, logger, true);
+
             stat
                 .save()
                 .then(() => {
@@ -62,6 +69,8 @@ export class Award extends Command {
                         .catch(err => logger.log('error', err));
                 })
                 .catch(err => logger.log('error', err));
+
+
 
         })
             .catch(err => logger.log('error', err));

@@ -1,7 +1,7 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Logger } from 'winston';
 import { Command } from './command';
 
@@ -23,8 +23,11 @@ export class PointsReset extends Command {
                 ravenclaw: 0,
                 hufflepuff: 0
             });
+            const guild = message.guild;
+            if (!guild) return;
+            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
 
-            printPoints(message, stat.points[stat.points.length - 1], logger);
+            printPoints(hourglass_channel, stat.points[stat.points.length - 1], logger, true);
 
             stat
                 .save()

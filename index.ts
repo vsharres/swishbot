@@ -1,4 +1,4 @@
-import Discord from 'discord.js';
+import Discord, { TextChannel } from 'discord.js';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import { Configs } from './config/configs';
@@ -26,8 +26,6 @@ mongoose
     .then(() => logger.log('info', 'MongoDB Connected'))
     .catch(err => logger.log('error', err));
 
-//import("./commands/devitos").then(command => logger.log('info', "devitos"));
-
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
 
 const commands = new Discord.Collection<string, Command>();
@@ -44,6 +42,8 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
     commands.set(command.default.name, command.default);
 }
+
+
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');
@@ -83,6 +83,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         return;
     }
     const guildMember = guild.members.cache.get(user.id);
+
+    const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
 
     //No reactions on your own message
     if (reaction.message.author.id === user.id) {
@@ -171,7 +173,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             })
             .catch(err => logger.log('error', err));
 
-        printPoints(reaction.message, points, logger);
+        printPoints(hourglass_channel, points, logger, true);
 
     });
 

@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { MessageAttachment, Message } from 'discord.js';
+import { MessageAttachment, Message, TextChannel } from 'discord.js';
 import { printPoints } from '../tools/print_points';
 import { Logger } from 'winston';
 import { Command } from './command';
@@ -17,6 +17,10 @@ export class Dumbly extends Command {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.name} ${this.usage}\``)
                 .catch(err => logger.log('error', err));
         }
+
+        const guild = message.guild;
+        if (!guild) return;
+        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -79,7 +83,7 @@ export class Dumbly extends Command {
                 })
                 .catch(err => logger.log('error', err));
 
-            printPoints(message, points, logger);
+            printPoints(hourglass_channel, points, logger, true);
         })
             .catch(err => logger.log('error', err));
     }
