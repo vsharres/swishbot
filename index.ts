@@ -155,7 +155,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
 
-        let points = stat.points[stat.points.length - 1];
+        let points = stat.points;
         points.gryffindor += pointsToAdd.gryffindor;
         if (points.gryffindor <= 0) points.gryffindor = 0;
         points.ravenclaw += pointsToAdd.ravenclaw;

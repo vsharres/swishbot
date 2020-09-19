@@ -5,11 +5,6 @@ const StatSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    head_pupils: [{
-        member: {
-            type: String
-        }
-    }],
     lightnings: [{
         member: {
             type: String
@@ -32,7 +27,7 @@ const StatSchema = new Schema({
             type: Number
         }
     },
-    points: [{
+    points: {
         gryffindor: {
             type: Number
         },
@@ -45,7 +40,7 @@ const StatSchema = new Schema({
         hufflepuff: {
             type: Number
         }
-    }]
+    }
 
 });
 
@@ -68,10 +63,9 @@ export interface HeadPupil {
 
 interface IStatSchema extends Document {
     recording_date: Date;
-    head_pupils: HeadPupil[];
     lightnings: Lightning[];
     house_cups: Houses;
-    points: Houses[]
+    points: Houses
 }
 
 export default model<IStatSchema>("stats", StatSchema);

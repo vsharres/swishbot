@@ -29,7 +29,7 @@ export class Dumbly extends Command {
                 return;
             }
 
-            let points = stat.points[stat.points.length - 1];
+            let points = stat.points;
 
             let parsed = args.shift();
             if (!parsed) {
@@ -69,7 +69,7 @@ export class Dumbly extends Command {
                     break;
             }
 
-            stat.points[stat.points.length - 1] = points;
+            stat.points = points;
 
             stat
                 .save()

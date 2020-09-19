@@ -20,7 +20,7 @@ export class Points extends Command {
                         return logger.log('error', 'Error getting the stat, check the stat id');
                     }
 
-                    const points = stat.points[stat.points.length - 1];
+                    const points = stat.points;
 
                     return printPoints(<TextChannel>message.channel, points, logger);
 

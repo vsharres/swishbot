@@ -17,17 +17,13 @@ export class PointsReset extends Command {
             if (!stat)
                 return;
 
-            stat.points.push({
-                gryffindor: 0,
-                slytherin: 0,
-                ravenclaw: 0,
-                hufflepuff: 0
-            });
+            stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+
             const guild = message.guild;
             if (!guild) return;
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
 
-            printPoints(hourglass_channel, stat.points[stat.points.length - 1], logger, true);
+            printPoints(hourglass_channel, stat.points, logger, true);
 
             stat
                 .save()
