@@ -8,13 +8,13 @@ import { Command } from './command';
 export class Snape extends Command {
 
     constructor() {
-        super("snape", '', 10, '<house> <points>', true, true);
+        super(["snape", "megans_favorite_teacher"], '', 10, '<house> <points>', true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {
 
         if (args.length !== 2 || isNaN(parseFloat(args[1]))) {
-            return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.name} ${this.usage}\``)
+            return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
                 .catch(err => logger.log('error', err));
         }
 

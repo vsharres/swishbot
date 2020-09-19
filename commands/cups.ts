@@ -8,7 +8,7 @@ import { printcups } from '../tools/print_cups';
 export class Cups extends Command {
 
     constructor() {
-        super("cups", '', 10, '');
+        super(["cups"], '', 10, '');
     }
 
     async execute(message: Message, arg: string[], logger: Logger) {

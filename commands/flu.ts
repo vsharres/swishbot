@@ -6,7 +6,7 @@ import { Command } from './command';
 export class Flu extends Command {
 
     constructor() {
-        super("flu", 'Sends a message to all discord members', 1, '<Roles to Exclude>');
+        super(["flu"], 'Sends a message to all discord members', 1, '<Roles to Exclude>');
     }
 
     async execute(message: Message, args: string[], logger: Logger) {

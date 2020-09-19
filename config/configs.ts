@@ -4,6 +4,7 @@ interface Keys {
   command_prefix: string,
   admin_role_id: string,
   head_pupil_id: string,
+  prefect_id: string,
   hogwarts_IT_id: string,
   general_channel_id: string,
   binger_gif: string,

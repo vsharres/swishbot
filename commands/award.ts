@@ -8,13 +8,13 @@ import { printcups } from '../tools/print_cups';
 export class Award extends Command {
 
     constructor() {
-        super("award_cup", 'Award the house cup for the recording', 60, '<house>', true, true);
+        super(["award_cup"], 'Award the house cup for the recording', 60, '<house>', true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {
 
         if (args.length !== 1 || !isNaN(parseFloat(args[0]))) {
-            return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.name} ${this.usage}\``)
+            return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
                 .catch(err => logger.log('error', err));
         }
 

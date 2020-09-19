@@ -8,7 +8,7 @@ import { Command } from './command';
 export class Recording extends Command {
 
     constructor() {
-        super("recording", 'Start the recording, prompting the chat for volunteers to be the head pupil', 30, '<date> <time>', true, true);
+        super(["recording"], 'Start the recording, prompting the chat for volunteers to be the head pupil', 30, '<date> <time>', true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {

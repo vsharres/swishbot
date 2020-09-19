@@ -40,7 +40,12 @@ if (process.env.NODE_ENV === "production") {
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`)
-    commands.set(command.default.name, command.default);
+    const names = command.default.names;
+
+    names.forEach((name: string) => {
+        commands.set(name, command.default);
+    });
+
 }
 
 
@@ -246,6 +251,7 @@ client.on('message', async message => {
     if (!command) {
         return;
     }
+
     const isAdminRole = member.roles.cache.has(Configs.admin_role_id);
     const isITRole = member.roles.cache.has(Configs.hogwarts_IT_id);
 
@@ -255,17 +261,24 @@ client.on('message', async message => {
     }
 
     const headRole = member.roles.cache.has(Configs.head_pupil_id);
+
     if (command.head_pupil && (headRole === false && isAdminRole === false && isITRole === false)) {
         logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.head_pupil_id}`);
         return;
     }
 
-    if (!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new Discord.Collection<string, number>());
+    const prefectRole = member.roles.cache.has(Configs.prefect_id)
+    if (command.prefect && (prefectRole === false && isAdminRole === false && isITRole === false)) {
+        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.head_pupil_id}`);
+        return;
+    }
+
+    if (!cooldowns.has(commandName)) {
+        cooldowns.set(commandName, new Discord.Collection<string, number>());
     }
 
     const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
+    const timestamps = cooldowns.get(commandName);
     if (!timestamps) {
         logger.log('error', `Error at getting the time stamps`);
         return;
@@ -274,7 +287,7 @@ client.on('message', async message => {
     if ((command.args && !args.length) || (command.attachments && message.attachments.size === 0)) {
         let reply = `You didn't provide any arguments, ${message.author.toString()}!`;
         if (command.usage) {
-            reply += `\nThe proper usage would be: \`${Configs.command_prefix}${command.name} ${command.usage}\``;
+            reply += `\nThe proper usage would be: \`${Configs.command_prefix}${commandName} ${command.usage}\``;
         }
         return member.createDM()
             .then(channel => {
@@ -287,7 +300,7 @@ client.on('message', async message => {
     if (command.attachments && message.attachments.size === 0) {
         let reply = `You didn't provide any attachment, ${message.author.toString()}!`;
         if (command.usage) {
-            reply += `\nThe proper usage would be: \`${Configs.command_prefix}${command.name} ${command.usage}\``;
+            reply += `\nThe proper usage would be: \`${Configs.command_prefix}${commandName} ${command.usage}\``;
         }
         return member.createDM()
             .then(channel => {
@@ -306,17 +319,6 @@ client.on('message', async message => {
             return;
         }
 
-        /** 
-        if (attachment.width ? attachment.width : 0 > command.attachment_size ||
-            attachment.height ? attachment.height : 0 > command.attachment_size) {
-            return member.createDM()
-                .then(channel => {
-                    channel.send(`${message.author.toString()} the attached image must be smaller than ${command.attachment_size}x${command.attachment_size}!`)
-                        .catch(err => console.error(err));
-                })
-                .catch(err => console.error(err));
-        }
-        */
     }
 
     const cooldownAmount = (command.cooldown || 3) * 1000;
@@ -334,7 +336,7 @@ client.on('message', async message => {
             logger.log('info', timeLeft);
             return member.createDM()
                 .then(channel => {
-                    channel.send(`Hello ${message.author.toString()} please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`)
+                    channel.send(`Hello ${message.author.toString()} please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${commandName}\` command.`)
                         .catch(err => console.error(err));
                 })
                 .catch(err => console.error(err));

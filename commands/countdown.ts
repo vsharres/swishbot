@@ -8,7 +8,7 @@ import { Command } from './command';
 export class Countdown extends Command {
 
     constructor() {
-        super("countdown", 'Counts down until the next recording', 5, '');
+        super(["countdown"], 'Counts down until the next recording', 5, '');
     }
 
     async execute(message: Message, args: string[], logger: Logger) {

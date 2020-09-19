@@ -6,6 +6,7 @@ export const keys: Keys = {
 	command_prefix: process.env.COMMAND_PREFIX ? process.env.COMMAND_PREFIX : '',
 	admin_role_id: process.env.ADMIN_ROLE_ID ? process.env.ADMIN_ROLE_ID : '',
 	head_pupil_id: process.env.HEAD_PUPIL ? process.env.HEAD_PUPIL : '',
+	prefect_id: process.env.PREFECT_ID ? process.env.PREFECT_ID : '',
 	hogwarts_IT_id: process.env.HOGWARTS_IT ? process.env.HOGWARTS_IT : '',
 	general_channel_id: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
 	binger_gif: 'https://media.giphy.com/media/JPsFUPp3vLS5q/giphy.gif',

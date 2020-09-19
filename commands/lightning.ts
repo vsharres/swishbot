@@ -7,7 +7,7 @@ import { Command } from './command';
 export class Lightning extends Command {
 
     constructor() {
-        super("lightningbolts", 'Get all of the lightningbolt questions for this recording', 10, '');
+        super(["lightningbolts", "⚡", "lightingbolts", "lightning_bolts"], 'Get all of the lightningbolt questions for this recording', 10, '', false, false, true);
     }
 
     async execute(message: Message, arg: string[], logger: Logger) {
