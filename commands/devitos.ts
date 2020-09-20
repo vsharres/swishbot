@@ -1,4 +1,5 @@
 import { Configs } from '../config/configs';
+import { Units } from '../config/units';
 import { Message } from 'discord.js'
 import { Logger } from 'winston';
 import { Command } from './command';
@@ -40,152 +41,14 @@ export class Devitos extends Command {
 
             }
 
-            switch (unit) {
-                case 'm':
-                    multiplier = 100;
-                    break;
-                case 'meters':
-                    multiplier = 100;
-                    break;
-                case 'meter':
-                    multiplier = 100;
-                    break;
-                case 'metres':
-                    multiplier = 100;
-                    break;
-                case 'metre':
-                    multiplier = 100;
-                    break;
-                case 'cm':
-                    multiplier = 1;
-                    break;
-                case 'centimeters':
-                    multiplier = 1;
-                    break;
-                case 'centimetres':
-                    multiplier = 1;
-                    break;
-                case 'centimeter':
-                    multiplier = 1;
-                    break;
-                case 'centimetre':
-                    multiplier = 1;
-                    break;
-                case 'km':
-                    multiplier = 100000;
-                    break;
-                case 'kilometers':
-                    multiplier = 100000;
-                    break;
-                case 'kilometer':
-                    multiplier = 100000;
-                    break;
-                case 'kilometres':
-                    multiplier = 100000;
-                    break;
-                case 'kilometre':
-                    multiplier = 100000;
-                    break;
-                case 'yd':
-                    multiplier = 91.44;
-                    break;
-                case 'yard':
-                    multiplier = 91.44;
-                    break;
-                case 'yards':
-                    multiplier = 91.44;
-                    break;
-                case 'mi':
-                    multiplier = 160934;
-                    break;
-                case 'mile':
-                    multiplier = 160934;
-                    break;
-                case 'miles':
-                    multiplier = 160934;
-                    break;
-                case 'ly':
-                    multiplier = 1.057e18;
-                    break;
-                case 'light-year':
-                    multiplier = 1.057e18;
-                    break;
-                case 'light-years':
-                    multiplier = 1.057e18;
-                    break;
-                case 'pc':
-                    multiplier = 3.24078e19;
-                    break;
-                case 'parsec':
-                    multiplier = 3.24078e19;
-                    break;
-                case 'parsecs':
-                    multiplier = 3.24078e19;
-                    break;
-                case 'g':
-                    multiplier = 1;
-                    divisor = Configs.weight;
-                    break;
-                case 'gram':
-                    multiplier = 1;
-                    divisor = Configs.weight;
-                    break;
-                case 'grams':
-                    multiplier = 1;
-                    divisor = Configs.weight;
-                    break;
-                case 'kg':
-                    multiplier = 1000;
-                    divisor = Configs.weight;
-                    break;
-                case 'kilogram':
-                    multiplier = 1000;
-                    divisor = Configs.weight;
-                    break;
-                case 'kilograms':
-                    multiplier = 1000;
-                    divisor = Configs.weight;
-                    break;
-                case 't':
-                    multiplier = 1000000;
-                    divisor = Configs.weight;
-                    break;
-                case 'tonne':
-                    multiplier = 1000000;
-                    divisor = Configs.weight;
-                    break;
-                case 'tonnes':
-                    multiplier = 1000000;
-                    divisor = Configs.weight;
-                    break;
-                case 'lb':
-                    multiplier = 453.59;
-                    divisor = Configs.weight;
-                    break;
-                case 'pound':
-                    multiplier = 453.59;
-                    divisor = Configs.weight;
-                    break;
-                case 'pounds':
-                    multiplier = 453.59;
-                    divisor = Configs.weight;
-                    break;
-                case 'oz':
-                    multiplier = 28.35;
-                    divisor = Configs.weight;
-                    break;
-                case 'ounce':
-                    multiplier = 28.35;
-                    divisor = Configs.weight;
-                    break;
-                case 'ounces':
-                    multiplier = 28.35;
-                    divisor = Configs.weight;
-                    break;
-                default:
-                    return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                        .catch(err => logger.log('error', err));
+            const Unit = Units.get(unit)
+            if (!Unit) {
+                return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
+                    .catch(err => logger.log('error', err));
             }
+            multiplier = Unit.multiplier;
+            divisor = Unit.divisor;
+
 
             parsed = parsed.substring(0, parsed.length - unit.length);
             const amount = parseFloat(parsed);
@@ -211,153 +74,18 @@ export class Devitos extends Command {
 
             let amount = parseFloat(parsed);
             let unit = args.shift();
-
-            switch (unit) {
-                case 'm':
-                    multiplier = 100;
-                    break;
-                case 'meters':
-                    multiplier = 100;
-                    break;
-                case 'meter':
-                    multiplier = 100;
-                    break;
-                case 'metres':
-                    multiplier = 100;
-                    break;
-                case 'metre':
-                    multiplier = 100;
-                    break;
-                case 'cm':
-                    multiplier = 1;
-                    break;
-                case 'centimeters':
-                    multiplier = 1;
-                    break;
-                case 'centimetres':
-                    multiplier = 1;
-                    break;
-                case 'centimeter':
-                    multiplier = 1;
-                    break;
-                case 'centimetre':
-                    multiplier = 1;
-                    break;
-                case 'km':
-                    multiplier = 100000;
-                    break;
-                case 'kilometers':
-                    multiplier = 100000;
-                    break;
-                case 'kilometer':
-                    multiplier = 100000;
-                    break;
-                case 'kilometres':
-                    multiplier = 100000;
-                    break;
-                case 'kilometre':
-                    multiplier = 100000;
-                    break;
-                case 'yd':
-                    multiplier = 91.44;
-                    break;
-                case 'yard':
-                    multiplier = 91.44;
-                    break;
-                case 'yards':
-                    multiplier = 91.44;
-                    break;
-                case 'mi':
-                    multiplier = 160934;
-                    break;
-                case 'mile':
-                    multiplier = 160934;
-                    break;
-                case 'miles':
-                    multiplier = 160934;
-                    break;
-                case 'ly':
-                    multiplier = 1.057e18;
-                    break;
-                case 'light-year':
-                    multiplier = 1.057e18;
-                    break;
-                case 'light-years':
-                    multiplier = 1.057e18;
-                    break;
-                case 'pc':
-                    multiplier = 3.24078e19;
-                    break;
-                case 'parsec':
-                    multiplier = 3.24078e19;
-                    break;
-                case 'parsecs':
-                    multiplier = 3.24078e19;
-                    break;
-                case 'g':
-                    multiplier = 1;
-                    divisor = Configs.weight;
-                    break;
-                case 'gram':
-                    multiplier = 1;
-                    divisor = Configs.weight;
-                    break;
-                case 'grams':
-                    multiplier = 1;
-                    divisor = Configs.weight;
-                    break;
-                case 'kg':
-                    multiplier = 1000;
-                    divisor = Configs.weight;
-                    break;
-                case 'kilogram':
-                    multiplier = 1000;
-                    divisor = Configs.weight;
-                    break;
-                case 'kilograms':
-                    multiplier = 1000;
-                    divisor = Configs.weight;
-                    break;
-                case 't':
-                    multiplier = 1000000;
-                    divisor = Configs.weight;
-                    break;
-                case 'tonne':
-                    multiplier = 1000000;
-                    divisor = Configs.weight;
-                    break;
-                case 'tonnes':
-                    multiplier = 1000000;
-                    divisor = Configs.weight;
-                    break;
-                case 'lb':
-                    multiplier = 453.59;
-                    divisor = Configs.weight;
-                    break;
-                case 'pound':
-                    multiplier = 453.59;
-                    divisor = Configs.weight;
-                    break;
-                case 'pounds':
-                    multiplier = 453.59;
-                    divisor = Configs.weight;
-                    break;
-                case 'oz':
-                    multiplier = 28.35;
-                    divisor = Configs.weight;
-                    break;
-                case 'ounce':
-                    multiplier = 28.35;
-                    divisor = Configs.weight;
-                    break;
-                case 'ounces':
-                    multiplier = 28.35;
-                    divisor = Configs.weight;
-                    break;
-                default:
-                    return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                        .catch(err => logger.log('error', err));
+            if (!unit) {
+                return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
+                    .catch(err => logger.log('error', err));
             }
+
+            const Unit = Units.get(unit)
+            if (!Unit) {
+                return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
+                    .catch(err => logger.log('error', err));
+            }
+            multiplier = Unit.multiplier;
+            divisor = Unit.divisor;
 
             const devitos = (amount * multiplier / divisor);
             const string_devitos = new Intl.NumberFormat('en-IN').format(devitos);
