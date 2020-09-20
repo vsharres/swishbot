@@ -47,12 +47,13 @@ export class Snape extends Command {
 
             house = house.toLowerCase();
             let name = 'Gryffindor 🦁';
-            let content = `Snape removes ${amount} from **${name} points**\n`;
+            let content: string;
 
             switch (house) {
                 case 'gryffindor':
                     points.gryffindor -= amount;
                     if (points.gryffindor <= 0) points.gryffindor = 0;
+                    content = `Snape removes ${amount} from **${name} points**\n`
                     break;
                 case 'slytherin':
                     points.slytherin += amount;
@@ -63,15 +64,18 @@ export class Snape extends Command {
                     points.ravenclaw -= amount;
                     if (points.ravenclaw <= 0) points.ravenclaw = 0;
                     name = 'Ravenclaw 🦅';
+                    content = `Snape removes ${amount} from **${name} points**\n`
                     break;
                 case 'hufflepuff':
                     points.hufflepuff -= amount;
                     if (points.hufflepuff <= 0) points.hufflepuff = 0;
                     name = 'Hufflepuff 🦡';
+                    content = `Snape removes ${amount} from **${name} points**\n`
                     break;
                 default:
                     points.gryffindor -= amount;
                     if (points.gryffindor <= 0) points.gryffindor = 0;
+                    content = `Snape removes ${amount} from **${name} points**\n`
                     break;
             }
 

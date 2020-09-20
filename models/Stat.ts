@@ -56,16 +56,12 @@ export interface Lightning {
     question: string;
 }
 
-export interface HeadPupil {
-    member: string;
-    date: string;
-}
 
 interface IStatSchema extends Document {
     recording_date: Date;
     lightnings: Lightning[];
     house_cups: Houses;
-    points: Houses
+    points: Houses;
 }
 
 export default model<IStatSchema>("stats", StatSchema);

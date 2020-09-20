@@ -41,14 +41,13 @@ export class Devitos extends Command {
 
             }
 
-            const Unit = Units.get(unit)
+            const Unit = Units.get(unit);
             if (!Unit) {
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
                     .catch(err => logger.log('error', err));
             }
             multiplier = Unit.multiplier;
             divisor = Unit.divisor;
-
 
             parsed = parsed.substring(0, parsed.length - unit.length);
             const amount = parseFloat(parsed);
@@ -63,7 +62,7 @@ export class Devitos extends Command {
         }
         //for more than one arg in the command, as if the unit is separate from the number
         else if (args.length == 2 && !isNaN(parseFloat(args[0]))) {
-            let parsed = args.shift();
+            const parsed = args.shift();
             let multiplier = 1;
             let divisor = Configs.height;
             if (!parsed) {
@@ -79,7 +78,7 @@ export class Devitos extends Command {
                     .catch(err => logger.log('error', err));
             }
 
-            const Unit = Units.get(unit)
+            const Unit = Units.get(unit);
             if (!Unit) {
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
                     .catch(err => logger.log('error', err));
