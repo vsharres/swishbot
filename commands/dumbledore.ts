@@ -76,7 +76,7 @@ export class Dumbly extends Command {
                 .then(() => {
                     message.channel
                         .send({
-                            content: `Dumbly awards ${name} with **${amount} points!**\n`,
+                            content: `Dumbly awards ${name} **${amount} points!**\n`,
                             files: [new MessageAttachment(Configs.dumbly_emoji)]
                         })
                         .catch(err => logger.log('error', err));

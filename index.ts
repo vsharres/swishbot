@@ -159,6 +159,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (!stat) {
             return;
         }
+        const elapsed_time = Math.abs(Date.now() - stat.recording_date.getTime());
+
+        if (elapsed_time > 43200000) {
+            return;
+        }
 
         let points = stat.points;
         points.gryffindor += pointsToAdd.gryffindor;
