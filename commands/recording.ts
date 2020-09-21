@@ -1,9 +1,10 @@
 import moment from 'moment-timezone';
 import Stat, { Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message } from 'discord.js';
+import { Message, TextChannel } from 'discord.js';
 import { Logger } from 'winston';
 import { Command } from './command';
+import { printPoints } from '../tools/print_points';
 
 export class Recording extends Command {
 
@@ -24,8 +25,21 @@ export class Recording extends Command {
 
             if (!stat) return;
 
+            const guild = message.guild;
+            if (!guild) return;
+            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
+
             stat.recording_date = new Date(zoned);
             stat.lightnings = new Array<Lightning>();
+            stat.points = {
+                gryffindor: 0,
+                slytherin: 0,
+                ravenclaw: 0,
+                hufflepuff: 0
+            };
+
+            printPoints(hourglass_channel, stat.points, logger, true);
+
             stat
                 .save()
                 .then(() => {
