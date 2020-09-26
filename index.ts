@@ -171,7 +171,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
         points.ravenclaw += pointsToAdd.ravenclaw;
         //if (points.ravenclaw <= 0) points.ravenclaw = 0;
         points.slytherin += pointsToAdd.slytherin;
-        //if (points.slytherin <= 0) points.slytherin = 0;
+        if (points.slytherin <= 0) points.slytherin = 0;
         points.hufflepuff += pointsToAdd.hufflepuff;
         //if (points.hufflepuff <= 0) points.hufflepuff = 0;
 
