@@ -48,8 +48,6 @@ for (const file of commandFiles) {
 
 }
 
-
-
 client.once('ready', () => {
     logger.log('info', 'Ready!');
 
@@ -167,13 +165,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
         let points = stat.points;
         points.gryffindor += pointsToAdd.gryffindor;
-        //if (points.gryffindor <= 0) points.gryffindor = 0;
+        if (points.gryffindor <= 0) points.gryffindor = 0;
         points.ravenclaw += pointsToAdd.ravenclaw;
-        //if (points.ravenclaw <= 0) points.ravenclaw = 0;
+        if (points.ravenclaw <= 0) points.ravenclaw = 0;
         points.slytherin += pointsToAdd.slytherin;
         if (points.slytherin <= 0) points.slytherin = 0;
         points.hufflepuff += pointsToAdd.hufflepuff;
-        //if (points.hufflepuff <= 0) points.hufflepuff = 0;
+        if (points.hufflepuff <= 0) points.hufflepuff = 0;
 
         stat
             .save()

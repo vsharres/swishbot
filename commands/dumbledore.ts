@@ -8,12 +8,13 @@ import { Command } from './command';
 export class Dumbly extends Command {
 
     constructor() {
-        super(["dumbly", "dumbledore"], '', 10, '<house> <points>', true, true);
+        super(["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡"], '', 10, '<house> <points>', true, true, true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {
 
-        if (args.length !== 2 || isNaN(parseFloat(args[1]))) {
+        if (args.length == 2 && isNaN(parseFloat(args[1])) ||
+            args.length == 1 && isNaN(parseFloat(args[0]))) {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
                 .catch(err => logger.log('error', err));
         }
@@ -30,43 +31,91 @@ export class Dumbly extends Command {
             }
 
             let points = stat.points;
-
-            let parsed = args.shift();
-            if (!parsed) {
-                logger.log('error', 'Error shifting the house.');
-                return;
-            }
-            let house = parsed;
-
-            parsed = args.shift();
-            if (!parsed) {
-                logger.log('error', 'Error shifting the amount.');
-                return;
-            }
-            const amount = parseFloat(parsed);
-
-            house = house.toLowerCase();
+            let parsed: string | undefined;
+            let amount = 0;
             let name = 'Gryffindor 🦁';
+            let messageToSent: any;
 
-            switch (house) {
-                case 'gryffindor':
-                    points.gryffindor += amount;
-                    break;
-                case 'slytherin':
-                    points.slytherin += amount;
-                    name = 'Slytherin 🐍';
-                    break;
-                case 'ravenclaw':
-                    points.ravenclaw += amount;
-                    name = 'Ravenclaw 🦅';
-                    break;
-                case 'hufflepuff':
-                    points.hufflepuff += amount;
-                    name = 'Hufflepuff 🦡';
-                    break;
-                default:
-                    points.gryffindor += amount;
-                    break;
+
+            if (args.length == 2) {
+                parsed = args.shift();
+                if (!parsed) {
+                    logger.log('error', 'Error shifting the house.');
+                    return;
+                }
+                let house = parsed;
+
+                parsed = args.shift();
+                if (!parsed) {
+                    logger.log('error', 'Error shifting the amount.');
+                    return;
+                }
+                amount = parseFloat(parsed);
+
+                house = house.toLowerCase();
+
+
+                switch (house) {
+                    case 'gryffindor':
+                        points.gryffindor += amount;
+                        break;
+                    case 'slytherin':
+                        points.slytherin += amount;
+                        name = 'Slytherin 🐍';
+                        break;
+                    case 'ravenclaw':
+                        points.ravenclaw += amount;
+                        name = 'Ravenclaw 🦅';
+                        break;
+                    case 'hufflepuff':
+                        points.hufflepuff += amount;
+                        name = 'Hufflepuff 🦡';
+                        break;
+                    default:
+                        points.gryffindor += amount;
+                        break;
+                }
+
+                messageToSent = {
+                    content: `Dumbly awards ${name} **${amount} points!**\n`,
+                    files: [new MessageAttachment(Configs.dumbly_emoji)]
+                }
+            }
+            else {
+
+                parsed = args.shift();
+                if (!parsed) {
+                    logger.log('error', 'Error shifting the amount.');
+                    return;
+                }
+                amount = parseFloat(parsed);
+                let messageCommands = message.content.slice(Configs.command_prefix.length).split(/ +/);
+                const house = messageCommands[1];
+
+                switch (house) {
+                    case "🦁":
+                        points.gryffindor += amount;
+
+                        break;
+                    case "🐍":
+                        points.slytherin += amount;
+                        name = 'Slytherin 🐍';
+                        break;
+                    case "🦅":
+                        points.ravenclaw += amount;
+                        name = 'Ravenclaw 🦅';
+                        break;
+                    case "🦡":
+                        points.hufflepuff += amount;
+                        name = 'Hufflepuff 🦡';
+                        break;
+
+                }
+
+                messageToSent = {
+                    content: `**${amount} points** to ${name}!!`
+                };
+
             }
 
             stat.points = points;
@@ -76,8 +125,8 @@ export class Dumbly extends Command {
                 .then(() => {
                     message.channel
                         .send({
-                            content: `Dumbly awards ${name} **${amount} points!**\n`,
-                            files: [new MessageAttachment(Configs.dumbly_emoji)]
+                            content: messageToSent.content,
+                            files: messageToSent.files
                         })
                         .catch(err => logger.log('error', err));
                 })
