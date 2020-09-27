@@ -20,7 +20,7 @@ export class Award extends Command {
 
         const guild = message.guild;
         if (!guild) return;
-        const trophy_channel = <TextChannel>guild.channels.cache.get(Configs.trophy_room_channel);
+        const trophy_channel = <TextChannel>guild.channels.cache.get(Configs.channel_trophy_room);
 
         Stat.findById(Configs.stats_id).then((stat) => {
 

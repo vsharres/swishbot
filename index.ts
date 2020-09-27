@@ -87,7 +87,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
     const guildMember = guild.members.cache.get(user.id);
 
-    const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
+    const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
     //No reactions on your own message
     if (reaction.message.author.id === user.id) {
@@ -98,8 +98,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         logger.log('error', `error getting the guildmemers`);
         return;
     }
-    const adminRole = guildMember.roles.cache.has(Configs.admin_role_id);
-    const headRole = guildMember.roles.cache.has(Configs.head_pupil_id);
+    const adminRole = guildMember.roles.cache.has(Configs.role_admin);
+    const headRole = guildMember.roles.cache.has(Configs.role_head_pupil);
 
     if (adminRole === false && headRole === false) {
         return;
@@ -133,16 +133,16 @@ client.on('messageReactionAdd', async (reaction, user) => {
     member.roles.cache.each(role => {
 
         switch (role.id) {
-            case Configs.gryffindor_role:
+            case Configs.role_gryffindor:
                 pointsToAdd.gryffindor += points;
                 break;
-            case Configs.slytherin_role:
+            case Configs.role_slytherin:
                 pointsToAdd.slytherin += points;
                 break;
-            case Configs.ravenclaw_role:
+            case Configs.role_ravenclaw:
                 pointsToAdd.ravenclaw += points;
                 break;
-            case Configs.hufflepuff_role:
+            case Configs.role_hufflepuff:
                 pointsToAdd.hufflepuff += points;
                 break;
 
@@ -255,24 +255,24 @@ client.on('message', async message => {
         return;
     }
 
-    const isAdminRole = member.roles.cache.has(Configs.admin_role_id);
-    const isITRole = member.roles.cache.has(Configs.hogwarts_IT_id);
+    const isAdminRole = member.roles.cache.has(Configs.role_admin);
+    const isITRole = member.roles.cache.has(Configs.role_IT);
 
     if (command.admin && (isAdminRole === false && isITRole === false)) {
-        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.admin_role_id}`);
+        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_admin}`);
         return;
     }
 
-    const headRole = member.roles.cache.has(Configs.head_pupil_id);
+    const headRole = member.roles.cache.has(Configs.role_head_pupil);
 
     if (command.head_pupil && (headRole === false && isAdminRole === false && isITRole === false)) {
-        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.head_pupil_id}`);
+        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_head_pupil}`);
         return;
     }
 
-    const prefectRole = member.roles.cache.has(Configs.prefect_id)
+    const prefectRole = member.roles.cache.has(Configs.role_prefect)
     if (command.prefect && (prefectRole === false && isAdminRole === false && isITRole === false)) {
-        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.head_pupil_id}`);
+        logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_head_pupil}`);
         return;
     }
 

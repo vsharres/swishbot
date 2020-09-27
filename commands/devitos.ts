@@ -16,7 +16,7 @@ export class Devitos extends Command {
         if (args.length === 1) {
             let parsed = args.shift();
             let multiplier = 1;
-            let divisor = Configs.height;
+            let divisor = Configs.devito_height;
             //Need to replace the regex so that . can be parsed out
             if (!parsed) {
                 logger.log('error', `Error parsing the message.`)
@@ -64,7 +64,7 @@ export class Devitos extends Command {
         else if (args.length == 2 && !isNaN(parseFloat(args[0]))) {
             const parsed = args.shift();
             let multiplier = 1;
-            let divisor = Configs.height;
+            let divisor = Configs.devito_height;
             if (!parsed) {
                 logger.log('error', `Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
@@ -101,7 +101,7 @@ export class Devitos extends Command {
             let firstunit = 'feet';
             let secondunit = 'inches';
             let parsed = args.shift();
-            let divisor = Configs.height;
+            let divisor = Configs.devito_height;
             if (!parsed) {
                 logger.log('error', `Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``);

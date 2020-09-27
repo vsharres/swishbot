@@ -20,7 +20,7 @@ export class Snape extends Command {
 
         const guild = message.guild;
         if (!guild) return;
-        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
+        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -87,7 +87,7 @@ export class Snape extends Command {
                     message.channel
                         .send({
                             content: content,
-                            files: [new MessageAttachment(Configs.snape_emoji)]
+                            files: [new MessageAttachment(Configs.emoji_snape)]
                         })
                         .catch(err => logger.log('error', err));
                 })

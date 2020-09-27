@@ -27,7 +27,7 @@ export class Recording extends Command {
 
             const guild = message.guild;
             if (!guild) return;
-            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
+            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
             stat.recording_date = new Date(zoned);
             stat.lightnings = new Array<Lightning>();

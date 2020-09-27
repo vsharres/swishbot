@@ -21,7 +21,7 @@ export class Dumbly extends Command {
 
         const guild = message.guild;
         if (!guild) return;
-        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.house_points_channel);
+        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -49,8 +49,8 @@ export class Dumbly extends Command {
                     logger.log('error', 'Error shifting the amount.');
                     return;
                 }
-                amount = parseFloat(parsed);
 
+                amount = parseFloat(parsed);
                 house = house.toLowerCase();
 
 
@@ -77,7 +77,7 @@ export class Dumbly extends Command {
 
                 messageToSent = {
                     content: `Dumbly awards ${name} **${amount} points!**\n`,
-                    files: [new MessageAttachment(Configs.dumbly_emoji)]
+                    files: [new MessageAttachment(Configs.emoji_dumbly)]
                 }
             }
             else {
@@ -94,7 +94,6 @@ export class Dumbly extends Command {
                 switch (house) {
                     case "🦁":
                         points.gryffindor += amount;
-
                         break;
                     case "🐍":
                         points.slytherin += amount;

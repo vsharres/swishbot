@@ -36,11 +36,6 @@ export class Countdown extends Command {
 
             }
 
-            //lolz
-            if (message.author.id === Configs.fletcher_id) {
-                time_to_recording.add(2000 * 60 * 60);
-            }
-
             const member = message.member;
             const time = time_now.to(time_to_recording);
             if (member) {
