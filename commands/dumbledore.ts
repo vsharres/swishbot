@@ -36,7 +36,6 @@ export class Dumbly extends Command {
             let name = 'Gryffindor 🦁';
             let messageToSent: any;
 
-
             if (args.length == 2) {
                 parsed = args.shift();
                 if (!parsed) {
