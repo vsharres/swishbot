@@ -17,7 +17,7 @@ export class Kicks extends Handler {
             if (message.author.id !== Configs.id_eric_munch ||
                 message.channel.id !== Configs.channel_mod_talk) return;
 
-            message.reply(Configs.gif_peace);
+            message.channel.send(Configs.gif_peace);
 
         });
     }
