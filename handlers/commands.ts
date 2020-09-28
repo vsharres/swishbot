@@ -59,7 +59,6 @@ export class Commands extends Handler {
                 return;
             }
 
-            const isDMChannel = message.channel.type === 'dm';
             const command = commands.get(commandName);
             if (!command) {
                 return;
@@ -105,9 +104,9 @@ export class Commands extends Handler {
                 return member.createDM()
                     .then(channel => {
                         channel.send(reply)
-                            .catch(err => console.error(err));
+                            .catch(err => logger.error(err));
                     })
-                    .catch(err => console.error(err));
+                    .catch(err => logger.error(err));
             }
 
             if (command.attachments && message.attachments.size === 0) {
@@ -118,9 +117,9 @@ export class Commands extends Handler {
                 return member.createDM()
                     .then(channel => {
                         channel.send(reply)
-                            .catch(err => console.error(err));
+                            .catch(err => logger.error(err));
                     })
-                    .catch(err => console.error(err));
+                    .catch(err => logger.error(err));
             }
             else if (command.attachments && message.attachments.size > 0) {
                 const attachments = message.attachments;
@@ -150,9 +149,9 @@ export class Commands extends Handler {
                     return member.createDM()
                         .then(channel => {
                             channel.send(`Hello ${message.author.toString()} please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${commandName}\` command.`)
-                                .catch(err => console.error(err));
+                                .catch(err => logger.error(err));
                         })
-                        .catch(err => console.error(err));
+                        .catch(err => logger.error(err));
                 }
             }
 
@@ -162,13 +161,13 @@ export class Commands extends Handler {
             try {
                 command.execute(message, args, logger);
             } catch (error) {
-                console.error(error);
+                logger.error(error);
                 member.createDM()
                     .then(channel => {
                         channel.send('there was an error trying to execute that command!')
-                            .catch(err => console.error(err));
+                            .catch(err => logger.error(err));
                     })
-                    .catch(err => console.error(err));
+                    .catch(err => logger.error(err));
             }
 
 

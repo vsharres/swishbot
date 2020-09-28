@@ -48,7 +48,6 @@ export class Points extends Handler {
                 return;
             }
             const guildMember = guild.members.cache.get(user.id);
-
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
             //No reactions on your own message
@@ -60,19 +59,13 @@ export class Points extends Handler {
                 logger.log('error', `error getting the guildmemers`);
                 return;
             }
-            const adminRole = guildMember.roles.cache.has(Configs.role_admin);
-            const headRole = guildMember.roles.cache.has(Configs.role_head_pupil);
+            const roles = guildMember.roles.cache;
+            const adminRole = roles.has(Configs.role_admin);
+            const headRole = roles.has(Configs.role_head_pupil);
 
             if (adminRole === false && headRole === false) {
                 return;
             }
-
-            let pointsToAdd = {
-                gryffindor: 0,
-                slytherin: 0,
-                ravenclaw: 0,
-                hufflepuff: 0
-            };
 
             const member = reaction.message.member;
             if (!member) {
@@ -92,25 +85,26 @@ export class Points extends Handler {
                 return;
             }
 
-            member.roles.cache.each(role => {
+            let pointsToAdd = {
+                gryffindor: 0,
+                slytherin: 0,
+                ravenclaw: 0,
+                hufflepuff: 0
+            };
+            const memberRoles = member.roles.cache;
 
-                switch (role.id) {
-                    case Configs.role_gryffindor:
-                        pointsToAdd.gryffindor += points;
-                        break;
-                    case Configs.role_slytherin:
-                        pointsToAdd.slytherin += points;
-                        break;
-                    case Configs.role_ravenclaw:
-                        pointsToAdd.ravenclaw += points;
-                        break;
-                    case Configs.role_hufflepuff:
-                        pointsToAdd.hufflepuff += points;
-                        break;
-
-                }
-
-            });
+            if (memberRoles.has(Configs.role_gryffindor)) {
+                pointsToAdd.gryffindor += points;
+            }
+            else if (memberRoles.has(Configs.role_slytherin)) {
+                pointsToAdd.slytherin += points;
+            }
+            else if (memberRoles.has(Configs.role_ravenclaw)) {
+                pointsToAdd.ravenclaw += points;
+            }
+            else if (memberRoles.has(Configs.role_hufflepuff)) {
+                pointsToAdd.hufflepuff += points;
+            }
 
             //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
             if (pointsToAdd.gryffindor === 0 && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;

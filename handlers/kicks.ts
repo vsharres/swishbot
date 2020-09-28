@@ -1,4 +1,4 @@
-import { Client, MessageAttachment } from 'discord.js';
+import { Client } from 'discord.js';
 import { Logger } from 'winston';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
