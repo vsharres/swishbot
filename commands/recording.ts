@@ -31,12 +31,6 @@ export class Recording extends Command {
 
             stat.recording_date = new Date(zoned);
             stat.lightnings = new Array<Lightning>();
-            stat.points = {
-                gryffindor: 0,
-                slytherin: 0,
-                ravenclaw: 0,
-                hufflepuff: 0
-            };
 
             printPoints(hourglass_channel, stat.points, logger, true);
 
