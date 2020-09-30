@@ -7,7 +7,7 @@ import { Configs } from '../config/configs';
 export class Zaps extends Handler {
 
     constructor(client: Client, logger: Logger) {
-        super('handler to get all of the zap questions', client, logger);
+        super('zaps', 'handler to get all of the zap questions', client, logger);
     }
 
     async On() {

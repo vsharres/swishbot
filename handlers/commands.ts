@@ -8,7 +8,7 @@ import { Command } from '../commands/command';
 export class Commands extends Handler {
 
     constructor(client: Client, logger: Logger) {
-        super('handler to get all of the commands to the bot', client, logger);
+        super('command', 'handler to get all of the commands to the bot', client, logger);
     }
 
     async On() {

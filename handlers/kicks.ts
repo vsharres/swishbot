@@ -6,7 +6,7 @@ import { Configs } from '../config/configs';
 export class Kicks extends Handler {
 
     constructor(client: Client, logger: Logger) {
-        super('handler to get all of the zap questions', client, logger);
+        super('kicks', 'handler to get all of the zap questions', client, logger);
     }
 
     async On() {
@@ -17,7 +17,7 @@ export class Kicks extends Handler {
             if (message.author.id !== Configs.id_eric_munch ||
                 message.channel.id !== Configs.channel_mod_talk) return;
 
-            message.channel.send(Configs.gif_peace);
+            message.reply(Configs.gif_peace);
 
         });
     }

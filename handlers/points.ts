@@ -8,7 +8,7 @@ import { printPoints } from '../tools/print_points';
 export class Points extends Handler {
 
     constructor(client: Client, logger: Logger) {
-        super('handler to get reactions from the heads of house and the head pupil', client, logger);
+        super('points', 'handler to get reactions from the heads of house and the head pupil', client, logger);
     }
 
     async On() {
@@ -106,16 +106,8 @@ export class Points extends Handler {
                 pointsToAdd.hufflepuff += points;
             }
 
-            //Return if there is no points to add, this is a sanity check, in the usual mode, this wouldn't be a problem
-            if (pointsToAdd.gryffindor === 0 && pointsToAdd.slytherin === 0 && pointsToAdd.ravenclaw === 0 && pointsToAdd.hufflepuff === 0) return;
-
             Stat.findById(Configs.stats_id).then((stat) => {
                 if (!stat) {
-                    return;
-                }
-                const elapsed_time = Math.abs(Date.now() - stat.recording_date.getTime());
-
-                if (elapsed_time > 43200000) {
                     return;
                 }
 
