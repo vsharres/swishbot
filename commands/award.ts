@@ -55,6 +55,10 @@ export class Award extends Command {
                     cups.hufflepuff++;
                     name = 'Hufflepuff 🦡';
                     break;
+                default:
+                    logger.log('error', 'Error to get the stats, check the id');
+                    return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
+                        .catch(err => logger.log('error', err));
             }
 
             stat.house_cups = cups;
