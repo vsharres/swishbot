@@ -22,8 +22,8 @@ export const keys: Keys = {
 	role_ravenclaw: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',
 	role_hufflepuff: process.env.HUFFLEPUFF_ROLE ? process.env.HUFFLEPUFF_ROLE : '',
 	recording_delay: process.env.RECORDING_DELAY ? process.env.RECORDING_DELAY : '',
-	emoji_addpoints: process.env.EMOJI_ADDPOINTS ? process.env.EMOJI_ADDPOINTS : '',
-	emoji_removepoints: process.env.EMOJI_REMOVEPOINTS ? process.env.EMOJI_REMOVEPOINTS : '',
+	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
+	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	gif_peace: 'https://tenor.com/view/peace-disappear-vanish-gif-9727828',
 	token: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : ''
 }

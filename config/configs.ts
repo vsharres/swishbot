@@ -20,8 +20,8 @@ interface Keys {
   role_ravenclaw: string,
   role_hufflepuff: string,
   recording_delay: string,
-  emoji_addpoints: string,
-  emoji_removepoints: string,
+  emoji_addpoints: string[],
+  emoji_removepoints: string[],
   gif_peace: string,
   token: string,
 }

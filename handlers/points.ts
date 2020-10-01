@@ -75,10 +75,10 @@ export class Points extends Handler {
             let points = 0;
 
             const emoji = reaction.emoji.toString();
-            if (emoji === Configs.emoji_addpoints) {
+            if (Configs.emoji_addpoints.some((addpoint) => addpoint === emoji)) {
                 points = 10;
             }
-            else if (emoji === Configs.emoji_removepoints) {
+            else if (Configs.emoji_removepoints.some((removepoint) => removepoint === emoji)) {
                 points = -10;
             }
             else {
