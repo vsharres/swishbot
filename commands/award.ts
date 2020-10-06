@@ -19,9 +19,12 @@ export class Award extends Command {
         }
 
         const guild = message.guild;
-        if (!guild) return;
-        const trophy_channel = <TextChannel>guild.channels.cache.get(Configs.channel_trophy_room);
+        if (!guild) {
+            logger.log('error', 'Couldn\'t find the server.');
+            return;
+        }
 
+        const trophy_channel = <TextChannel>guild.channels.cache.get(Configs.channel_trophy_room);
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
@@ -57,6 +60,7 @@ export class Award extends Command {
                     break;
                 default:
                     return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
+                        .then(() => logger.log('log', `${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``))
                         .catch(err => logger.log('error', err));
             }
 
@@ -69,6 +73,7 @@ export class Award extends Command {
                 .then(() => {
                     message.channel
                         .send(`The house cup for this recording goes to **${name}!** \n`)
+                        .then(() => logger.log('log', `The house cup for this recording goes to **${name}!** \n`))
                         .catch(err => logger.log('error', err));
                 })
                 .catch(err => logger.log('error', err));

@@ -29,6 +29,7 @@ export class Countdown extends Command {
                     return member.createDM()
                         .then(channel => {
                             channel.send(`There is no recording scheduled yet! Keep up on a lookout for the next one in the #annoucements channel!`)
+                                .then(() => logger.log('log', `There is no recording scheduled yet! Keep up on a lookout for the next one in the #annoucements channel!`))
                                 .catch(err => logger.log('error', err));
                         })
                         .catch(err => logger.log('error', err));
@@ -40,12 +41,16 @@ export class Countdown extends Command {
             const time = time_now.to(time_to_recording);
             if (member) {
                 member.createDM()
-                    .then(channel => {
-                        return channel.send(`The next recording will be ${time}`)
-                            .catch(err => logger.log('error', err));
+                    .then(async channel => {
+                        try {
+                            channel.send(`The next recording will be ${time}`);
+                            return logger.log('info', `The next recording will be ${time}`);
+                        } catch (err) {
+                            return logger.log('error', err);
+                        }
+
                     })
                     .catch(err => logger.log('error', err));
-                logger.log('info', `The next recording will be ${time}`);
             }
 
         })

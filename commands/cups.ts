@@ -22,6 +22,8 @@ export class Cups extends Command {
 
             printcups(<TextChannel>message.channel, cups, logger);
 
+            logger.log('log', 'Error getting the stat, check the stat id');
+
 
         })
             .catch(err => logger.log('error', err));

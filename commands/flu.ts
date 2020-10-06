@@ -1,4 +1,3 @@
-import { Configs } from '../config/configs';
 import { Message } from 'discord.js';
 import { Logger } from 'winston';
 import { Command } from './command';
