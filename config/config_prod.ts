@@ -24,6 +24,10 @@ export const keys: Keys = {
 	recording_delay: process.env.RECORDING_DELAY ? process.env.RECORDING_DELAY : '',
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
+	slytherin_points_multiplier: 20,
+	ravenclaw_points_multiplier: 10,
+	gryffindor_points_multiplier: 10,
+	hufflepuff_points_multiplier: 10,
 	gif_peace: 'https://tenor.com/view/peace-disappear-vanish-gif-9727828',
 	token: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : ''
 }

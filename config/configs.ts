@@ -22,6 +22,10 @@ interface Keys {
   recording_delay: string,
   emoji_addpoints: string[],
   emoji_removepoints: string[],
+  slytherin_points_multiplier: number,
+  ravenclaw_points_multiplier: number,
+  gryffindor_points_multiplier: number,
+  hufflepuff_points_multiplier: number,
   gif_peace: string,
   token: string,
 }

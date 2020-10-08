@@ -41,7 +41,7 @@ export class Zaps extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        this.logger.log('info', `lightning bolt question saved!`);
+                        this.logger.log('info', `Lightning bolt saved: ${message.content}`);
                         message.reply(`Your lightning bolt question was saved!`);
                     })
                     .catch(err => this.logger.log('error', err));

@@ -76,10 +76,10 @@ export class Points extends Handler {
 
             const emoji = reaction.emoji.toString();
             if (Configs.emoji_addpoints.some((addpoint) => addpoint === emoji)) {
-                points = 10;
+                points = 1;
             }
             else if (Configs.emoji_removepoints.some((removepoint) => removepoint === emoji)) {
-                points = -10;
+                points = -1;
             }
             else {
                 return;
@@ -94,15 +94,19 @@ export class Points extends Handler {
             const memberRoles = member.roles.cache;
 
             if (memberRoles.has(Configs.role_gryffindor)) {
+                points *= Configs.gryffindor_points_multiplier;
                 pointsToAdd.gryffindor += points;
             }
             else if (memberRoles.has(Configs.role_slytherin)) {
+                points *= Configs.slytherin_points_multiplier;
                 pointsToAdd.slytherin += points;
             }
             else if (memberRoles.has(Configs.role_ravenclaw)) {
+                points *= Configs.ravenclaw_points_multiplier;
                 pointsToAdd.ravenclaw += points;
             }
             else if (memberRoles.has(Configs.role_hufflepuff)) {
+                points *= Configs.hufflepuff_points_multiplier;
                 pointsToAdd.hufflepuff += points;
             }
 
@@ -124,7 +128,7 @@ export class Points extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', 'Points saved!');
+                        logger.log('info', `Points modified by: ${pointsToAdd}`);
 
                     })
                     .catch(err => logger.log('error', err));
