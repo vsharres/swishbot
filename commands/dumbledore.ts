@@ -111,7 +111,7 @@ export class Dumbly extends Command {
                 }
 
                 messageToSent = {
-                    content: `**${amount} points** to ${name}!!`
+                    content: `**${amount} points** ${amount > 0 ? 'to' : 'from'} ${name}!!`
                 };
 
             }
