@@ -58,6 +58,36 @@ const UnitsArray: Unit[] = [
         divisor: Configs.devito_height
     },
     {
+        name: 'feet',
+        multiplier: 30.48,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'ft',
+        multiplier: 30.48,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'foot',
+        multiplier: 30.48,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'inch',
+        multiplier: 2.54,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'inches',
+        multiplier: 2.54,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'in',
+        multiplier: 2.54,
+        divisor: Configs.devito_height
+    },
+    {
         name: 'km',
         multiplier: 100000,
         divisor: Configs.devito_height
