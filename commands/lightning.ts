@@ -11,6 +11,7 @@ export class Lightning extends Command {
     }
 
     async execute(message: Message, arg: string[], logger: Logger) {
+        if (message.channel.id !== Configs.channel_bot_talk) return;
 
         Stat.findById(Configs.stats_id).then(stat => {
 
@@ -36,7 +37,7 @@ export class Lightning extends Command {
                     }
 
                     for (let bolt = 10 * index; bolt < end; bolt++) {
-                        reply += `${guild.member(stat.lightnings[bolt].member)?.toString()} asks: ${stat.lightnings[bolt].question}\n`;
+                        reply += `${guild.member(stat.lightnings[bolt].member)?.toString()} asks: ${stat.lightnings[bolt].question} votes: ${stat.lightnings[bolt].votes} ${stat.lightnings[bolt].votes > 0 ? 'up' : 'down'}\n`;
                     }
 
                     message.channel.send(reply);

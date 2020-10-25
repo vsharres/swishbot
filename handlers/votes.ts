@@ -40,7 +40,7 @@ export class Votes extends Handler {
             }
             const message = reaction.message;
             //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
-            if (!message.content.startsWith('⚡') || message.channel.id !== Configs.channel_bot_talk) return;
+            if (!message.content.startsWith('⚡')) return;
 
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
@@ -49,7 +49,7 @@ export class Votes extends Handler {
                 return;
             }
             const guildMember = guild.members.cache.get(user.id);
-            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
+
             if (!guildMember) {
                 logger.log('error', `error getting the guildmembers`);
                 return;
@@ -58,6 +58,8 @@ export class Votes extends Handler {
             if (!isPrefect) {
                 return;
             }
+
+            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
             let votes = 0;
             const emoji = reaction.emoji.toString();

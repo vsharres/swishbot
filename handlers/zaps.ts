@@ -43,14 +43,11 @@ export class Zaps extends Handler {
                     return;
                 }
 
-                const bot_talk_channel = <TextChannel>guild.channels.cache.get(Configs.channel_bot_talk);
-
                 stat.lightnings.push(question);
                 stat
                     .save()
                     .then(() => {
                         this.logger.log('info', `Lightning bolt saved: ${message.content}`);
-                        bot_talk_channel.send(message);
 
                     })
                     .catch(err => this.logger.log('error', err));
