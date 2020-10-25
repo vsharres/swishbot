@@ -41,7 +41,7 @@ export class Points extends Handler {
                 }
             }
 
-            //Only the founders and the head pupil can add points to houses. The head pupil can't give points to itself.
+            //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
             if (!guild) {
                 logger.log('error', `error getting the guild of the reaction`);
@@ -61,9 +61,8 @@ export class Points extends Handler {
             }
             const roles = guildMember.roles.cache;
             const adminRole = roles.has(Configs.role_admin);
-            const headRole = roles.has(Configs.role_head_pupil);
 
-            if (adminRole === false && headRole === false) {
+            if (adminRole === false) {
                 return;
             }
 

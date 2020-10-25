@@ -8,7 +8,7 @@ import { Command } from './command';
 export class PointsReset extends Command {
 
     constructor() {
-        super(["points_reset", "reset_points"], '', 10, '', false, true);
+        super(["points_reset", "reset_points"], '', 10, '', false, true, true);
     }
 
     async execute(message: Message, arg: string[], logger: Logger) {

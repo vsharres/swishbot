@@ -8,7 +8,7 @@ import { Command } from './command';
 export class Snape extends Command {
 
     constructor() {
-        super(["snape", "megans_favorite_teacher"], '', 10, '<house> <points>', true, true);
+        super(["snape", "megans_favorite_teacher"], '', 10, '<house> <points>', true, true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {

@@ -12,6 +12,13 @@ const StatSchema = new Schema({
         question: {
             type: String
         },
+        votes: {
+            type: Number
+        },
+        was_awarded: {
+            type: Boolean,
+            default: false
+        }
     }],
     house_cups: {
         gryffindor: {
@@ -54,6 +61,8 @@ export interface Houses {
 export interface Lightning {
     member: string;
     question: string;
+    votes: number;
+    was_awarded: boolean;
 }
 
 

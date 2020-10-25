@@ -72,16 +72,9 @@ export class Commands extends Handler {
                 return;
             }
 
-            const headRole = member.roles.cache.has(Configs.role_head_pupil);
-
-            if (command.head_pupil && (headRole === false && isAdminRole === false && isITRole === false)) {
-                logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_head_pupil}`);
-                return;
-            }
-
             const prefectRole = member.roles.cache.has(Configs.role_prefect)
             if (command.prefect && (prefectRole === false && isAdminRole === false && isITRole === false)) {
-                logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_head_pupil}`);
+                logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_prefect}`);
                 return;
             }
 

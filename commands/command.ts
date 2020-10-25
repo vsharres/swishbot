@@ -9,7 +9,6 @@ export class Command {
     args: boolean;
     admin: boolean;
     prefect: boolean;
-    head_pupil: boolean;
     attachments: boolean;
     attachment_size: number;
     async execute(message: Message, args: string[], logger: Logger): Promise<any> { }
@@ -21,7 +20,6 @@ export class Command {
         args: boolean = false,
         admin: boolean = false,
         prefect: boolean = false,
-        head_pupil: boolean = false,
         attachments: boolean = false,
         attachment_size: number = 0) {
 
@@ -33,7 +31,6 @@ export class Command {
         this.args = args;
         this.admin = admin;
         this.prefect = prefect;
-        this.head_pupil = head_pupil;
         this.attachments = attachments;
         this.attachment_size = attachment_size;
     }

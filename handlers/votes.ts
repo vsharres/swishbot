@@ -1,0 +1,147 @@
+import { Client, TextChannel } from 'discord.js';
+import { Logger } from 'winston';
+import { Handler } from './handler';
+import Stat from '../models/Stat';
+import { Configs } from '../config/configs';
+import { printPoints } from '../tools/print_points';
+
+export class Votes extends Handler {
+    constructor(client: Client, logger: Logger) {
+        super('zaps', 'handler to get all of the zap questions', client, logger);
+    }
+
+    async On() {
+        const client = this.client;
+        const logger = this.logger;
+        //Listening to lightningbolts
+        client.on('messageReactionAdd', async (reaction, user) => {
+
+            if (reaction.partial) {
+
+                try {
+                    await reaction.fetch();
+                }
+                catch (error) {
+                    logger.log('error', `Something went wrong when fetching the message: ${error}`);
+                    return;
+                }
+            }
+
+            if (user.partial) {
+
+                try {
+                    await user.fetch();
+
+                }
+                catch (error) {
+                    logger.log('error', `Something went wrong when fetching the user: ${error}`);
+                    return;
+                }
+            }
+            const message = reaction.message;
+            //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
+            if (!message.content.startsWith('⚡') || message.channel.id !== Configs.channel_bot_talk) return;
+
+            //Only the founderscan add points to houses.
+            const guild = reaction.message.guild;
+            if (!guild) {
+                logger.log('error', `error getting the guild of the reaction`);
+                return;
+            }
+            const guildMember = guild.members.cache.get(user.id);
+            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
+            if (!guildMember) {
+                logger.log('error', `error getting the guildmembers`);
+                return;
+            }
+            const isPrefect = guildMember.roles.cache.has(Configs.role_prefect);
+            if (!isPrefect) {
+                return;
+            }
+
+            let votes = 0;
+            const emoji = reaction.emoji.toString();
+            if (Configs.emojis_vote_yes.some((yes) => yes === emoji)) {
+                votes++;
+            }
+            else if (Configs.emojis_vote_no.some((no) => no === emoji)) {
+                votes--;
+            }
+            else {
+                return;
+            }
+
+            Stat.findById(Configs.stats_id).then((stat) => {
+                if (!stat) {
+                    return;
+                }
+
+                let zapIndex = stat.lightnings.findIndex((zap) => zap.question === message.content);
+                if (zapIndex == -1) {
+                    return;
+                }
+                const zap = stat.lightnings[zapIndex];
+                zap.votes += votes;
+
+                if (!zap.was_awarded && (zap.votes >= 3 || zap.votes <= -3)) {
+
+                    let pointsToAdd = {
+                        gryffindor: 0,
+                        slytherin: 0,
+                        ravenclaw: 0,
+                        hufflepuff: 0
+                    };
+                    const memberRoles = guildMember.roles.cache;
+                    let points;
+                    if (memberRoles.has(Configs.role_gryffindor)) {
+                        points = Configs.points_votes * Math.sign(zap.votes);
+                        pointsToAdd.gryffindor += points;
+                    }
+                    else if (memberRoles.has(Configs.role_slytherin)) {
+                        points = Configs.points_votes * Math.sign(zap.votes);
+                        pointsToAdd.slytherin += points;
+                    }
+                    else if (memberRoles.has(Configs.role_ravenclaw)) {
+                        points = Configs.points_votes * Math.sign(zap.votes);
+                        pointsToAdd.ravenclaw += points;
+                    }
+                    else if (memberRoles.has(Configs.role_hufflepuff)) {
+                        points = Configs.points_votes * Math.sign(zap.votes);
+                        pointsToAdd.hufflepuff += points;
+                    }
+                    else {
+                        return;
+                    }
+
+                    stat.points.gryffindor += pointsToAdd.gryffindor;
+                    if (stat.points.gryffindor <= 0) stat.points.gryffindor = 0;
+                    stat.points.ravenclaw += pointsToAdd.ravenclaw;
+                    if (stat.points.ravenclaw <= 0) stat.points.ravenclaw = 0;
+                    stat.points.slytherin += pointsToAdd.slytherin;
+                    if (stat.points.slytherin <= 0) stat.points.slytherin = 0;
+                    stat.points.hufflepuff += pointsToAdd.hufflepuff;
+                    if (stat.points.hufflepuff <= 0) stat.points.hufflepuff = 0;
+
+                    zap.was_awarded = true;
+                    printPoints(hourglass_channel, stat.points, logger, true);
+
+                }
+
+                stat.lightnings[zapIndex] = zap;
+
+                stat
+                    .save()
+                    .then(() => {
+                        logger.log('info', `Votes modified`);
+
+                    })
+                    .catch(err => logger.log('error', err));
+
+
+            });
+
+
+        });
+
+    }
+}

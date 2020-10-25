@@ -8,7 +8,7 @@ import { printcups } from '../tools/print_cups';
 export class Award extends Command {
 
     constructor() {
-        super(["award_cup"], 'Award the house cup for the recording', 60, '<house>', true, true);
+        super(["award_cup"], 'Award the house cup for the recording', 60, '<house>', true, true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {

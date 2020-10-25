@@ -6,11 +6,11 @@ export const keys: Keys = {
 	id_eric_munch: process.env.ERIC_MUNCH_ID ? process.env.ERIC_MUNCH_ID : '',
 	command_prefix: process.env.COMMAND_PREFIX ? process.env.COMMAND_PREFIX : '',
 	role_admin: process.env.ADMIN_ROLE_ID ? process.env.ADMIN_ROLE_ID : '',
-	role_head_pupil: process.env.HEAD_PUPIL ? process.env.HEAD_PUPIL : '',
 	role_prefect: process.env.PREFECT_ROLE ? process.env.PREFECT_ROLE : '',
 	role_IT: process.env.HOGWARTS_IT ? process.env.HOGWARTS_IT : '',
 	channel_recording: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
 	channel_mod_talk: process.env.MOD_TALK_CHANNEL ? process.env.MOD_TALK_CHANNEL : '',
+	channel_bot_talk: process.env.BOT_TALK_CHANNEL ? process.env.BOT_TALK_CHANNEL : '',
 	emoji_dumbly: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_17.png',
 	emoji_snape: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
 	devito_height: 147, // in cm
@@ -24,10 +24,14 @@ export const keys: Keys = {
 	recording_delay: process.env.RECORDING_DELAY ? process.env.RECORDING_DELAY : '',
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
+	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
+	emojis_vote_no: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	slytherin_points_multiplier: 10,
 	ravenclaw_points_multiplier: 10,
 	gryffindor_points_multiplier: 10,
 	hufflepuff_points_multiplier: 10,
+	points_votes: 30,
+	points_reactions: 10,
 	gif_peace: 'https://tenor.com/view/peace-disappear-vanish-gif-9727828',
 	token: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : ''
 }

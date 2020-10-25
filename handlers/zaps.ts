@@ -1,4 +1,4 @@
-import { Client } from 'discord.js';
+import { Client, TextChannel } from 'discord.js';
 import { Logger } from 'winston';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -14,7 +14,7 @@ export class Zaps extends Handler {
         const client = this.client;
         //Listening to lightningbolts
         client.on('message', async message => {
-            if (!message.content.startsWith('⚡')) return;
+            if (!message.content.startsWith('⚡') || message.author.bot) return;
 
             Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -35,14 +35,23 @@ export class Zaps extends Handler {
                 const question = {
                     member: message.author.id,
                     question: message.content,
+                    votes: 0,
+                    was_awarded: false
                 };
+                const guild = message.guild;
+                if (!guild) {
+                    return;
+                }
+
+                const bot_talk_channel = <TextChannel>guild.channels.cache.get(Configs.channel_bot_talk);
 
                 stat.lightnings.push(question);
                 stat
                     .save()
                     .then(() => {
                         this.logger.log('info', `Lightning bolt saved: ${message.content}`);
-                        message.reply(`Your lightning bolt question was saved!`);
+                        bot_talk_channel.send(message);
+
                     })
                     .catch(err => this.logger.log('error', err));
 
