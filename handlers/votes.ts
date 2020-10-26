@@ -7,7 +7,7 @@ import { printPoints } from '../tools/print_points';
 
 export class Votes extends Handler {
     constructor(client: Client, logger: Logger) {
-        super('zaps', 'handler to get all of the zap questions', client, logger);
+        super('votes', 'handles the voting of zap questions on the bot talk channel', client, logger);
     }
 
     async On() {
@@ -40,7 +40,7 @@ export class Votes extends Handler {
             }
             const message = reaction.message;
             //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
-            if (!message.content.startsWith('⚡')) return;
+            if (!message.content.startsWith('⚡') || message.channel.id !== Configs.channel_bot_talk) return;
 
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
@@ -93,7 +93,10 @@ export class Votes extends Handler {
                         ravenclaw: 0,
                         hufflepuff: 0
                     };
-                    const memberRoles = guildMember.roles.cache;
+                    const zapmember = guild.members.cache.get(zap.member);
+                    if (!zapmember) return;
+                    const memberRoles = zapmember.roles.cache;
+
                     let points;
                     if (memberRoles.has(Configs.role_gryffindor)) {
                         points = Configs.points_votes * Math.sign(zap.votes);

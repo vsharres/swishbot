@@ -43,6 +43,8 @@ export class Zaps extends Handler {
                     return;
                 }
 
+                const bot_talk = <TextChannel>guild.channels.cache.get(Configs.channel_bot_talk);
+                bot_talk.send(message);
                 stat.lightnings.push(question);
                 stat
                     .save()

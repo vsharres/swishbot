@@ -50,8 +50,8 @@ export class Points extends Handler {
             const guildMember = guild.members.cache.get(user.id);
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
-            //No reactions on your own message
-            if (reaction.message.author.id === user.id) {
+            //No reactions on your own message or no points given to a bot message
+            if (reaction.message.author.id === user.id || reaction.message.author.bot) {
                 return;
             }
 
@@ -107,6 +107,9 @@ export class Points extends Handler {
             else if (memberRoles.has(Configs.role_hufflepuff)) {
                 points *= Configs.hufflepuff_points_multiplier;
                 pointsToAdd.hufflepuff += points;
+            }
+            else {
+                return;
             }
 
             Stat.findById(Configs.stats_id).then((stat) => {

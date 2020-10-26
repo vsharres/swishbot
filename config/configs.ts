@@ -30,6 +30,7 @@ interface Keys {
   hufflepuff_points_multiplier: number,
   points_votes: number,
   points_reactions: number,
+  number_reactions: number,
   gif_peace: string,
   token: string,
 }
