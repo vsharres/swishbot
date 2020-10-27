@@ -8,6 +8,7 @@ import { Handler } from './handlers/handler';
 import { Commands } from './handlers/commands';
 import { Kicks } from './handlers/kicks';
 import { Votes } from './handlers/votes';
+import { Likes } from './handlers/likes';
 
 const logger = winston.createLogger({
     transports: [
@@ -36,6 +37,7 @@ handlers.set('points', new Points(client, logger));
 handlers.set('commands', new Commands(client, logger));
 handlers.set('votes', new Votes(client, logger));
 handlers.set('kicks', new Kicks(client, logger));
+handlers.set('likes', new Likes(client, logger));
 
 handlers.forEach(handler => {
     handler.On();
