@@ -40,7 +40,7 @@ export class Votes extends Handler {
             }
             const message = reaction.message;
             //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
-            if (!message.content.startsWith('⚡') || message.channel.id !== Configs.channel_bot_talk) return;
+            if (!message.content.startsWith('⚡')) return;
 
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
