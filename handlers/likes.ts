@@ -47,7 +47,7 @@ export class Likes extends Handler {
             time_since_message = time_since_message / (1000 * 60 * 60);
 
             //Only count messages that happened during the recording
-            if (time_since_message < Configs.recording_delay) return;
+            if (time_since_message > Configs.recording_delay) return;
 
             let pointsToAdd = {
                 gryffindor: 0,
