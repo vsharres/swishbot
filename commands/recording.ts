@@ -9,7 +9,7 @@ import { printPoints } from '../tools/print_points';
 export class Recording extends Command {
 
     constructor() {
-        super(["recording"], 'Set the recording time', 30, '<date> <time>', true, true, true);
+        super(["recording"], 'Set the recording time', 30, '<date> <time>', true, false, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {
