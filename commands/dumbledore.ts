@@ -89,10 +89,14 @@ export class Dumbly extends Command {
                 }
                 amount = parseFloat(parsed);
                 let messageCommands = message.content.slice(Configs.command_prefix.length).split(/ +/);
-                const house = messageCommands[1];
+                const house = messageCommands[1].toLowerCase();
 
                 switch (house) {
                     case "🦁":
+                        points.gryffindor += amount;
+                        if (points.gryffindor <= 0) points.gryffindor = 0;
+                        break;
+                    case "gryffindor":
                         points.gryffindor += amount;
                         if (points.gryffindor <= 0) points.gryffindor = 0;
                         break;
@@ -101,10 +105,25 @@ export class Dumbly extends Command {
                         if (points.slytherin <= 0) points.slytherin = 0;
                         name = 'Slytherin 🐍';
                         break;
+                    case "slytherin":
+                        points.slytherin += amount;
+                        if (points.slytherin <= 0) points.slytherin = 0;
+                        name = 'Slytherin 🐍';
+                        break;
                     case "🦅":
                         points.ravenclaw += amount;
                         if (points.ravenclaw <= 0) points.ravenclaw = 0;
                         name = 'Ravenclaw 🦅';
+                        break;
+                    case "ravenclaw":
+                        points.ravenclaw += amount;
+                        if (points.ravenclaw <= 0) points.ravenclaw = 0;
+                        name = 'Ravenclaw 🦅';
+                        break;
+                    case "hufflepuff":
+                        points.hufflepuff += amount;
+                        if (points.hufflepuff <= 0) points.hufflepuff = 0;
+                        name = 'Hufflepuff 🦡';
                         break;
                     case "🦡":
                         points.hufflepuff += amount;
