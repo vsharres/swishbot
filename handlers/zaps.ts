@@ -27,7 +27,7 @@ export class Zaps extends Handler {
                 elapsed_time = elapsed_time / 60;
                 elapsed_time = elapsed_time / 60;
 
-                if (elapsed_time > parseFloat(Configs.recording_delay)) {
+                if (elapsed_time > Configs.recording_delay) {
                     stat.lightnings = [];
                     stat.recording_date = new Date();
                 }

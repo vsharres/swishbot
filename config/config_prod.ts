@@ -21,7 +21,7 @@ export const keys: Keys = {
 	role_slytherin: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
 	role_ravenclaw: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',
 	role_hufflepuff: process.env.HUFFLEPUFF_ROLE ? process.env.HUFFLEPUFF_ROLE : '',
-	recording_delay: process.env.RECORDING_DELAY ? process.env.RECORDING_DELAY : '',
+	recording_delay: 12,
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
