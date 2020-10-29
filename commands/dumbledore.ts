@@ -8,7 +8,7 @@ import { Command } from './command';
 export class Dumbly extends Command {
 
     constructor() {
-        super(["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡"], '', 10, '<house> <points>', true, true, true);
+        super(["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡", "gryffindor", "ravenclaw", "hufflepuff", "slytherin"], '', 10, '<house> <points>', true, true, true);
     }
 
     async execute(message: Message, args: string[], logger: Logger) {
@@ -94,17 +94,21 @@ export class Dumbly extends Command {
                 switch (house) {
                     case "🦁":
                         points.gryffindor += amount;
+                        if (points.gryffindor <= 0) points.gryffindor = 0;
                         break;
                     case "🐍":
                         points.slytherin += amount;
+                        if (points.slytherin <= 0) points.slytherin = 0;
                         name = 'Slytherin 🐍';
                         break;
                     case "🦅":
                         points.ravenclaw += amount;
+                        if (points.ravenclaw <= 0) points.ravenclaw = 0;
                         name = 'Ravenclaw 🦅';
                         break;
                     case "🦡":
                         points.hufflepuff += amount;
+                        if (points.hufflepuff <= 0) points.hufflepuff = 0;
                         name = 'Hufflepuff 🦡';
                         break;
 
