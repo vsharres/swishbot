@@ -32,7 +32,7 @@ export const keys: Keys = {
 	hufflepuff_points_multiplier: 10,
 	points_votes: 30,
 	points_reactions: 10,
-	number_reactions: 10,
+	number_reactions: 7,
 	gif_peace: 'https://tenor.com/view/peace-disappear-vanish-gif-9727828',
 	token: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : ''
 }

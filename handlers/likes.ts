@@ -15,13 +15,14 @@ export class Likes extends Handler {
         const logger = this.logger;
 
         client.on('messageReactionAdd', async (reaction, user) => {
+
             if (reaction.partial) {
 
                 try {
                     await reaction.fetch();
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the message: ${error}`);
+                    logger.log('error', `Something went wrong when fetching the reaction: ${error}`);
                     return;
                 }
             }
@@ -37,6 +38,18 @@ export class Likes extends Handler {
                     return;
                 }
             }
+
+            if (reaction.message.partial) {
+
+                try {
+                    await reaction.message.fetch();
+                }
+                catch (error) {
+                    logger.log('error', `Something went wrong when fetching the message: ${error}`);
+                    return;
+                }
+            }
+
             const message = reaction.message;
 
             if (!message) return;
