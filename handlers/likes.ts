@@ -43,7 +43,9 @@ export class Likes extends Handler {
 
             if (message.author.bot) return;
 
-            if (message.reactions.cache.entries.length < Configs.number_reactions) return;
+            const number_reaction = message.reactions.cache.array().length;
+
+            if (number_reaction < Configs.number_reactions) return;
 
             let time_since_message = Date.now() - message.createdAt.getTime();
             time_since_message = time_since_message / (1000 * 60 * 60);
