@@ -39,9 +39,11 @@ export class Likes extends Handler {
             }
             const message = reaction.message;
 
+            if (!message) return;
+
             if (message.author.bot) return;
 
-            if (message.reactions.cache.array().length < Configs.number_reactions) return;
+            if (message.reactions.cache.entries.length < Configs.number_reactions) return;
 
             let time_since_message = Date.now() - message.createdAt.getTime();
             time_since_message = time_since_message / (1000 * 60 * 60);
@@ -104,7 +106,7 @@ export class Likes extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', `Points for 10 reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
+                        logger.log('info', `Points for ${Configs.number_reactions} reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
 
                     })
                     .catch(err => logger.log('error', err));
