@@ -130,7 +130,7 @@ export class Points extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', `Points modified by: ${pointsToAdd}`);
+                        logger.log('info', `Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
 
                     })
                     .catch(err => logger.log('error', err));

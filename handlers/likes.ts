@@ -104,7 +104,7 @@ export class Likes extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', `Points modified by: ${pointsToAdd}`);
+                        logger.log('info', `Points for 10 reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
 
                     })
                     .catch(err => logger.log('error', err));
