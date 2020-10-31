@@ -41,6 +41,17 @@ export class Points extends Handler {
                 }
             }
 
+            if (reaction.message.partial) {
+                try {
+                    await reaction.message.fetch();
+
+                }
+                catch (error) {
+                    logger.log('error', `Something went wrong when fetching the reaction message: ${error}`);
+                    return;
+                }
+            }
+
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
             if (!guild) {
@@ -56,7 +67,7 @@ export class Points extends Handler {
             }
 
             if (!guildMember) {
-                logger.log('error', `error getting the guildmemers`);
+                logger.log('error', `error getting the guildmember`);
                 return;
             }
             const roles = guildMember.roles.cache;

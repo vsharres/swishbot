@@ -7,7 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 /config/config_dev.ts
-/config/config_dev_1.ts
 build/
 package-lock.json
 # Diagnostic reports (https://nodejs.org/api/report.html)
