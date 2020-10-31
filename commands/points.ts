@@ -17,7 +17,7 @@ export class Points extends Command {
             if (guild) {
                 Stat.findById(Configs.stats_id).then(stat => {
                     if (!stat) {
-                        return logger.log('error', 'Error getting the stat, check the stat id');
+                        return logger.log('error', `[${this.names[0]}]:Error getting the stat, check the stat id`);
                     }
 
                     const points = stat.points;
@@ -25,7 +25,7 @@ export class Points extends Command {
                     return printPoints(<TextChannel>message.channel, points, logger);
 
                 })
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
 
 

@@ -38,11 +38,11 @@ export class Recording extends Command {
                 .save()
                 .then(() => {
                     message.reply(`New recording set to ${date_string.toString()}`);
-                    logger.log('info', `New recording set to ${date_string.toString()}`);
+                    logger.log('info', `[${this.names[0]}]: New recording set to ${date_string.toString()}`);
                 })
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 

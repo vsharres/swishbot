@@ -15,12 +15,12 @@ export class Award extends Command {
 
         if (args.length !== 1 || !isNaN(parseFloat(args[0]))) {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
         }
 
         const guild = message.guild;
         if (!guild) {
-            logger.log('error', 'Couldn\'t find the server.');
+            logger.log('error', `[${this.names[0]}]: Couldn\'t find the server.`);
             return;
         }
 
@@ -28,13 +28,13 @@ export class Award extends Command {
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
-                logger.log('error', 'Error to get the stats, check the id');
+                logger.log('error', `[${this.names[0]}]: Error to get the stats, check the id`);
                 return;
             }
 
             let house = args.shift();
             if (!house) {
-                logger.log('error', 'Error shifting the house.');
+                logger.log('error', `[${this.names[0]}]: Error shifting the house.`);
                 return;
             }
             house = house.toLowerCase();
@@ -60,7 +60,7 @@ export class Award extends Command {
                     break;
                 default:
                     return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                        .then(() => logger.log('log', `${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``))
+                        .then(() => logger.log('log', `[${this.names[0]}]: ${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``))
                         .catch(err => logger.log('error', err));
             }
 
@@ -73,15 +73,15 @@ export class Award extends Command {
                 .then(() => {
                     message.channel
                         .send(`The house cup for this recording goes to **${name}!** \n`)
-                        .then(() => logger.log('log', `The house cup for this recording goes to **${name}!** \n`))
-                        .catch(err => logger.log('error', err));
+                        .then(() => logger.log('log', `[${this.names[0]}]: The house cup for this recording goes to **${name}!** \n`))
+                        .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                 })
                 .catch(err => logger.log('error', err));
 
 
 
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 

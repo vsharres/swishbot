@@ -28,12 +28,12 @@ export class PointsReset extends Command {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `A new year has begun! All house points are reset.`);
+                    logger.log('info', `[${this.names[0]}]:A new year has begun! All house points are reset.`);
                 })
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 

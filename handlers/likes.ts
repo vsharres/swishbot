@@ -22,7 +22,7 @@ export class Likes extends Handler {
                     await reaction.fetch();
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the reaction: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the reaction: ${error}`);
                     return;
                 }
             }
@@ -34,7 +34,7 @@ export class Likes extends Handler {
 
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the user: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
                     return;
                 }
             }
@@ -45,14 +45,16 @@ export class Likes extends Handler {
                     await reaction.message.fetch();
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the message: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the message: ${error}`);
                     return;
                 }
             }
 
             const message = reaction.message;
 
-            if (!message) return;
+            if (!message) {
+                return logger.log('error', `[${this.name}]: Something went wrong when fetching the message:`);
+            }
 
             if (message.author.bot) return;
 
@@ -73,7 +75,9 @@ export class Likes extends Handler {
                 hufflepuff: 0
             };
             const member = reaction.message.member;
-            if (!member) return;
+            if (!member) {
+                return logger.log('error', `[${this.name}]: Something went wrong when getting the member`);
+            }
 
             const memberRoles = member.roles.cache;
             let points = 0;
@@ -121,10 +125,10 @@ export class Likes extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', `Points for ${Configs.number_reactions} reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
+                        logger.log('info', ` [${this.name}]: Points for ${Configs.number_reactions} reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
 
                     })
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
                 printPoints(hourglass_channel, points, logger, true);
 

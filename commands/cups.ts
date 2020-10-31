@@ -15,18 +15,18 @@ export class Cups extends Command {
 
         Stat.findById(Configs.stats_id).then((stat) => {
             if (!stat) {
-                return logger.log('error', 'Error getting the stat, check the stat id');
+                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
             const cups = stat.house_cups;
 
             printcups(<TextChannel>message.channel, cups, logger);
 
-            logger.log('log', `Total number of cups: ${cups}`);
+            logger.log('log', `[${this.names[0]}]: Total number of cups: ${cups}`);
 
 
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 

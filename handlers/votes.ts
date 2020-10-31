@@ -22,7 +22,7 @@ export class Votes extends Handler {
                     await reaction.fetch();
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the message: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the message: ${error}`);
                     return;
                 }
             }
@@ -34,7 +34,7 @@ export class Votes extends Handler {
 
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the user: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
                     return;
                 }
             }
@@ -45,13 +45,13 @@ export class Votes extends Handler {
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
             if (!guild) {
-                logger.log('error', `error getting the guild of the reaction`);
+                logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
                 return;
             }
             const guildMember = guild.members.cache.get(user.id);
 
             if (!guildMember) {
-                logger.log('error', `error getting the guildmembers`);
+                logger.log('error', `[${this.name}]: Error getting the guildmembers`);
                 return;
             }
             const isPrefect = guildMember.roles.cache.has(Configs.role_prefect);
@@ -137,7 +137,7 @@ export class Votes extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', `Votes modified`);
+                        logger.log('info', `[${this.name}]: Votes modified by ${votes}`);
 
                     })
                     .catch(err => logger.log('error', err));

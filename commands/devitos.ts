@@ -19,9 +19,9 @@ export class Devitos extends Command {
             let divisor = Configs.devito_height;
             //Need to replace the regex so that . can be parsed out
             if (!parsed) {
-                logger.log('error', `Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
 
             let unit = parsed.replace(/[0-9]/g, '').toLowerCase();
@@ -37,14 +37,14 @@ export class Devitos extends Command {
                 const string_feet = new Intl.NumberFormat('en-IN').format(feet);
                 const string_inches = new Intl.NumberFormat('en-IN').format(inches);
                 return message.channel.send(`${message.author.toString()} ${feet > 0 ? string_feet + "'" : ''}${inches > 0 ? string_inches + '"' : ''} is ${devitos_string} ${Configs.command_prefix}!`)
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
             }
 
             const Unit = Units.get(unit);
             if (!Unit) {
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
             multiplier = Unit.multiplier;
             divisor = Unit.divisor;
@@ -56,7 +56,7 @@ export class Devitos extends Command {
             const string_amount = new Intl.NumberFormat('en-IN').format(amount);
 
             return message.channel.send(`${message.author.toString()} ${string_amount} ${unit} is ${devitos_string} ${Configs.command_prefix}!`)
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
 
         }
@@ -68,20 +68,20 @@ export class Devitos extends Command {
             if (!parsed) {
                 logger.log('error', `Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
 
             let amount = parseFloat(parsed);
             let unit = args.shift();
             if (!unit) {
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
 
             const Unit = Units.get(unit);
             if (!Unit) {
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
             multiplier = Unit.multiplier;
             divisor = Unit.divisor;
@@ -103,27 +103,27 @@ export class Devitos extends Command {
             let parsed = args.shift();
             let divisor = Configs.devito_height;
             if (!parsed) {
-                logger.log('error', `Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``);
             }
 
             firstAmount = parseFloat(parsed);
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``);
             }
             firstunit = parsed;
 
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``);
             }
             secondAmount = parseFloat(parsed);
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
                 return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``);
             }
             secondunit = parsed;

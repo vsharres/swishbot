@@ -16,7 +16,7 @@ export class Countdown extends Command {
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
-                return logger.log('error', 'Stats was invalid check id');
+                return logger.log('error', `[${this.names[0]}]: Stats was invalid check id`);
             }
 
             let time_to_recording = moment(stat.recording_date);
@@ -29,8 +29,8 @@ export class Countdown extends Command {
                     return member.createDM()
                         .then(channel => {
                             channel.send(`There is no recording scheduled yet! Keep up on a lookout for the next one in the #annoucements channel!`)
-                                .then(() => logger.log('log', `There is no recording scheduled yet! Keep up on a lookout for the next one in the #annoucements channel!`))
-                                .catch(err => logger.log('error', err));
+                                .then(() => logger.log('log', `[${this.names[0]}]: There is no recording scheduled yet! Keep up on a lookout for the next one in the #annoucements channel!`))
+                                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                         })
                         .catch(err => logger.log('error', err));
                 }
@@ -44,17 +44,17 @@ export class Countdown extends Command {
                     .then(async channel => {
                         try {
                             channel.send(`The next recording will be ${time}`);
-                            return logger.log('info', `The next recording will be ${time}`);
+                            return logger.log('info', `[${this.names[0]}]: The next recording will be ${time}`);
                         } catch (err) {
-                            return logger.log('error', err);
+                            return logger.log('error', `[${this.names[0]}]: ${err}`);
                         }
 
                     })
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             }
 
         })
-            .catch(err => { return logger.log('error', err) });
+            .catch(err => { return logger.log('error', `[${this.names[0]}]: ${err}`) });
     }
 };
 

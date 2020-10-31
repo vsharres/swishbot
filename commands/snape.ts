@@ -15,7 +15,7 @@ export class Snape extends Command {
 
         if (args.length !== 2 || isNaN(parseFloat(args[1]))) {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
         }
 
         const guild = message.guild;
@@ -25,7 +25,7 @@ export class Snape extends Command {
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
-                logger.log('error', 'Error to get the stats, check the id');
+                logger.log('error', `[${this.names[0]}]: Error to get the stats, check the id`);
                 return;
             }
 
@@ -33,14 +33,14 @@ export class Snape extends Command {
 
             let parsed = args.shift();
             if (!parsed) {
-                logger.log('error', 'Error shifting the house.');
+                logger.log('error', `[${this.names[0]}]: Error shifting the house.`);
                 return;
             }
             let house = parsed;
 
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', 'Error shifting the amount.');
+                logger.log('error', `[${this.names[0]}]: Error shifting the amount.`);
                 return;
             }
             const amount = parseFloat(parsed);
@@ -89,13 +89,13 @@ export class Snape extends Command {
                             content: content,
                             files: [new MessageAttachment(Configs.emoji_snape)]
                         })
-                        .catch(err => logger.log('error', err));
+                        .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                 })
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
             printPoints(hourglass_channel, points, logger, true);
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 

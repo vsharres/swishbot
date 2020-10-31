@@ -24,7 +24,7 @@ export class Points extends Handler {
                     await reaction.fetch();
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the message: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the message: ${error}`);
                     return;
                 }
             }
@@ -36,7 +36,7 @@ export class Points extends Handler {
 
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the user: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
                     return;
                 }
             }
@@ -47,7 +47,7 @@ export class Points extends Handler {
 
                 }
                 catch (error) {
-                    logger.log('error', `Something went wrong when fetching the reaction message: ${error}`);
+                    logger.log('error', `[${this.name}]: Something went wrong when fetching the reaction message: ${error}`);
                     return;
                 }
             }
@@ -55,11 +55,10 @@ export class Points extends Handler {
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
             if (!guild) {
-                logger.log('error', `error getting the guild of the reaction`);
+                logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
                 return;
             }
             const guildMember = guild.members.cache.get(user.id);
-            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
             //No reactions on your own message or no points given to a bot message
             if (reaction.message.author.id === user.id || reaction.message.author.bot) {
@@ -67,7 +66,7 @@ export class Points extends Handler {
             }
 
             if (!guildMember) {
-                logger.log('error', `error getting the guildmember`);
+                logger.log('error', `[${this.name}]: Error getting the guildmember`);
                 return;
             }
             const roles = guildMember.roles.cache;
@@ -141,11 +140,12 @@ export class Points extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        logger.log('info', `Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
+                        logger.log('info', `[${this.name}]: Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
 
                     })
-                    .catch(err => logger.log('error', err));
+                    .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
+                const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
                 printPoints(hourglass_channel, points, logger, true);
 
             });

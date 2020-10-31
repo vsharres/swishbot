@@ -15,7 +15,7 @@ export class Flu extends Command {
         const guild = message.guild;
 
         if (!guild) {
-            return logger.log('error', 'Error getting the guild, check the id');
+            return logger.log('error', `[${this.names[0]}]: Error getting the guild, check the id`);
         }
 
         guild.members.fetch()
@@ -27,13 +27,13 @@ export class Flu extends Command {
                         member.createDM()
                             .then(channel => {
                                 channel.send(``)
-                                    .catch(err => logger.log('error', err));
+                                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                             })
-                            .catch(err => logger.log('error', err));
+                            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                     }
                 });
             })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
     }
 };

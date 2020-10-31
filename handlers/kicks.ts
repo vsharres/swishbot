@@ -18,7 +18,7 @@ export class Kicks extends Handler {
                 message.channel.id !== Configs.channel_mod_talk) return;
 
             message.channel.send(Configs.gif_peace);
-            this.logger.log('info', `${message.content}`);
+            this.logger.log('info', `[${this.name}]: ${message.content}`);
 
         });
     }

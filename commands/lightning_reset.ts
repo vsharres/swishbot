@@ -15,7 +15,7 @@ export class LightningReset extends Command {
         Stat.findById(Configs.stats_id).then(stat => {
 
             if (!stat) {
-                return logger.log('error', 'Error getting the stat, check the stat id');
+                return logger.log('error', `[${this.names[0]}]:Error getting the stat, check the stat id`);
             }
 
             stat.lightnings = new Array<Lightning>();
@@ -25,10 +25,10 @@ export class LightningReset extends Command {
                 .then(() => {
                     logger.log('info', `All of the lightning bolts are reset.`);
                 })
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 

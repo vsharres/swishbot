@@ -49,12 +49,12 @@ export class Zaps extends Handler {
                 stat
                     .save()
                     .then(() => {
-                        this.logger.log('info', `Lightning bolt saved: ${message.content}`);
+                        this.logger.log('info', `[${this.name}]: Lightning bolt saved: ${message.content}`);
 
                     })
-                    .catch(err => this.logger.log('error', err));
+                    .catch(err => this.logger.log('error', `[${this.name}]: ${err}`));
 
-            }).catch(err => this.logger.log('error', err));
+            }).catch(err => this.logger.log('error', `[${this.name}]: ${err}`));
 
         });
     }

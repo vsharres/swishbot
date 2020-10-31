@@ -16,7 +16,7 @@ export class Dumbly extends Command {
         if (args.length == 2 && isNaN(parseFloat(args[1])) ||
             args.length == 1 && isNaN(parseFloat(args[0]))) {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                .catch(err => logger.log('error', err));
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
         }
 
         const guild = message.guild;
@@ -26,7 +26,7 @@ export class Dumbly extends Command {
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
-                logger.log('error', 'Error to get the stats, check the id');
+                logger.log('error', `[${this.names[0]}]: Error to get the stats, check the id`);
                 return;
             }
 
@@ -39,14 +39,14 @@ export class Dumbly extends Command {
             if (args.length == 2) {
                 parsed = args.shift();
                 if (!parsed) {
-                    logger.log('error', 'Error shifting the house.');
+                    logger.log('error', `[${this.names[0]}]: Error shifting the house.`);
                     return;
                 }
                 let house = parsed;
 
                 parsed = args.shift();
                 if (!parsed) {
-                    logger.log('error', 'Error shifting the amount.');
+                    logger.log('error', `[${this.names[0]}]: Error shifting the amount.`);
                     return;
                 }
 
@@ -84,7 +84,7 @@ export class Dumbly extends Command {
 
                 parsed = args.shift();
                 if (!parsed) {
-                    logger.log('error', 'Error shifting the amount.');
+                    logger.log('error', `[${this.names[0]}]: Error shifting the amount.`);
                     return;
                 }
                 amount = parseFloat(parsed);
@@ -149,14 +149,14 @@ export class Dumbly extends Command {
                             content: messageToSent.content,
                             files: messageToSent.files
                         })
-                        .catch(err => logger.log('error', err));
+                        .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                 })
-                .catch(err => logger.log('error', err));
-            logger.log('info', `${messageToSent.conten}`);
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            logger.log('info', `[${this.names[0]}]: ${messageToSent.conten}`);
 
             printPoints(hourglass_channel, points, logger, true);
         })
-            .catch(err => logger.log('error', err));
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
 };
 
