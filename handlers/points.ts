@@ -21,7 +21,7 @@ export class Points extends Handler {
             if (reaction.partial) {
 
                 try {
-                    await reaction.fetch();
+                    reaction = await reaction.fetch();
                 }
                 catch (error) {
                     logger.log('error', `[${this.name}]: Something went wrong when fetching the message: ${error}`);
@@ -32,7 +32,7 @@ export class Points extends Handler {
             if (user.partial) {
 
                 try {
-                    await user.fetch();
+                    user = await user.fetch();
 
                 }
                 catch (error) {
@@ -43,7 +43,7 @@ export class Points extends Handler {
 
             if (reaction.message.partial) {
                 try {
-                    await reaction.message.fetch();
+                    await reaction.message.fetch(true);
 
                 }
                 catch (error) {
@@ -52,24 +52,25 @@ export class Points extends Handler {
                 }
             }
 
+            //No reactions on your own message or no points given to a bot message
+            if (reaction.message.author.id === user.id || reaction.message.author.bot) {
+                return;
+            }
+
             //Only the founderscan add points to houses.
             const guild = reaction.message.guild;
             if (!guild) {
                 logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
                 return;
             }
-            const guildMember = guild.members.cache.get(user.id);
+            const guild_members = await guild.members.fetch();
+            const guild_member = guild_members.get(user.id);
 
-            //No reactions on your own message or no points given to a bot message
-            if (reaction.message.author.id === user.id || reaction.message.author.bot) {
-                return;
-            }
-
-            if (!guildMember) {
+            if (!guild_member) {
                 logger.log('error', `[${this.name}]: Error getting the guildmember`);
                 return;
             }
-            const roles = guildMember.roles.cache;
+            const roles = guild_member.roles.cache;
             const adminRole = roles.has(Configs.role_admin);
 
             if (adminRole === false) {
