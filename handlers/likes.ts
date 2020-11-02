@@ -39,17 +39,6 @@ export class Likes extends Handler {
                 }
             }
 
-            if (reaction.message.partial) {
-
-                try {
-                    await reaction.message.fetch();
-                }
-                catch (error) {
-                    logger.log('error', `[${this.name}]: Something went wrong when fetching the message: ${error}`);
-                    return;
-                }
-            }
-
             const message = reaction.message;
 
             if (!message) {
@@ -74,12 +63,18 @@ export class Likes extends Handler {
                 ravenclaw: 0,
                 hufflepuff: 0
             };
-            const member = reaction.message.member;
-            if (!member) {
+
+            const guild = reaction.message.guild;
+            if (!guild) {
+                logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
+                return;
+            }
+            const guild_member = await guild.members.fetch(user.id);
+            if (!guild_member) {
                 return logger.log('error', `[${this.name}]: Something went wrong when getting the member`);
             }
 
-            const memberRoles = member.roles.cache;
+            const memberRoles = guild_member.roles.cache;
             let points = 0;
 
             if (memberRoles.has(Configs.role_gryffindor)) {

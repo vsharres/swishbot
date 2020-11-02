@@ -48,7 +48,7 @@ export class Votes extends Handler {
                 logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
                 return;
             }
-            const guildMember = guild.members.cache.get(user.id);
+            const guildMember = await guild.members.fetch(user.id);
 
             if (!guildMember) {
                 logger.log('error', `[${this.name}]: Error getting the guildmembers`);

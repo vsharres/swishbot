@@ -41,17 +41,6 @@ export class Points extends Handler {
                 }
             }
 
-            if (reaction.message.partial) {
-                try {
-                    await reaction.message.fetch(true);
-
-                }
-                catch (error) {
-                    logger.log('error', `[${this.name}]: Something went wrong when fetching the reaction message: ${error}`);
-                    return;
-                }
-            }
-
             //No reactions on your own message or no points given to a bot message
             if (reaction.message.author.id === user.id || reaction.message.author.bot) {
                 return;
@@ -63,8 +52,7 @@ export class Points extends Handler {
                 logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
                 return;
             }
-            const guild_members = guild.members.cache;
-            const guild_member = guild_members.get(user.id);
+            const guild_member = await guild.members.fetch(user.id);
 
             if (!guild_member) {
                 logger.log('error', `[${this.name}]: Error getting the guildmember`);
@@ -74,11 +62,6 @@ export class Points extends Handler {
             const adminRole = roles.has(Configs.role_admin);
 
             if (adminRole === false) {
-                return;
-            }
-
-            const member = reaction.message.member;
-            if (!member) {
                 return;
             }
 
@@ -101,7 +84,7 @@ export class Points extends Handler {
                 ravenclaw: 0,
                 hufflepuff: 0
             };
-            const memberRoles = member.roles.cache;
+            const memberRoles = guild_member.roles.cache;
 
             if (memberRoles.has(Configs.role_gryffindor)) {
                 points *= Configs.gryffindor_points_multiplier;
