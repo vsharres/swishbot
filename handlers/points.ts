@@ -63,7 +63,7 @@ export class Points extends Handler {
                 logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
                 return;
             }
-            const guild_members = await guild.members.fetch();
+            const guild_members = guild.members.cache;
             const guild_member = guild_members.get(user.id);
 
             if (!guild_member) {
