@@ -45,11 +45,11 @@ export class Likes extends Handler {
             if (!message) {
                 return logger.log('error', `[${this.name}]: Something went wrong when fetching the message:`);
             }
-            assert(message.author.bot, this, logger);
+
             if (message.author.bot) return;
 
-            const number_reaction = message.reactions.cache.array().length;
-            assert(number_reaction, this, logger);
+            const number_reaction = message.reactions.valueOf().array.length;
+            assert(number_reaction < Configs.number_reactions, this, logger);
 
             if (number_reaction < Configs.number_reactions) return;
 
