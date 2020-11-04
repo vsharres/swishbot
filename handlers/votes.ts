@@ -13,7 +13,7 @@ export class Votes extends Handler {
     async On() {
         const client = this.client;
         const logger = this.logger;
-        //Listening to lightningbolts
+
         client.on('messageReactionAdd', async (reaction, user) => {
 
             if (reaction.partial) {

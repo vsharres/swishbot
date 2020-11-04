@@ -4,6 +4,7 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
+import { assert } from '../tools/assert';
 
 export class Likes extends Handler {
     constructor(client: Client, logger: Logger) {
@@ -44,10 +45,11 @@ export class Likes extends Handler {
             if (!message) {
                 return logger.log('error', `[${this.name}]: Something went wrong when fetching the message:`);
             }
-
+            assert(message.author.bot, this, logger);
             if (message.author.bot) return;
 
             const number_reaction = message.reactions.cache.array().length;
+            assert(number_reaction, this, logger);
 
             if (number_reaction < Configs.number_reactions) return;
 
@@ -102,10 +104,7 @@ export class Likes extends Handler {
                     return;
                 }
 
-                const guild = reaction.message.guild;
-                if (!guild) return;
-
-                const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
+                const hourglass_channel = <TextChannel>client.channels.cache.get(Configs.channel_house_points);
 
                 let points = stat.points;
                 points.gryffindor += pointsToAdd.gryffindor;
