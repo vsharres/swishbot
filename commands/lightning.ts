@@ -38,7 +38,7 @@ export class Lightning extends Command {
                     for (let bolt = 10 * index; bolt < end; bolt++) {
                         let can_show_votes = ``;
 
-                        if (message.channel.id !== Configs.channel_bot_talk) {
+                        if (message.channel.id === Configs.channel_bot_talk) {
                             can_show_votes = ` votes: ${stat.lightnings[bolt].votes} ${stat.lightnings[bolt].votes >= 0 ? 'up' : 'down'}`;
                         }
                         reply += `${guild.member(stat.lightnings[bolt].member)?.toString()} asks: ${stat.lightnings[bolt].question}${can_show_votes}\n`;
