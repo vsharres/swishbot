@@ -7,33 +7,37 @@ import { Command } from '../commands/command';
 
 export class Commands extends Handler {
 
+    commandFiles: String[];
+    commands: Collection<string, Command>;
+    cooldowns: Collection<string, Collection<string, number>>;
+
     constructor(client: Client, logger: Logger) {
         super('command', 'handler to get all of the commands to the bot', client, logger);
+        this.commandFiles = [];
+        this.commands = new Collection<string, Command>();
+        this.cooldowns = new Collection<string, Collection<string, number>>();
+
+        if (process.env.NODE_ENV === "production") {
+            this.commandFiles = fs.readdirSync('./build/commands').filter(file => !file.includes('command'));
+        } else {
+            this.commandFiles = fs.readdirSync('./commands').filter(file => !file.includes('command'));
+        }
+
+        for (const file of this.commandFiles) {
+            const command = require(`../commands/${file}`)
+            const names = command.default.names;
+
+            names.forEach((name: string) => {
+                this.commands.set(name, command.default);
+            });
+        }
     }
 
     async On() {
         const client = this.client;
         const logger = this.logger;
-
-        const commands = new Collection<string, Command>();
-        const cooldowns = new Collection<string, Collection<string, number>>();
-        let commandFiles: string[];
-
-        if (process.env.NODE_ENV === "production") {
-            commandFiles = fs.readdirSync('./build/commands').filter(file => !file.includes('command'));
-        } else {
-            commandFiles = fs.readdirSync('./commands').filter(file => !file.includes('command'));
-        }
-
-        for (const file of commandFiles) {
-            const command = require(`../commands/${file}`)
-            const names = command.default.names;
-
-            names.forEach((name: string) => {
-                commands.set(name, command.default);
-            });
-        }
-
+        const commands = this.commands;
+        let cooldowns = this.cooldowns;
 
         //General commands given to the bot
         client.on('message', async message => {
