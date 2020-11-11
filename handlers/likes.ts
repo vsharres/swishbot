@@ -45,7 +45,8 @@ export class Likes extends Handler {
             logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
             return;
         }
-        const guild_member = await guild.members.fetch(user.id);
+
+        const guild_member = await guild.members.fetch(reaction.message.author.id);
         if (!guild_member) {
             return logger.log('error', `[${this.name}]: Something went wrong when getting the member`);
         }
