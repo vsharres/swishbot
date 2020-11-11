@@ -1,25 +1,21 @@
 import { Logger } from 'winston';
-import { Client } from 'discord.js';
+import { Message, User, MessageReaction } from 'discord.js';
 
 export class Handler {
     name: string;
     description: string;
-    client: Client;
     logger: Logger;
 
     constructor(
         name: string,
         description: string,
-        client: Client,
         logger: Logger
     ) {
         this.name = name;
         this.description = description;
-        this.client = client;
         this.logger = logger;
-
-
     }
 
-    async On() { }
+    async OnMessage(message: Message): Promise<any> { }
+    async OnReaction(user: User, reaction: MessageReaction): Promise<any> { }
 };
