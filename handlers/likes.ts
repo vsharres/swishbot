@@ -1,4 +1,4 @@
-import { MessageReaction, TextChannel, User } from 'discord.js';
+import { MessageReaction, TextChannel, User, Collection } from 'discord.js';
 import { Logger } from 'winston';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -7,8 +7,31 @@ import { printPoints } from '../tools/print_points';
 import { assert } from '../tools/assert';
 
 export class Likes extends Handler {
+
+    liked_messages: Collection<string, string>;
+
     constructor(logger: Logger) {
         super('likes', 'handles the voting of zap questions on the bot talk channel', logger);
+        this.liked_messages = new Collection<string, string>();
+
+        Stat.findById(Configs.stats_id).then((stat) => {
+            if (!stat) {
+                return;
+            }
+
+            if (!stat.liked_messages) {
+                stat.liked_messages = new Map<string, string>();
+                stat.save();
+            }
+
+            stat.liked_messages.forEach((value, key) => {
+                this.liked_messages.set(key, value);
+            });
+
+
+
+        });
+
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
@@ -26,6 +49,8 @@ export class Likes extends Handler {
         //assert(number_reaction < Configs.number_reactions, this, logger);
 
         if (number_reaction < Configs.number_reactions) return;
+
+        if (this.liked_messages.get(message.id)) return;
 
         let pointsToAdd = {
             gryffindor: 0,
@@ -74,6 +99,7 @@ export class Likes extends Handler {
             }
 
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
+            stat.liked_messages.set(message.id, message.id);
 
             let points = stat.points;
             points.gryffindor += pointsToAdd.gryffindor;

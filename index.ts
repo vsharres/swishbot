@@ -29,7 +29,7 @@ mongoose
     .then(() => logger.log('info', 'MongoDB Connected'))
     .catch(err => logger.log('error', err));
 
-const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE'] });
+const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'] });
 const handlers = new Discord.Collection<string, Handler>();
 
 handlers.set('zap', new Zaps(logger));

@@ -5,6 +5,11 @@ const StatSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    liked_messages: {
+        type: Map,
+        of: String,
+
+    },
     lightnings: [{
         member: {
             type: String
@@ -58,6 +63,11 @@ export interface Houses {
     hufflepuff: number;
 }
 
+export interface LikedMessage {
+    _id: string;
+    message_id: string;
+}
+
 export interface Lightning {
     member: string;
     question: string;
@@ -68,6 +78,7 @@ export interface Lightning {
 
 interface IStatSchema extends Document {
     recording_date: Date;
+    liked_messages: Map<string, string>;
     lightnings: Lightning[];
     house_cups: Houses;
     points: Houses;
