@@ -100,6 +100,7 @@ export class Likes extends Handler {
 
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
             stat.liked_messages.set(message.id, message.id);
+            this.liked_messages.set(message.id, message.id);
 
             let points = stat.points;
             points.gryffindor += pointsToAdd.gryffindor;
