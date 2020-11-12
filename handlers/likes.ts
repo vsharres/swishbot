@@ -23,15 +23,9 @@ export class Likes extends Handler {
         if (message.author.bot) return;
 
         const number_reaction = message.reactions.cache.array().length;
-        assert(number_reaction < Configs.number_reactions, this, logger);
+        //assert(number_reaction < Configs.number_reactions, this, logger);
 
         if (number_reaction < Configs.number_reactions) return;
-
-        let time_since_message = Date.now() - message.createdAt.getTime();
-        time_since_message = time_since_message / (1000 * 60 * 60);
-
-        //Only count messages that happened during the recording
-        if (time_since_message > Configs.recording_delay) return;
 
         let pointsToAdd = {
             gryffindor: 0,
