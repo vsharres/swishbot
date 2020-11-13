@@ -78,8 +78,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    handlers.forEach(handler => {
-        handler.OnReaction(user as User, reaction);
+    handlers.forEach(async handler => {
+        await handler.OnReaction(user as User, reaction);
     });
 
 });
