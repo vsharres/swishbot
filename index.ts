@@ -46,7 +46,7 @@ client.once('ready', () => {
 client.on('message', async message => {
 
     handlers.forEach(async handler => {
-        await handler.OnMessage(message);
+        handler.OnMessage(message);
     });
 
 });
@@ -77,10 +77,67 @@ client.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
     }
+    handlers.get('likes')?.OnReaction(user as User, reaction);
 
-    handlers.forEach(async handler => {
-        await handler.OnReaction(user as User, reaction);
-    });
+});
+
+//NEED TO CHANGE THAT
+//Checking for reactions
+client.on('messageReactionAdd', async (reaction, user) => {
+
+    if (reaction.partial) {
+
+        try {
+            await reaction.fetch();
+        }
+        catch (error) {
+            logger.log('error', `[Index]: Something went wrong when fetching the message: ${error}`);
+            return;
+        }
+    }
+
+    if (user.partial) {
+
+        try {
+            await user.fetch();
+
+        }
+        catch (error) {
+            logger.log('error', `[Index]: Something went wrong when fetching the user: ${error}`);
+            return;
+        }
+    }
+    handlers.get('votes')?.OnReaction(user as User, reaction);
+
+});
+
+//NEED TO CHANGE THAT
+//Checking for reactions
+client.on('messageReactionAdd', async (reaction, user) => {
+
+    if (reaction.partial) {
+
+        try {
+            await reaction.fetch();
+        }
+        catch (error) {
+            logger.log('error', `[Index]: Something went wrong when fetching the message: ${error}`);
+            return;
+        }
+    }
+
+    if (user.partial) {
+
+        try {
+            await user.fetch();
+
+        }
+        catch (error) {
+            logger.log('error', `[Index]: Something went wrong when fetching the user: ${error}`);
+            return;
+        }
+    }
+    handlers.get('points')?.OnReaction(user as User, reaction);
 
 });
 
