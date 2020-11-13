@@ -45,8 +45,8 @@ client.once('ready', () => {
 });
 client.on('message', async message => {
 
-    handlers.forEach(handler => {
-        handler.OnMessage(message);
+    handlers.forEach(async handler => {
+        await handler.OnMessage(message);
     });
 
 });
