@@ -7,27 +7,8 @@ import { printPoints } from '../tools/print_points';
 
 export class Likes extends Handler {
 
-    liked_messages: Collection<string, string>;
-
     constructor(logger: Logger) {
         super('likes', 'handles the voting of zap questions on the bot talk channel', logger);
-        this.liked_messages = new Collection<string, string>();
-
-        Stat.findById(Configs.stats_id).then((stat) => {
-            if (!stat) {
-                return;
-            }
-
-            if (!stat.liked_messages) {
-                stat.liked_messages = new Map<string, string>();
-                stat.save();
-            }
-
-            stat.liked_messages.forEach((value, key) => {
-                this.liked_messages.set(key, value);
-            });
-
-        });
 
     }
 
@@ -36,9 +17,8 @@ export class Likes extends Handler {
         if (message.author.bot) return;
 
         const filter = (reaction: MessageReaction, user: User) => true;
-        message.awaitReactions(filter, { time: 60000, max: Configs.number_reactions })
+        message.awaitReactions(filter, { time: parseInt(Configs.reactions_timer), max: Configs.number_reactions })
             .then(collected => {
-                if (this.liked_messages.get(message.id)) return;
                 if (collected.size < Configs.number_reactions) return;
 
                 const message_guild = message.guild;
@@ -88,8 +68,6 @@ export class Likes extends Handler {
                     }
 
                     const hourglass_channel = <TextChannel>message_guild.channels.cache.get(Configs.channel_house_points);
-                    stat.liked_messages.set(message.id, message.id);
-                    this.liked_messages.set(message.id, message.id);
 
                     let points = stat.points;
                     points.gryffindor += pointsToAdd.gryffindor;

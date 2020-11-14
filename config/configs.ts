@@ -31,6 +31,7 @@ interface Keys {
   points_votes: number,
   points_reactions: number,
   number_reactions: number,
+  reactions_timer: string,
   gif_peace: string,
   token: string,
 }
