@@ -37,7 +37,7 @@ handlers.set('points', new Points(logger));
 handlers.set('commands', new Commands(logger));
 handlers.set('votes', new Votes(logger));
 handlers.set('kicks', new Kicks(logger));
-//handlers.set('likes', new Likes(logger));
+handlers.set('likes', new Likes(logger));
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');
@@ -55,35 +55,7 @@ client.on('message', async message => {
 //Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
 
-    if (reaction.partial) {
-
-        try {
-            await reaction.fetch();
-        }
-        catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the message: ${error}`);
-            return;
-        }
-    }
-
-    if (user.partial) {
-
-        try {
-            await user.fetch();
-
-        }
-        catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the user: ${error}`);
-            return;
-        }
-    }
-    handlers.get('likes')?.OnReaction(user as User, reaction);
-
-});
-
-//NEED TO CHANGE THAT
-//Checking for reactions
-client.on('messageReactionAdd', async (reaction, user) => {
+    logger.log('info', 'Reaction caught');
 
     if (reaction.partial) {
 

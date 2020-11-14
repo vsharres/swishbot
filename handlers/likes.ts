@@ -1,10 +1,9 @@
-import { MessageReaction, TextChannel, User, Collection } from 'discord.js';
+import { MessageReaction, TextChannel, User, Collection, Message } from 'discord.js';
 import { Logger } from 'winston';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { assert } from '../tools/assert';
 
 export class Likes extends Handler {
 
@@ -36,11 +35,15 @@ export class Likes extends Handler {
 
     async OnReaction(user: User, reaction: MessageReaction) {
         const logger = this.logger;
+        let message = reaction.message;
 
-        const message = reaction.message;
-
-        if (!message) {
-            return logger.log('error', `[${this.name}]: Something went wrong when fetching the message:`);
+        if (reaction.message.partial) {
+            try {
+                message = await reaction.message.fetch(true);
+            }
+            catch (error) {
+                return logger.log('error', `[${this.name}]: Something went wrong when fetching the message: ${error}`);
+            }
         }
 
         if (message.author.bot) return;
