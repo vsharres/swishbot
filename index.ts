@@ -55,7 +55,7 @@ client.on('message', async message => {
 //Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
 
-    logger.log('info', 'Reaction caught');
+    if (process.env.NODE_ENV == 'development') logger.log('info', 'Reaction caught');
 
     if (reaction.partial) {
 
