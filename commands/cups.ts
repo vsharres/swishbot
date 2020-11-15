@@ -1,7 +1,7 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message, TextChannel } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 import { printcups } from '../tools/print_cups';
 
@@ -11,7 +11,7 @@ export class Cups extends Command {
         super(["cups"], '', 10, '');
     }
 
-    async execute(message: Message, arg: string[], logger: Logger) {
+    async execute(message: Message, arg: string[]) {
 
         Stat.findById(Configs.stats_id).then((stat) => {
             if (!stat) {

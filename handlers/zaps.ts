@@ -1,13 +1,13 @@
 import { Message, TextChannel } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 
 export class Zaps extends Handler {
 
-    constructor(logger: Logger) {
-        super('zaps', 'handler to get all of the zap questions', logger);
+    constructor() {
+        super('zaps', 'handler to get all of the zap questions');
     }
 
     async OnMessage(message: Message) {
@@ -47,12 +47,12 @@ export class Zaps extends Handler {
             stat
                 .save()
                 .then(() => {
-                    this.logger.log('info', `[${this.name}]: Lightning bolt saved: ${message.content}`);
+                    logger.log('info', `[${this.name}]: Lightning bolt saved: ${message.content}`);
 
                 })
-                .catch(err => this.logger.log('error', `[${this.name}]: ${err}`));
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-        }).catch(err => this.logger.log('error', `[${this.name}]: ${err}`));
+        }).catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
     }
 

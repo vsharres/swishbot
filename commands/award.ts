@@ -1,7 +1,7 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message, TextChannel } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 import { printcups } from '../tools/print_cups';
 
@@ -11,7 +11,7 @@ export class Award extends Command {
         super(["award_cup"], 'Award the house cup for the recording', 60, '<house>', true, true, true);
     }
 
-    async execute(message: Message, args: string[], logger: Logger) {
+    async execute(message: Message, args: string[],) {
 
         if (args.length !== 1 || !isNaN(parseFloat(args[0]))) {
             return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)

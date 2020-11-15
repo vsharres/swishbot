@@ -1,7 +1,7 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message, TextChannel } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 import { printPoints } from '../tools/print_points';
 
@@ -11,7 +11,7 @@ export class Points extends Command {
         super(["points"], '', 10, '');
     }
 
-    async execute(message: Message, arg: string[], logger: Logger) {
+    async execute(message: Message, arg: string[]) {
         try {
             const guild = await message.guild?.fetch();
             if (guild) {

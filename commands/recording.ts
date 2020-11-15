@@ -2,7 +2,7 @@ import moment from 'moment-timezone';
 import Stat, { Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Recording extends Command {
@@ -11,7 +11,7 @@ export class Recording extends Command {
         super(["recording"], 'Set the recording time', 30, '<date> <time>', true, false, true);
     }
 
-    async execute(message: Message, args: string[], logger: Logger) {
+    async execute(message: Message, args: string[]) {
 
         const date_string = moment.tz(args.join(' '), "DD MMM YYYY hh:mm aa", 'America/New_York');
         const zoned = date_string.format();

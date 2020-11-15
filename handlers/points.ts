@@ -1,5 +1,5 @@
 import { MessageReaction, TextChannel, User } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
@@ -7,12 +7,11 @@ import { printPoints } from '../tools/print_points';
 
 export class Points extends Handler {
 
-    constructor(logger: Logger) {
-        super('points', 'handler to get reactions from the heads of house and the head pupil', logger);
+    constructor() {
+        super('points', 'handler to get reactions from the heads of house and the head pupil');
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
-        const logger = this.logger;
 
         //No reactions on your own message or no points given to a bot message
         if (reaction.message.author.id === user.id || reaction.message.author.bot) {

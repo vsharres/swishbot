@@ -1,7 +1,7 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Lightning extends Command {
@@ -10,7 +10,7 @@ export class Lightning extends Command {
         super(["lightningbolts", "⚡", "lightingbolts", "lightning_bolts"], 'Get all of the lightningbolt questions for this recording', 10, '', false, false, true);
     }
 
-    async execute(message: Message, arg: string[], logger: Logger) {
+    async execute(message: Message, arg: string[]) {
 
         Stat.findById(Configs.stats_id).then(stat => {
 

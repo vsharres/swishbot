@@ -2,7 +2,7 @@ import Stat from '../models/Stat';
 import moment from 'moment-timezone';
 import { Configs } from '../config/configs';
 import { Message } from 'discord.js'
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Countdown extends Command {
@@ -11,7 +11,7 @@ export class Countdown extends Command {
         super(["countdown"], 'Counts down until the next recording', 5, '');
     }
 
-    async execute(message: Message, args: string[], logger: Logger) {
+    async execute(message: Message, args: string[]) {
 
         Stat.findById(Configs.stats_id).then((stat) => {
 

@@ -1,7 +1,6 @@
 import Discord, { User } from 'discord.js';
 import mongoose from 'mongoose';
 import { Configs } from './config/configs';
-import winston from 'winston';
 import { Zaps } from './handlers/zaps';
 import { Points } from './handlers/points';
 import { Handler } from './handlers/handler';
@@ -9,14 +8,7 @@ import { Commands } from './handlers/commands';
 import { Kicks } from './handlers/kicks';
 import { Votes } from './handlers/votes';
 import { Likes } from './handlers/likes';
-
-const logger = winston.createLogger({
-    transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'log' }),
-    ],
-    format: winston.format.printf((log: any) => `[${log.level.toUpperCase()}] - ${log.message}`),
-});
+import logger from './tools/logger';
 
 mongoose
     .connect(
@@ -32,12 +24,12 @@ mongoose
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'] });
 const handlers = new Discord.Collection<string, Handler>();
 
-handlers.set('zap', new Zaps(logger));
-handlers.set('points', new Points(logger));
-handlers.set('commands', new Commands(logger));
-handlers.set('votes', new Votes(logger));
-handlers.set('kicks', new Kicks(logger));
-handlers.set('likes', new Likes(logger));
+handlers.set('zap', new Zaps());
+handlers.set('points', new Points());
+handlers.set('commands', new Commands());
+handlers.set('votes', new Votes());
+handlers.set('kicks', new Kicks());
+handlers.set('likes', new Likes());
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');

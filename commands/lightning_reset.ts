@@ -1,7 +1,7 @@
 import Stat, { Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class LightningReset extends Command {
@@ -10,7 +10,7 @@ export class LightningReset extends Command {
         super(["lightning_reset", "reset_lightning"], 'Reset all of the lightning bolts', 10, '', false, false, true);
     }
 
-    async execute(message: Message, arg: string[], logger: Logger) {
+    async execute(message: Message, arg: string[]) {
 
         Stat.findById(Configs.stats_id).then(stat => {
 

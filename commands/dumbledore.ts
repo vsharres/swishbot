@@ -2,7 +2,7 @@ import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { MessageAttachment, Message, TextChannel } from 'discord.js';
 import { printPoints } from '../tools/print_points';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Dumbly extends Command {
@@ -11,7 +11,7 @@ export class Dumbly extends Command {
         super(["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡", "gryffindor", "ravenclaw", "hufflepuff", "slytherin"], '', 10, '<house> <points>', true, false, true);
     }
 
-    async execute(message: Message, args: string[], logger: Logger) {
+    async execute(message: Message, args: string[]) {
 
         if (args.length == 2 && isNaN(parseFloat(args[1])) ||
             args.length == 1 && isNaN(parseFloat(args[0]))) {

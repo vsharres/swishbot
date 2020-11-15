@@ -1,7 +1,7 @@
 import { Configs } from '../config/configs';
 import { Units } from '../config/units';
 import { Message } from 'discord.js'
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Devitos extends Command {
@@ -10,7 +10,7 @@ export class Devitos extends Command {
         super(["convert"], 'Converts the provided number to devitos', 10, '<amount> <type>', true);
     }
 
-    async execute(message: Message, args: string[], logger: Logger) {
+    async execute(message: Message, args: string[]) {
 
         //for the usage of having only on number on the args
         if (args.length === 1) {

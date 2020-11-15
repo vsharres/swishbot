@@ -1,17 +1,16 @@
-import { Client, MessageReaction, TextChannel, User } from 'discord.js';
-import { Logger } from 'winston';
+import { MessageReaction, TextChannel, User } from 'discord.js';
+import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 
 export class Votes extends Handler {
-    constructor(logger: Logger) {
-        super('votes', 'handles the voting of zap questions on the bot talk channel', logger);
+    constructor() {
+        super('votes', 'handles the voting of zap questions on the bot talk channel');
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
-        const logger = this.logger;
 
         const message = reaction.message;
         //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts

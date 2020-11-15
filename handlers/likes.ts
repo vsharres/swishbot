@@ -1,5 +1,5 @@
-import { MessageReaction, TextChannel, User, Collection, Message } from 'discord.js';
-import { Logger } from 'winston';
+import { MessageReaction, TextChannel, User, Message } from 'discord.js';
+import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
@@ -7,13 +7,12 @@ import { printPoints } from '../tools/print_points';
 
 export class Likes extends Handler {
 
-    constructor(logger: Logger) {
-        super('likes', 'handles the voting of zap questions on the bot talk channel', logger);
+    constructor() {
+        super('likes', 'handles the voting of zap questions on the bot talk channel');
 
     }
 
     async OnMessage(message: Message) {
-        const logger = this.logger;
         if (message.author.bot) return;
 
         const filter = (reaction: MessageReaction, user: User) => true;
@@ -82,7 +81,7 @@ export class Likes extends Handler {
                     stat
                         .save()
                         .then(() => {
-                            logger.log('info', ` [${this.name}]: Points for ${Configs.number_reactions} reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
+                            logger.log('info', `[${this.name}]: Points for ${Configs.number_reactions} reactions! Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
 
                         })
                         .catch(err => logger.log('error', `[${this.name}]: ${err}`));

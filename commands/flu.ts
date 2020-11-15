@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Flu extends Command {
@@ -8,7 +8,7 @@ export class Flu extends Command {
         super(["flu"], 'Sends a message to all discord members', 1, '<Roles to Exclude>');
     }
 
-    async execute(message: Message, args: string[], logger: Logger) {
+    async execute(message: Message, args: string[]) {
 
         args.push('Hogwarts Ghosts');
 

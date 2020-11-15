@@ -1,5 +1,5 @@
 import { Collection, Message } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import fs from 'fs';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
@@ -11,8 +11,8 @@ export class Commands extends Handler {
     commands: Collection<string, Command>;
     cooldowns: Collection<string, Collection<string, number>>;
 
-    constructor(logger: Logger) {
-        super('command', 'handler to get all of the commands to the bot', logger);
+    constructor() {
+        super('command', 'handler to get all of the commands to the bot');
         this.commandFiles = [];
         this.commands = new Collection<string, Command>();
         this.cooldowns = new Collection<string, Collection<string, number>>();
@@ -34,7 +34,6 @@ export class Commands extends Handler {
     }
 
     async OnMessage(message: Message) {
-        const logger = this.logger;
         const commands = this.commands;
         let cooldowns = this.cooldowns;
 
@@ -89,43 +88,6 @@ export class Commands extends Handler {
             return;
         }
 
-        if ((command.args && !args.length) || (command.attachments && message.attachments.size === 0)) {
-            let reply = `You didn't provide any arguments, ${message.author.toString()}!`;
-            if (command.usage) {
-                reply += `\nThe proper usage would be: \`${Configs.command_prefix}${commandName} ${command.usage}\``;
-            }
-            return member.createDM()
-                .then(channel => {
-                    channel.send(reply)
-                        .catch(err => logger.error(err));
-                })
-                .catch(err => logger.error(err));
-        }
-
-        if (command.attachments && message.attachments.size === 0) {
-            let reply = `You didn't provide any attachment, ${message.author.toString()}!`;
-            if (command.usage) {
-                reply += `\nThe proper usage would be: \`${Configs.command_prefix}${commandName} ${command.usage}\``;
-            }
-            return member.createDM()
-                .then(channel => {
-                    channel.send(reply)
-                        .catch(err => logger.error(err));
-                })
-                .catch(err => logger.error(err));
-        }
-        else if (command.attachments && message.attachments.size > 0) {
-            const attachments = message.attachments;
-            if (!attachments) {
-                return;
-            }
-            const attachment = attachments.first();
-            if (!attachment) {
-                return;
-            }
-
-        }
-
         const cooldownAmount = (command.cooldown || 3) * 1000;
 
         if (timestamps.has(message.author.id)) {
@@ -152,7 +114,7 @@ export class Commands extends Handler {
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
         try {
-            command.execute(message, args, logger);
+            command.execute(message, args);
         } catch (error) {
             logger.error(error);
             member.createDM()

@@ -2,7 +2,7 @@ import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Message, TextChannel } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Command } from './command';
 
 export class PointsReset extends Command {
@@ -11,7 +11,7 @@ export class PointsReset extends Command {
         super(["points_reset", "reset_points"], '', 10, '', false, false, true);
     }
 
-    async execute(message: Message, arg: string[], logger: Logger) {
+    async execute(message: Message, arg: string[]) {
 
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat)

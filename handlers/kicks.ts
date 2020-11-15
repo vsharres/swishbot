@@ -1,12 +1,12 @@
 import { Message } from 'discord.js';
-import { Logger } from 'winston';
+import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
 
 export class Kicks extends Handler {
 
-    constructor(logger: Logger) {
-        super('kicks', 'handler to get all of the zap questions', logger);
+    constructor() {
+        super('kicks', 'handler to get all of the zap questions');
     }
 
     async OnMessage(message: Message) {
@@ -16,7 +16,7 @@ export class Kicks extends Handler {
             message.channel.id !== Configs.channel_mod_talk) return;
 
         message.channel.send(Configs.gif_peace);
-        this.logger.log('info', `[${this.name}]: ${message.content}`);
+        logger.log('info', `[${this.name}]: ${message.content}`);
 
     }
 
