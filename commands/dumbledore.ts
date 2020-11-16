@@ -152,7 +152,7 @@ export class Dumbly extends Command {
                         .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
-            logger.log('info', `[${this.names[0]}]: ${messageToSent.conten}`);
+            logger.log('info', `[${this.names[0]}]: ${messageToSent.content}`);
 
             printPoints(hourglass_channel, points, logger, true);
         })

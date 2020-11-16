@@ -115,6 +115,7 @@ export class Commands extends Handler {
 
         try {
             command.execute(message, args);
+            logger.log('info', `[${command.names[0]}]: called by: ${message.author.toString()}`);
         } catch (error) {
             logger.error(error);
             member.createDM()
@@ -126,7 +127,7 @@ export class Commands extends Handler {
         }
 
 
-        logger.log('info', message.content);
+
 
     }
 

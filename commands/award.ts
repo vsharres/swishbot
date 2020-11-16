@@ -60,7 +60,7 @@ export class Award extends Command {
                     break;
                 default:
                     return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                        .then(() => logger.log('log', `[${this.names[0]}]: ${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``))
+                        .then(() => logger.log('info', `[${this.names[0]}]: ${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``))
                         .catch(err => logger.log('error', err));
             }
 
@@ -73,7 +73,7 @@ export class Award extends Command {
                 .then(() => {
                     message.channel
                         .send(`The house cup for this recording goes to **${name}!** \n`)
-                        .then(() => logger.log('log', `[${this.names[0]}]: The house cup for this recording goes to **${name}!** \n`))
+                        .then(() => logger.log('info', `[${this.names[0]}]: The house cup for this recording goes to **${name}!** \n`))
                         .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                 })
                 .catch(err => logger.log('error', err));

@@ -22,7 +22,7 @@ export class Cups extends Command {
 
             printcups(<TextChannel>message.channel, cups, logger);
 
-            logger.log('log', `[${this.names[0]}]: Total number of cups: ${cups}`);
+            logger.log('info', `[${this.names[0]}]: Total number of cups: ${cups}`);
 
 
         })
