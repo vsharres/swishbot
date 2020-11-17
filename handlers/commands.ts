@@ -132,3 +132,5 @@ export class Commands extends Handler {
     }
 
 };
+
+export default new Commands();

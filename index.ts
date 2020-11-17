@@ -1,13 +1,7 @@
 import Discord, { User } from 'discord.js';
 import mongoose from 'mongoose';
 import { Configs } from './config/configs';
-import { Zaps } from './handlers/zaps';
-import { Points } from './handlers/points';
-import { Handler } from './handlers/handler';
-import { Commands } from './handlers/commands';
-import { Kicks } from './handlers/kicks';
-import { Votes } from './handlers/votes';
-import { Likes } from './handlers/likes';
+import handlers from './handlers/handlers';
 import logger from './tools/logger';
 
 mongoose
@@ -22,14 +16,6 @@ mongoose
     .catch(err => logger.log('error', err));
 
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'] });
-const handlers = new Discord.Collection<string, Handler>();
-
-handlers.set('zap', new Zaps());
-handlers.set('points', new Points());
-handlers.set('commands', new Commands());
-handlers.set('votes', new Votes());
-handlers.set('kicks', new Kicks());
-handlers.set('likes', new Likes());
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');
@@ -37,9 +23,7 @@ client.once('ready', () => {
 });
 client.on('message', async message => {
 
-    handlers.forEach(async handler => {
-        handler.OnMessage(message);
-    });
+    handlers.OnMessage(message);
 
 });
 
@@ -71,9 +55,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
     }
-    handlers.forEach(async handler => {
-        handler.OnReaction(user as User, reaction);
-    });
+    handlers.OnReaction(user as User, reaction);
 
 });
 

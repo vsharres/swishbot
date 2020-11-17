@@ -97,3 +97,5 @@ export class Likes extends Handler {
     }
 
 }
+
+export default new Likes();

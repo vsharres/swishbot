@@ -122,3 +122,5 @@ export class Votes extends Handler {
 
     }
 }
+
+export default new Votes();

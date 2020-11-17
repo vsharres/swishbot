@@ -21,3 +21,5 @@ export class Kicks extends Handler {
     }
 
 };
+
+export default new Kicks();

@@ -109,3 +109,5 @@ export class Points extends Handler {
     }
 
 };
+
+export default new Points();

@@ -57,3 +57,5 @@ export class Zaps extends Handler {
     }
 
 };
+
+export default new Zaps();
