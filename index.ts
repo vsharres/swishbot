@@ -23,6 +23,8 @@ client.once('ready', () => {
 });
 client.on('message', async message => {
 
+    if (process.env.NODE_ENV == 'development') logger.log('info', 'On Message event caught');
+
     handlers.OnMessage(message);
 
 });
