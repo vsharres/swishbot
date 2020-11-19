@@ -19,6 +19,10 @@ export class Snape extends Command {
         if (!guild) return;
         const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
+        const prefects_role = guild.roles.cache.get(Configs.role_prefect);
+        if (!prefects_role) return;
+
+        message.channel.send(`Poll started: ${prefects_role.toString()} we have ${Math.floor(parseInt(Configs.reactions_timer) / 60000)} minutes to vote.`);
         const filter = (reaction: MessageReaction, user: User) => Configs.emoji_addpoints.includes(reaction.emoji.toString()) || Configs.emoji_removepoints.includes(reaction.emoji.toString());
         message.awaitReactions(filter, { time: parseInt(Configs.reactions_timer) })
             .then(collected => {
@@ -28,7 +32,6 @@ export class Snape extends Command {
 
                 if (remove_emojis_size > add_emojis_size) return;
                 else if (remove_emojis_size === add_emojis_size) return;
-                else if (add_emojis_size - remove_emojis_size < 2) return;
 
 
                 Stat.findById(Configs.stats_id).then((stat) => {
