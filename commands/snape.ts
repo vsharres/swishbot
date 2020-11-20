@@ -126,7 +126,7 @@ export class Snape extends Command {
                         .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                     logger.log('info', `[${this.names[0]}]: ${messageToSent.content}`);
 
-                    printPoints(hourglass_channel, points, logger, true);
+                    printPoints(hourglass_channel, points, true);
 
                 })
                     .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

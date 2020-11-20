@@ -20,7 +20,7 @@ export class Cups extends Command {
 
             const cups = stat.house_cups;
 
-            printcups(<TextChannel>message.channel, cups, logger);
+            printcups(<TextChannel>message.channel, cups);
 
             logger.log('info', `[${this.names[0]}]: Total number of cups: ${cups}`);
 

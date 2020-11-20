@@ -86,7 +86,7 @@ export class Likes extends Handler {
                         })
                         .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-                    printPoints(hourglass_channel, points, logger, true);
+                    printPoints(hourglass_channel, points, true);
 
                 });
 

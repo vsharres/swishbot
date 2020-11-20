@@ -1,8 +1,8 @@
 import { TextChannel } from 'discord.js'
-import { Logger } from 'winston';
+import logger from 'winston';
 import { Houses } from '../models/Stat';
 
-async function printcups(channel: TextChannel, cups: Houses, logger: Logger, removeMessages: boolean = false) {
+async function printcups(channel: TextChannel, cups: Houses, removeMessages: boolean = false) {
 
     if (removeMessages) {
         channel.bulkDelete(4)

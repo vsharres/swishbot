@@ -22,7 +22,7 @@ export class Points extends Command {
 
                     const points = stat.points;
 
-                    return printPoints(<TextChannel>message.channel, points, logger);
+                    return printPoints(<TextChannel>message.channel, points);
 
                 })
                     .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

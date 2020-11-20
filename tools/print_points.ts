@@ -1,8 +1,8 @@
 import { TextChannel } from 'discord.js'
-import { Logger } from 'winston';
+import logger from 'winston';
 import { Houses } from '../models/Stat';
 
-async function printPoints(channel: TextChannel, points: Houses, logger: Logger, removeMessages: boolean = false) {
+async function printPoints(channel: TextChannel, points: Houses, removeMessages: boolean = false) {
     //Delete the previous message
 
     if (removeMessages) {

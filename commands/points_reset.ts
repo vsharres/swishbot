@@ -23,7 +23,7 @@ export class PointsReset extends Command {
             if (!guild) return;
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
-            printPoints(hourglass_channel, stat.points, logger, true);
+            printPoints(hourglass_channel, stat.points, true);
 
             stat
                 .save()

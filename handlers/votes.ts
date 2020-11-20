@@ -102,7 +102,7 @@ export class Votes extends Handler {
                 if (stat.points.hufflepuff <= 0) stat.points.hufflepuff = 0;
 
                 zap.was_awarded = true;
-                printPoints(hourglass_channel, stat.points, logger, true);
+                printPoints(hourglass_channel, stat.points, true);
 
             }
 

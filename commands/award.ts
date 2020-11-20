@@ -66,7 +66,7 @@ export class Award extends Command {
 
             stat.house_cups = cups;
 
-            printcups(trophy_channel, cups, logger, true);
+            printcups(trophy_channel, cups, true);
 
             stat
                 .save()
