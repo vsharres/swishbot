@@ -1,4 +1,4 @@
-import logger from 'winston';
+import logger from './logger';
 
 function assert(value: any, caller: any): boolean {
 

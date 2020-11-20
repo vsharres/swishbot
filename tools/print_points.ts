@@ -1,5 +1,5 @@
 import { TextChannel } from 'discord.js'
-import logger from 'winston';
+import logger from './logger';
 import { Houses } from '../models/Stat';
 
 async function printPoints(channel: TextChannel, points: Houses, removeMessages: boolean = false) {
