@@ -8,7 +8,7 @@ import { printPoints } from '../tools/print_points';
 export class Points extends Handler {
 
     constructor() {
-        super('points', 'handler to get reactions from the heads of house and the head pupil');
+        super('points', 'handler to get reactions from the heads of house and the head pupil', false, true);
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {

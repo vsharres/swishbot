@@ -7,7 +7,7 @@ import { Configs } from '../config/configs';
 export class Zaps extends Handler {
 
     constructor() {
-        super('zaps', 'handler to get all of the zap questions');
+        super('zaps', 'handler to get all of the zap questions', true);
     }
 
     async OnMessage(message: Message) {

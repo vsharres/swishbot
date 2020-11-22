@@ -7,7 +7,7 @@ import { printPoints } from '../tools/print_points';
 
 export class Votes extends Handler {
     constructor() {
-        super('votes', 'handles the voting of zap questions on the bot talk channel');
+        super('votes', 'handles the voting of zap questions on the bot talk channel', false, true);
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {

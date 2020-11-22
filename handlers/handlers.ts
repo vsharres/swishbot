@@ -3,13 +3,15 @@ import { Handler } from './handler';
 import { Collection, Message, MessageReaction, User } from 'discord.js';
 
 export class Handlers extends Handler {
-    handlers: Collection<string, Handler>;
+    message_handlers: Collection<string, Handler>;
+    reaction_handlers: Collection<string, Handler>;
     handler_files: String[];
 
     constructor() {
-        super('handlers', 'Holds all of the handlers.');
+        super('handlers', 'Holds all of the handlers.', true, true);
 
-        this.handlers = new Collection<string, Handler>();
+        this.reaction_handlers = new Collection<string, Handler>();
+        this.message_handlers = new Collection<string, Handler>();
         this.handler_files = [];
 
         if (process.env.NODE_ENV === "production") {
@@ -19,8 +21,15 @@ export class Handlers extends Handler {
         }
 
         for (const file of this.handler_files) {
-            const handler = require(`../handlers/${file}`)
-            this.handlers.set(handler.default.name, handler.default);
+            const handler = require(`../handlers/${file}`);
+
+            if (handler.default.catch_reaction) {
+                this.reaction_handlers.set(handler.default.name, handler.default);
+            }
+
+            if (handler.default.catch_message) {
+                this.message_handlers.set(handler.default.name, handler.default);
+            }
 
         }
 
@@ -28,14 +37,14 @@ export class Handlers extends Handler {
 
     async OnMessage(message: Message) {
 
-        this.handlers.forEach(async handler => {
+        this.message_handlers.forEach(async handler => {
             handler.OnMessage(message);
         });
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
 
-        this.handlers.forEach(async handler => {
+        this.reaction_handlers.forEach(async handler => {
             handler.OnReaction(user, reaction);
         });
     }

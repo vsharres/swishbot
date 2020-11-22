@@ -6,7 +6,7 @@ import { Configs } from '../config/configs';
 export class Kicks extends Handler {
 
     constructor() {
-        super('kicks', 'handler to get all of the zap questions');
+        super('kicks', 'handler to get all of the zap questions', true);
     }
 
     async OnMessage(message: Message) {
@@ -17,6 +17,10 @@ export class Kicks extends Handler {
 
         message.channel.send(Configs.gif_peace);
         logger.log('info', `[${this.name}]: ${message.content}`);
+
+        if (process.env.NODE_ENV === "development") {
+            logger.profile(name);
+        }
 
     }
 

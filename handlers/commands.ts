@@ -12,7 +12,7 @@ export class Commands extends Handler {
     cooldowns: Collection<string, Collection<string, number>>;
 
     constructor() {
-        super('command', 'handler to get all of the commands to the bot');
+        super('command', 'handler to get all of the commands to the bot', true);
         this.commandFiles = [];
         this.commands = new Collection<string, Command>();
         this.cooldowns = new Collection<string, Collection<string, number>>();
@@ -113,21 +113,22 @@ export class Commands extends Handler {
         timestamps.set(message.author.id, now);
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-        try {
-            command.execute(message, args);
-            logger.log('info', `[${command.names[0]}]: called by: ${message.author.toString()}`);
-        } catch (error) {
-            logger.error(error);
-            member.createDM()
-                .then(channel => {
-                    channel.send('there was an error trying to execute that command!')
-                        .catch(err => logger.error(err));
-                })
-                .catch(err => logger.error(err));
-        }
 
 
-
+        //logger.profile(command.names[0]);
+        logger.log('info', `[${command.names[0]}]: called by: ${message.author.toString()}`);
+        command.execute(message, args).then((value) => {
+            //logger.profile(command.names[0]);
+        })
+            .catch(error => {
+                logger.error(error);
+                member.createDM()
+                    .then(channel => {
+                        channel.send('there was an error trying to execute that command!')
+                            .catch(err => logger.error(err));
+                    })
+                    .catch(err => logger.error(err));
+            });
 
     }
 

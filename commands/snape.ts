@@ -7,7 +7,7 @@ import { printPoints } from '../tools/print_points';
 
 export class Snape extends Command {
     constructor() {
-        super(["snape"], '', 10, '<house> <points> <reason>', true, false, true);
+        super(["snape", 'poll'], '', 10, '<house> <points> <reason>', true, false, true);
     }
 
     async execute(message: Message, args: string[]) {
