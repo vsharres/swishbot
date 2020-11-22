@@ -31,7 +31,7 @@ export const keys: Keys = {
 	ravenclaw_points_multiplier: 10,
 	gryffindor_points_multiplier: 10,
 	hufflepuff_points_multiplier: 10,
-	points_votes: 30,
+	points_votes: 10,
 	points_reactions: 10,
 	number_reactions: 7,
 	gif_peace: 'https://tenor.com/view/peace-disappear-vanish-gif-9727828',
