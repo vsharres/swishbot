@@ -1,5 +1,6 @@
 import { Collection, Message } from 'discord.js';
 import logger from '../tools/logger';
+import profiler from '../tools/profiler';
 import fs from 'fs';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
@@ -113,12 +114,12 @@ export class Commands extends Handler {
         timestamps.set(message.author.id, now);
         setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-
-
-        //logger.profile(command.names[0]);
-        logger.log('info', `[${command.names[0]}]: called by: ${message.author.toString()}`);
+        logger.log('info', `[${commandName}]: called by: ${message.author.toString()}`);
+        profiler.startTimer(commandName);
         command.execute(message, args).then((value) => {
-            //logger.profile(command.names[0]);
+            if (commandName) {
+                logger.log('info', `[${commandName}]: time to execute: ${profiler.endTimer(commandName)} ms`);
+            }
         })
             .catch(error => {
                 logger.error(error);

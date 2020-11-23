@@ -26,7 +26,7 @@ export class Recording extends Command {
 
             stat.recording_date = new Date(zoned);
             stat.lightnings = new Array<Lightning>();
-
+            stat.likes = new Map<string, number>();
 
             stat
                 .save()

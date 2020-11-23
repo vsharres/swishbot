@@ -18,10 +18,6 @@ export class Kicks extends Handler {
         message.channel.send(Configs.gif_peace);
         logger.log('info', `[${this.name}]: ${message.content}`);
 
-        if (process.env.NODE_ENV === "development") {
-            logger.profile(name);
-        }
-
     }
 
 };
