@@ -1,5 +1,7 @@
 import fs from 'fs';
 import { Handler } from './handler';
+import profiler from '../tools/profiler';
+import logger from '../tools/logger';
 import { Collection, Message, MessageReaction, User } from 'discord.js';
 
 export class Handlers extends Handler {
@@ -8,7 +10,7 @@ export class Handlers extends Handler {
     handler_files: String[];
 
     constructor() {
-        super('handlers', 'Holds all of the handlers.', true, true);
+        super('handlers', true, true);
 
         this.reaction_handlers = new Collection<string, Handler>();
         this.message_handlers = new Collection<string, Handler>();
@@ -38,14 +40,22 @@ export class Handlers extends Handler {
     async OnMessage(message: Message) {
 
         this.message_handlers.forEach(async handler => {
-            handler.OnMessage(message);
+            if (process.env.NODE_ENV === 'development') profiler.startTimer(handler.name);
+            handler.OnMessage(message)
+                .then(() => {
+                    if (process.env.NODE_ENV === 'development') logger.log('info', `[${handler.name}]: time to execute: ${profiler.endTimer(handler.name)} ms`);
+                });
         });
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
 
         this.reaction_handlers.forEach(async handler => {
-            handler.OnReaction(user, reaction);
+            if (process.env.NODE_ENV === 'development') profiler.startTimer(handler.name);
+            handler.OnReaction(user, reaction)
+                .then(() => {
+                    if (process.env.NODE_ENV === 'development') logger.log('info', `[${handler.name}]: time to execute: ${profiler.endTimer(handler.name)} ms`);
+                });
         });
     }
 }

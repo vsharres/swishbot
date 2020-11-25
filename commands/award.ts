@@ -8,14 +8,14 @@ import { printcups } from '../tools/print_cups';
 export class Award extends Command {
 
     constructor() {
-        super(["award_cup"], 'Award the house cup for the recording', 60, '<house>', true, true, true);
+        super(["award_cup"], true, true, true);
     }
 
     async execute(message: Message, args: string[],) {
 
         if (args.length !== 1 || !isNaN(parseFloat(args[0]))) {
-            return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            logger.log('error', `[${this.names[0]}]: Incorrect usage.`);
+            return;
         }
 
         const guild = message.guild;
@@ -59,9 +59,8 @@ export class Award extends Command {
                     name = 'Hufflepuff 🦡';
                     break;
                 default:
-                    return message.channel.send(`${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``)
-                        .then(() => logger.log('info', `[${this.names[0]}]: ${message.author.toString()} the proper usage would be: ${Configs.command_prefix} \`${this.names} ${this.usage}\``))
-                        .catch(err => logger.log('error', err));
+                    logger.log('error', `[${this.names[0]}]: Incorrect usage.`);
+                    return;
             }
 
             stat.house_cups = cups;

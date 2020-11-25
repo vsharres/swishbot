@@ -7,7 +7,7 @@ import { printPoints } from '../tools/print_points';
 
 export class Snape extends Command {
     constructor() {
-        super(["snape", 'poll'], '', 10, '<house> <points> <reason>', true, false, true);
+        super(["snape", 'poll'], true, false, true);
     }
 
     async execute(message: Message, args: string[]) {
@@ -66,40 +66,32 @@ export class Snape extends Command {
                     switch (house) {
                         case "🦁":
                             points.gryffindor += amount;
-                            if (points.gryffindor <= 0) points.gryffindor = 0;
                             break;
                         case "gryffindor":
                             points.gryffindor += amount;
-                            if (points.gryffindor <= 0) points.gryffindor = 0;
                             break;
                         case "🐍":
                             points.slytherin += amount;
-                            if (points.slytherin <= 0) points.slytherin = 0;
                             name = 'Slytherin 🐍';
                             break;
                         case "slytherin":
                             points.slytherin += amount;
-                            if (points.slytherin <= 0) points.slytherin = 0;
                             name = 'Slytherin 🐍';
                             break;
                         case "🦅":
                             points.ravenclaw += amount;
-                            if (points.ravenclaw <= 0) points.ravenclaw = 0;
                             name = 'Ravenclaw 🦅';
                             break;
                         case "ravenclaw":
                             points.ravenclaw += amount;
-                            if (points.ravenclaw <= 0) points.ravenclaw = 0;
                             name = 'Ravenclaw 🦅';
                             break;
                         case "hufflepuff":
                             points.hufflepuff += amount;
-                            if (points.hufflepuff <= 0) points.hufflepuff = 0;
                             name = 'Hufflepuff 🦡';
                             break;
                         case "🦡":
                             points.hufflepuff += amount;
-                            if (points.hufflepuff <= 0) points.hufflepuff = 0;
                             name = 'Hufflepuff 🦡';
                             break;
                         default:

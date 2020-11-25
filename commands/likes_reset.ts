@@ -7,7 +7,7 @@ import { Message } from 'discord.js';
 export class LikesReset extends Command {
 
     constructor() {
-        super(["likes_reset", "reset_likes"], '', 10, '', false, false, true);
+        super(["likes_reset", "reset_likes"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {

@@ -6,7 +6,7 @@ import { Configs } from '../config/configs';
 export class Kicks extends Handler {
 
     constructor() {
-        super('kicks', 'handler to get all of the zap questions', true);
+        super('kicks', true);
     }
 
     async OnMessage(message: Message) {

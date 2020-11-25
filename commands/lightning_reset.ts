@@ -7,7 +7,7 @@ import { Command } from './command';
 export class LightningReset extends Command {
 
     constructor() {
-        super(["lightning_reset", "reset_lightning"], 'Reset all of the lightning bolts', 10, '', false, false, true);
+        super(["lightning_reset", "reset_lightning"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {

@@ -13,7 +13,7 @@ export class Commands extends Handler {
     cooldowns: Collection<string, Collection<string, number>>;
 
     constructor() {
-        super('command', 'handler to get all of the commands to the bot', true);
+        super('command', true);
         this.commandFiles = [];
         this.commands = new Collection<string, Command>();
         this.cooldowns = new Collection<string, Collection<string, number>>();
@@ -77,42 +77,6 @@ export class Commands extends Handler {
             logger.log('warn', `${message.author.toString()} does not have the necessary role to execute this command. The necessary role is ${Configs.role_prefect}`);
             return;
         }
-
-        if (!cooldowns.has(commandName)) {
-            cooldowns.set(commandName, new Collection<string, number>());
-        }
-
-        const now = Date.now();
-        const timestamps = cooldowns.get(commandName);
-        if (!timestamps) {
-            logger.log('error', `Error at getting the time stamps`);
-            return;
-        }
-
-        const cooldownAmount = (command.cooldown || 3) * 1000;
-
-        if (timestamps.has(message.author.id)) {
-            const author_timestamp = timestamps.get(message.author.id);
-            if (!author_timestamp) {
-                return;
-            }
-
-            const expirationTime = author_timestamp + cooldownAmount;
-
-            if (now < expirationTime && !isAdminRole) {
-                const timeLeft = (expirationTime - now) / 1000;
-                logger.log('info', timeLeft);
-                return member.createDM()
-                    .then(channel => {
-                        channel.send(`Hello ${message.author.toString()} please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${commandName}\` command.`)
-                            .catch(err => logger.error(err));
-                    })
-                    .catch(err => logger.error(err));
-            }
-        }
-
-        timestamps.set(message.author.id, now);
-        setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
         logger.log('info', `[${commandName}]: called by: ${message.author.toString()}`);
         profiler.startTimer(commandName);
