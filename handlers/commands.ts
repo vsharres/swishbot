@@ -78,7 +78,6 @@ export class Commands extends Handler {
             return;
         }
 
-        logger.log('info', `[${commandName}]: called by: ${message.author.toString()}`);
         profiler.startTimer(commandName);
         command.execute(message, args).then((value) => {
             if (commandName) {

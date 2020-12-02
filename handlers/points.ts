@@ -60,7 +60,7 @@ export class Points extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: Points modified`);
+                    logger.log('info', `[${this.name}]: Points modified by the hosts for the message: "${reaction.message.content}"`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));

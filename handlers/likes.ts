@@ -29,13 +29,6 @@ export class Likes extends Handler {
                 value++;
                 if (value === Configs.number_reactions) {
 
-                    let pointsToAdd = {
-                        gryffindor: 0,
-                        slytherin: 0,
-                        ravenclaw: 0,
-                        hufflepuff: 0
-                    };
-
                     const guild = reaction.message.guild;
                     if (!guild) {
                         logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
@@ -52,7 +45,7 @@ export class Likes extends Handler {
 
                     printPoints(hourglass_channel, stat.points, true);
 
-                    logger.log('info', `[${this.name}]: Points modified by: gryffindor:${pointsToAdd.gryffindor} slytherin:${pointsToAdd.slytherin} ravenclaw:${pointsToAdd.ravenclaw} hufflepuff:${pointsToAdd.hufflepuff}`);
+                    logger.log('info', `[${this.name}]: Points awarded as the message: "${reaction.message.content}" reached ${Configs.number_reactions} reactions! `);
 
                 }
 

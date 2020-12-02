@@ -77,7 +77,7 @@ export class Votes extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: Votes modified by ${votes}`);
+                    logger.log('info', `[${this.name}]: Votes modified by ${votes} for the message: "${reaction.message.content}"`);
 
                 })
                 .catch(err => logger.log('error', err));
