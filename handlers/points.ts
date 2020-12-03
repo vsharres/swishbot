@@ -44,9 +44,11 @@ export class Points extends Handler {
         if (Configs.emoji_addpoints.some((addpoint) => addpoint === emoji)) {
             points = 1;
         }
-
-        if (Configs.emoji_removepoints.some((removepoint) => removepoint === emoji)) {
+        else if (Configs.emoji_removepoints.some((removepoint) => removepoint === emoji)) {
             points = -1;
+        }
+        else {
+            return;
         }
 
 
