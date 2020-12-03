@@ -60,12 +60,12 @@ export class Votes extends Handler {
             const zap = stat.lightnings[zapIndex];
             zap.votes += votes;
 
-            if (!zap.was_awarded && (zap.votes >= 3 || zap.votes <= -3)) {
+            if (!zap.was_awarded && zap.votes <= -3) {
 
                 const zapmember = guild.members.cache.get(zap.member);
                 if (!zapmember) return;
 
-                stat.points = addPoints(Math.sign(zap.votes) / 3, stat.points, zapmember);
+                stat.points = addPoints(Math.sign(zap.votes), stat.points, zapmember);
 
                 zap.was_awarded = true;
                 printPoints(hourglass_channel, stat.points, true);
