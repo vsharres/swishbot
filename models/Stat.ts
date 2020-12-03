@@ -9,7 +9,7 @@ const StatSchema = new Schema({
         type: Map,
         of: Number
     },
-    lightnings: [{
+    lightnings: {
         member: {
             type: String
         },
@@ -23,7 +23,7 @@ const StatSchema = new Schema({
             type: Boolean,
             default: false
         }
-    }],
+    },
     house_cups: {
         gryffindor: {
             type: Number
