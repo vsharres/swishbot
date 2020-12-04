@@ -18,12 +18,14 @@ export class PointsReset extends Command {
                 return;
 
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+            stat.likes = new Map<string, number>();
 
             const guild = message.guild;
             if (!guild) return;
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
             printPoints(hourglass_channel, stat.points, true);
+
 
             stat
                 .save()
