@@ -36,7 +36,6 @@ export class Commands extends Handler {
 
     async OnMessage(message: Message) {
         const commands = this.commands;
-        let cooldowns = this.cooldowns;
 
         //Ignores all messages and commands send to the bot from DM
         if (!message.guild) return;

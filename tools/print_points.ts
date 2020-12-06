@@ -5,7 +5,7 @@ import { Houses } from '../models/Stat';
 async function printPoints(channel: TextChannel, points: Houses, removeMessages: boolean = false) {
     //Delete the previous message
 
-    if (removeMessages && process.env.NODE_ENV === 'development') {
+    if (removeMessages) {
         channel.bulkDelete(4)
             .then(messages => {
                 logger.log('info', `Bulk deleted ${messages.size} messages`);
@@ -40,7 +40,7 @@ async function printPoints(channel: TextChannel, points: Houses, removeMessages:
     houses.sort((a, b) => b.points - a.points);
     let reply = '**House Points**\n\n';
 
-    //Check if any house is tied
+    //Check if any house are tied
     if (gryf_points === slyth_points || gryf_points === raven_points || gryf_points === huff_points || slyth_points === raven_points || slyth_points === huff_points || raven_points === huff_points) {
 
         //for the case when all houses are tied

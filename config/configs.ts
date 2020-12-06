@@ -29,7 +29,7 @@ interface Keys {
   gryffindor_points_multiplier: number,
   hufflepuff_points_multiplier: number,
   points_votes: number,
-  points_reactions: number,
+  points_likes: number,
   number_reactions: number,
   reactions_timer: string,
   gif_peace: string,

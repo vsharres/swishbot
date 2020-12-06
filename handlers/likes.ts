@@ -41,7 +41,7 @@ export class Likes extends Handler {
                         return;
                     }
 
-                    stat.points = addPoints(1, stat.points, reaction_member);
+                    stat.points = addPoints(Configs.points_likes, stat.points, reaction_member);
 
                     printPoints(hourglass_channel, stat.points, true);
 
