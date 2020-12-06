@@ -16,6 +16,8 @@ export class Likes extends Handler {
         //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
         if (reaction.message.author.bot) return;
 
+        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) return;
+
         Stat.findById(Configs.stats_id).then((stat) => {
             if (!stat) {
                 return;

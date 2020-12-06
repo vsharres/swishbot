@@ -24,6 +24,7 @@ interface Keys {
   emoji_removepoints: string[],
   emojis_vote_yes: string[],
   emojis_vote_no: string[],
+  emojis_negative_reactions: string[],
   slytherin_points_multiplier: number,
   ravenclaw_points_multiplier: number,
   gryffindor_points_multiplier: number,
