@@ -12,28 +12,17 @@ export class Points extends Command {
     }
 
     async execute(message: Message, arg: string[]) {
-        try {
-            const guild = await message.guild?.fetch();
-            if (guild) {
-                Stat.findById(Configs.stats_id).then(stat => {
-                    if (!stat) {
-                        return logger.log('error', `[${this.names[0]}]:Error getting the stat, check the stat id`);
-                    }
 
-                    const points = stat.points;
-
-                    return printPoints(<TextChannel>message.channel, points);
-
-                })
-                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+        Stat.findById(Configs.stats_id).then(stat => {
+            if (!stat) {
+                return logger.log('error', `[${this.names[0]}]:Error getting the stat, check the stat id`);
             }
 
+            const points = stat.points;
+            printPoints(<TextChannel>message.channel, points);
 
-
-        }
-        catch (err) {
-            return;
-        }
+        })
+            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
     }
 };

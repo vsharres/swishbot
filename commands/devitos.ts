@@ -35,7 +35,9 @@ export class Devitos extends Command {
                 const devitos_string = new Intl.NumberFormat('en-IN').format(devitos);
                 const string_feet = new Intl.NumberFormat('en-IN').format(feet);
                 const string_inches = new Intl.NumberFormat('en-IN').format(inches);
-                return message.channel.send(`${message.author.toString()} ${feet > 0 ? string_feet + "'" : ''}${inches > 0 ? string_inches + '"' : ''} is ${devitos_string} ${Configs.command_prefix}!`)
+                const message_to_send = `${message.author.toString()} ${feet > 0 ? string_feet + "'" : ''}${inches > 0 ? string_inches + '"' : ''} is ${devitos_string} ${Configs.command_prefix}!`;
+                return message.channel.send(message_to_send)
+                    .then(() => logger.log('info', message_to_send))
                     .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
             }
@@ -52,8 +54,10 @@ export class Devitos extends Command {
             const devitos = (amount * multiplier / divisor);
             const devitos_string = new Intl.NumberFormat('en-IN').format(devitos);
             const string_amount = new Intl.NumberFormat('en-IN').format(amount);
+            const message_to_send = `${message.author.toString()} ${string_amount} ${unit} is ${devitos_string} ${Configs.command_prefix}!`;
 
-            return message.channel.send(`${message.author.toString()} ${string_amount} ${unit} is ${devitos_string} ${Configs.command_prefix}!`)
+            return message.channel.send(message_to_send)
+                .then(() => logger.log('info', message_to_send))
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
 
@@ -84,8 +88,11 @@ export class Devitos extends Command {
             const devitos = (amount * multiplier / divisor);
             const string_devitos = new Intl.NumberFormat('en-IN').format(devitos);
             const string_amount = new Intl.NumberFormat('en-IN').format(amount);
+            const message_to_send = `${message.author.toString()} ${string_amount} ${unit} is ${string_devitos} ${Configs.command_prefix}!`;
 
-            return message.channel.send(`${message.author.toString()} ${string_amount} ${unit} is ${string_devitos} ${Configs.command_prefix}!`);
+            return message.channel.send(message_to_send)
+                .then(() => logger.log('info', message_to_send))
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
         }
         else if (args.length === 4 && !isNaN(parseFloat(args[0])) && !isNaN(parseFloat(args[2]))) {
@@ -98,36 +105,37 @@ export class Devitos extends Command {
             let parsed = args.shift();
             let divisor = Configs.devito_height;
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
                 return;
             }
 
             firstAmount = parseFloat(parsed);
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
                 return;
             }
             firstunit = parsed;
 
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
                 return;
             }
             secondAmount = parseFloat(parsed);
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]:Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
                 return;
             }
             secondunit = parsed;
 
-            if (firstunit === 'feet' && secondunit === 'inches') {
+            if (firstunit === 'feet' && secondunit === 'inches' || secondunit === 'inch') {
                 firstmultiplier = 30.48;
                 secondMultiplier = 2.54;
             }
             else {
+                logger.log('error', `[${this.names[0]}]: The first unit and the second unit were not feet and inches`)
                 return;
             }
 
@@ -135,8 +143,11 @@ export class Devitos extends Command {
             const devitos = new Intl.NumberFormat('en-IN').format(amount);
             const string_firstamount = new Intl.NumberFormat('en-IN').format(firstAmount);
             const string_secondamount = new Intl.NumberFormat('en-IN').format(secondAmount);
+            const message_to_send = `${message.author.toString()} ${string_firstamount} ${firstunit} ${string_secondamount} ${secondunit} is ${devitos} ${Configs.command_prefix}!`;
 
-            return message.channel.send(`${message.author.toString()} ${string_firstamount} ${firstunit} ${string_secondamount} ${secondunit} is ${devitos} ${Configs.command_prefix}!`);
+            return message.channel.send(message_to_send)
+                .then(() => logger.log('info', message_to_send))
+                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
 
         }

@@ -15,7 +15,7 @@ export class Lightning extends Command {
         Stat.findById(Configs.stats_id).then(stat => {
 
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]:Error getting the stat, check the stat id`);
+                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
             let reply = '';
@@ -26,7 +26,7 @@ export class Lightning extends Command {
                 const number_batches = Math.floor(stat.lightnings.length / 10) + 1;
                 const guild = message.guild;
                 if (!guild) {
-                    return logger.log('error', `[${this.names[0]}]:Error getting the guild, check id`);
+                    return logger.log('error', `[${this.names[0]}]: Error getting the guild, check id`);
                 }
 
                 for (let index = 0; index < number_batches; index++) {
@@ -47,6 +47,8 @@ export class Lightning extends Command {
                     message.channel.send(reply);
                     reply = '';
                 }
+
+                logger.log('info', `[${this.names[0]}]: ${stat.lightnings.length} were successfully printed.`);
             }
             else {
                 return message.channel.send(`${message.author.toString()} there are no lightning bolts yet, maybe ask the first one!`)

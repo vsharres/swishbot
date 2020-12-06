@@ -5,7 +5,7 @@ import { Houses } from '../models/Stat';
 async function printPoints(channel: TextChannel, points: Houses, removeMessages: boolean = false) {
     //Delete the previous message
 
-    if (removeMessages) {
+    if (removeMessages && process.env.NODE_ENV === 'development') {
         channel.bulkDelete(4)
             .then(messages => {
                 logger.log('info', `Bulk deleted ${messages.size} messages`);

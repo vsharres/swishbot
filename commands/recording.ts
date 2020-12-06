@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import Stat, { Lightning } from '../models/Stat';
+import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Message } from 'discord.js';
 import logger from '../tools/logger';
@@ -25,13 +25,12 @@ export class Recording extends Command {
             if (!stat) return;
 
             stat.recording_date = new Date(zoned);
-            stat.lightnings = new Array<Lightning>();
 
             stat
                 .save()
                 .then(() => {
-                    message.reply(`New recording set to ${date_string.toString()}`);
-                    logger.log('info', `[${this.names[0]}]: New recording set to ${date_string.toString()}`);
+                    message.reply(`New recording set to ${zoned.toString()}`);
+                    logger.log('info', `[${this.names[0]}]: New recording set to ${zoned.toString()}`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
         })

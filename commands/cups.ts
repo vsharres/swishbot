@@ -22,8 +22,6 @@ export class Cups extends Command {
 
             printcups(<TextChannel>message.channel, cups);
 
-            logger.log('info', `[${this.names[0]}]: Total number of cups: ${cups}`);
-
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

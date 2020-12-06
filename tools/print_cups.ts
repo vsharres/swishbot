@@ -4,7 +4,7 @@ import { Houses } from '../models/Stat';
 
 async function printcups(channel: TextChannel, cups: Houses, removeMessages: boolean = false) {
 
-    if (removeMessages) {
+    if (removeMessages && process.env.NODE_ENV === 'development') {
         channel.bulkDelete(4)
             .then(messages => {
                 logger.log('info', `Bulk deleted ${messages.size} messages`);

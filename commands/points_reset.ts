@@ -1,4 +1,4 @@
-import Stat from '../models/Stat';
+import Stat, { Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Message, TextChannel } from 'discord.js';
@@ -19,13 +19,13 @@ export class PointsReset extends Command {
 
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
             stat.likes = new Map<string, number>();
+            stat.lightnings = new Array<Lightning>();
 
             const guild = message.guild;
             if (!guild) return;
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
             printPoints(hourglass_channel, stat.points, true);
-
 
             stat
                 .save()
