@@ -62,7 +62,7 @@ export class Points extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: Points modified by the hosts for the message: "${reaction.message.content}"`);
+                    logger.log('info', `[${this.name}]: Points awarded by ${admin_member.nickname} tp ${guild_member.nickname}"`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));

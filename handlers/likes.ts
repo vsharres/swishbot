@@ -47,7 +47,7 @@ export class Likes extends Handler {
 
                     printPoints(hourglass_channel, stat.points, true);
 
-                    logger.log('info', `[${this.name}]: Points awarded as the message: "${reaction.message.content}" reached ${Configs.number_reactions} reactions! `);
+                    logger.log('info', `[${this.name}]: Points awarded to ${reaction_member.nickname} as the message: "${reaction.message.content}" reached ${Configs.number_reactions} reactions! `);
 
                 }
 
