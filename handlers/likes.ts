@@ -25,8 +25,14 @@ export class Likes extends Handler {
 
             const message_id = reaction.message.id;
 
-            let value = stat.likes.get(message_id);
-            if (value) {
+            let authors_array = stat.likes.get(message_id);
+            if (authors_array) {
+
+                if (authors_array.authors.some(author => author === user.id)) {
+                    return;
+                }
+
+                let value = authors_array.authors.length;
                 //Increment the value of reactions
                 value++;
                 if (value === Configs.number_reactions) {
@@ -51,13 +57,15 @@ export class Likes extends Handler {
 
                 }
 
-                stat.likes.set(message_id, value);
+                authors_array.authors.push(user.id);
+                stat.likes.set(message_id, authors_array);
 
             }
             else {
-                stat.likes.set(message_id, 1);
+                authors_array = { authors: [] };
+                authors_array.authors.push(user.id);
+                stat.likes.set(message_id, authors_array);
             }
-
 
             stat
                 .save()

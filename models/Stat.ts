@@ -1,5 +1,11 @@
 import { Document, model, Schema } from 'mongoose';
 
+const ArrayAuthors = new Schema({
+    authors: [String],
+
+
+}, { _id: false });
+
 const StatSchema = new Schema({
     recording_date: {
         type: Date,
@@ -7,7 +13,7 @@ const StatSchema = new Schema({
     },
     likes: {
         type: Map,
-        of: Number
+        of: ArrayAuthors
     },
     lightnings: [{
         member: {
@@ -62,6 +68,10 @@ export interface Houses {
     hufflepuff: number;
 }
 
+export interface AuthorsArray {
+    authors: string[]
+}
+
 export interface LikedMessage {
     _id: string;
     message_id: string;
@@ -79,7 +89,7 @@ interface IStatSchema extends Document {
     lightnings: Lightning[];
     house_cups: Houses;
     points: Houses;
-    likes: Map<string, number>;
+    likes: Map<string, AuthorsArray>;
 }
 
 export default model<IStatSchema>("stats", StatSchema);

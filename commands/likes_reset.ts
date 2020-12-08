@@ -1,4 +1,4 @@
-import Stat from '../models/Stat';
+import Stat, { AuthorsArray } from '../models/Stat';
 import { Configs } from '../config/configs';
 import logger from '../tools/logger';
 import { Command } from './command';
@@ -16,7 +16,7 @@ export class LikesReset extends Command {
             if (!stat)
                 return;
 
-            stat.likes = new Map<string, number>();
+            stat.likes = new Map<string, AuthorsArray>();
 
             stat
                 .save()

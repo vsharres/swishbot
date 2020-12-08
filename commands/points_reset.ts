@@ -1,4 +1,4 @@
-import Stat, { Lightning } from '../models/Stat';
+import Stat, { AuthorsArray, Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Message, TextChannel } from 'discord.js';
@@ -18,7 +18,7 @@ export class PointsReset extends Command {
                 return;
 
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
-            stat.likes = new Map<string, number>();
+            stat.likes = new Map<string, AuthorsArray>();
             stat.lightnings = new Array<Lightning>();
 
             const guild = message.guild;
