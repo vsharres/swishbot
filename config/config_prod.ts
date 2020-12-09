@@ -27,7 +27,7 @@ export const keys: Keys = {
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emojis_vote_no: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
-	emojis_negative_reactions: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
+	emojis_negative_reactions: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿', '🤮', '🤢'],
 	slytherin_points_multiplier: 1,
 	ravenclaw_points_multiplier: 1,
 	gryffindor_points_multiplier: 1,
