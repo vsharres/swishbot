@@ -6,9 +6,6 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
 
     if (removeMessages) {
         channel.bulkDelete(4)
-            .then(messages => {
-                logger.log('info', `Bulk deleted ${messages.size} messages`);
-            })
             .catch(error => { return logger.log('error', error) });
 
     }
