@@ -14,8 +14,7 @@ export class PointsReset extends Command {
     async execute(message: Message, arg: string[]) {
 
         Stat.findById(Configs.stats_id).then(stat => {
-            if (!stat)
-                return;
+            if (!stat) return;
 
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
             stat.likes = new Map<string, AuthorsArray>();
