@@ -22,9 +22,9 @@ export class Snape extends Command {
         const prefects_role = guild.roles.cache.get(Configs.role_prefect);
         if (!prefects_role) return;
 
-        message.channel.send(`Poll started: ${prefects_role.toString()} we have ${Math.floor(parseInt(Configs.reactions_timer) / 60000)} minutes to vote.`);
+        message.channel.send(`Poll started: ${prefects_role.toString()} we have ${Math.floor(Configs.reactions_timer / 60000)} minutes to vote.`);
         const filter = (reaction: MessageReaction, user: User) => Configs.emoji_addpoints.includes(reaction.emoji.toString()) || Configs.emoji_removepoints.includes(reaction.emoji.toString());
-        message.awaitReactions(filter, { time: parseInt(Configs.reactions_timer) })
+        message.awaitReactions(filter, { time: Configs.reactions_timer })
             .then(collected => {
 
                 const add_emojis_size = collected.filter(reaction => Configs.emoji_addpoints.includes(reaction.emoji.toString())).size;

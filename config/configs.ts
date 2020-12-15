@@ -32,7 +32,7 @@ interface Keys {
   points_votes: number,
   points_likes: number,
   number_reactions: number,
-  reactions_timer: string,
+  reactions_timer: number,
   gif_peace: string,
   token: string,
 }
