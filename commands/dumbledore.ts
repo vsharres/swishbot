@@ -57,7 +57,14 @@ export class Dumbly extends Command {
                     case 'gryffindor':
                         points.gryffindor += amount;
                         break;
+                    case "🦁":
+                        points.gryffindor += amount;
+                        break;
                     case 'slytherin':
+                        points.slytherin += amount;
+                        name = 'Slytherin 🐍';
+                        break;
+                    case '🐍':
                         points.slytherin += amount;
                         name = 'Slytherin 🐍';
                         break;
@@ -65,13 +72,21 @@ export class Dumbly extends Command {
                         points.ravenclaw += amount;
                         name = 'Ravenclaw 🦅';
                         break;
+                    case '🦅':
+                        points.ravenclaw += amount;
+                        name = 'Ravenclaw 🦅';
+                        break;
                     case 'hufflepuff':
                         points.hufflepuff += amount;
                         name = 'Hufflepuff 🦡';
                         break;
-                    default:
-                        points.gryffindor += amount;
+                    case '🦡':
+                        points.hufflepuff += amount;
+                        name = 'Hufflepuff 🦡';
                         break;
+                    default:
+                        logger.log('error', `[${this.names[0]}]: Error parsing the house from the arguments`);
+                        return;
                 }
 
                 messageToSent = {

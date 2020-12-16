@@ -46,15 +46,30 @@ export class Award extends Command {
                 case 'gryffindor':
                     cups.gryffindor++;
                     break;
+                case '🦁':
+                    cups.gryffindor++;
+                    break;
                 case 'slytherin':
                     cups.slytherin++;
                     name = 'Slytherin 🐍';
+                    break;
+                case '🐍':
+                    cups.slytherin++;
+                    name = 'Slytherin 🐍';
+                    break;
+                case '🦅':
+                    cups.ravenclaw++;
+                    name = 'Ravenclaw 🦅';
                     break;
                 case 'ravenclaw':
                     cups.ravenclaw++;
                     name = 'Ravenclaw 🦅';
                     break;
                 case 'hufflepuff':
+                    cups.hufflepuff++;
+                    name = 'Hufflepuff 🦡';
+                    break;
+                case '🦡':
                     cups.hufflepuff++;
                     name = 'Hufflepuff 🦡';
                     break;
