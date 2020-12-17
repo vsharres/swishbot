@@ -20,16 +20,6 @@ export class Zaps extends Handler {
                 return;
             }
 
-            let elapsed_time = Date.now() - stat.recording_date.getTime();
-            elapsed_time = elapsed_time / 1000;
-            elapsed_time = elapsed_time / 60;
-            elapsed_time = elapsed_time / 60;
-
-            if (elapsed_time > Configs.recording_delay) {
-                stat.lightnings = [];
-                stat.recording_date = new Date();
-            }
-
             const question = {
                 member: message.author.id,
                 question: message.content,

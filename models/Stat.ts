@@ -7,10 +7,6 @@ const ArrayAuthors = new Schema({
 }, { _id: false });
 
 const StatSchema = new Schema({
-    recording_date: {
-        type: Date,
-        default: Date.now
-    },
     likes: {
         type: Map,
         of: ArrayAuthors
@@ -85,7 +81,6 @@ export interface Lightning {
 }
 
 interface IStatSchema extends Document {
-    recording_date: Date;
     lightnings: Lightning[];
     house_cups: Houses;
     points: Houses;

@@ -19,7 +19,6 @@ interface Keys {
   role_slytherin: string,
   role_ravenclaw: string,
   role_hufflepuff: string,
-  recording_delay: number,
   emoji_addpoints: string[],
   emoji_removepoints: string[],
   emojis_vote_yes: string[],

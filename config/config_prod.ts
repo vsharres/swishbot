@@ -22,7 +22,6 @@ export const keys: Keys = {
 	role_ravenclaw: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',
 	role_hufflepuff: process.env.HUFFLEPUFF_ROLE ? process.env.HUFFLEPUFF_ROLE : '',
 	reactions_timer: process.env.REACTIONS_TIMER ? parseInt(process.env.REACTIONS_TIMER) : 60000,
-	recording_delay: process.env.RECORDING_DELAY ? parseInt(process.env.RECORDING_DELAY) : 12,  // in hours
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
