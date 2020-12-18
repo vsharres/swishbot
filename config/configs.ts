@@ -9,6 +9,7 @@ interface Keys {
   channel_recording: string,
   channel_mod_talk: string,
   channel_bot_talk: string,
+  channel_welcome: string,
   emoji_dumbly: string,
   emoji_snape: string,
   devito_height: number, // in cm

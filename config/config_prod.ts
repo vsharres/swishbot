@@ -11,6 +11,7 @@ export const keys: Keys = {
 	channel_recording: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
 	channel_mod_talk: process.env.MOD_TALK_CHANNEL ? process.env.MOD_TALK_CHANNEL : '',
 	channel_bot_talk: process.env.BOT_TALK_CHANNEL ? process.env.BOT_TALK_CHANNEL : '',
+	channel_welcome: process.env.CHANNEL_WELCOME ? process.env.CHANNEL_WELCOME : '',
 	emoji_dumbly: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_17.png',
 	emoji_snape: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
 	devito_height: 147, // in cm

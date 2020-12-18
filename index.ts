@@ -29,6 +29,12 @@ client.on('message', async message => {
 
 });
 
+client.on('guildMemberAdd', member => {
+    if (process.env.NODE_ENV == 'development') logger.log('info', 'On Member added event caught');
+
+    handlers.OnMemberAdd(member);
+});
+
 //NEED TO CHANGE THAT
 //Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
