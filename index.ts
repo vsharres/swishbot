@@ -1,7 +1,7 @@
-import Discord, { User } from 'discord.js';
+import Discord, { Message, User } from 'discord.js';
 import mongoose from 'mongoose';
 import { Configs } from './config/configs';
-import handlers from './handlers/handlers';
+import { Handlers } from './handlers/handlers';
 import logger from './tools/logger';
 
 mongoose
@@ -16,9 +16,11 @@ mongoose
     .catch(err => logger.log('error', err));
 
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'] });
+let handlers: Handlers;
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');
+    handlers = require('./handlers/handlers')(client);
 
 });
 client.on('message', async message => {
@@ -27,6 +29,23 @@ client.on('message', async message => {
 
     handlers.OnMessage(message);
 
+});
+
+client.on('messageDelete', async message => {
+
+    if (message.partial) {
+        try {
+            await message.fetch();
+        }
+        catch (error) {
+            logger.log('error', `[Index]: Something went wrong when fetching the message: ${error}`);
+            return;
+        }
+    }
+
+    if (process.env.NODE_ENV == 'development') logger.log('info', 'On Message deleted event caught');
+
+    handlers.OnMessageDelete(message as Message);
 });
 
 client.on('guildMemberAdd', member => {
@@ -47,7 +66,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             await reaction.fetch();
         }
         catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the message: ${error}`);
+            logger.log('error', `[Index]: Something went wrong when fetching the reaction: ${error}`);
             return;
         }
     }

@@ -1,4 +1,4 @@
-import { MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -7,8 +7,8 @@ import { printPoints } from '../tools/print_points';
 import { addPoints } from '../tools/add_points';
 
 export class Likes extends Handler {
-    constructor() {
-        super('likes', false, true);
+    constructor(client: Client) {
+        super(client, 'likes', false, true);
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
@@ -78,4 +78,7 @@ export class Likes extends Handler {
     }
 }
 
-export default new Likes();
+
+module.exports = (client: Client) => {
+    return new Likes(client);
+}

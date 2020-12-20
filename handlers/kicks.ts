@@ -1,12 +1,13 @@
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
+import { isInterfaceDeclaration } from 'typescript';
 
 export class Kicks extends Handler {
 
-    constructor() {
-        super('kicks', true);
+    constructor(client: Client) {
+        super(client, 'kicks', true);
     }
 
     async OnMessage(message: Message) {
@@ -22,4 +23,6 @@ export class Kicks extends Handler {
 
 };
 
-export default new Kicks();
+module.exports = (client: Client) => {
+    return new Kicks(client);
+}

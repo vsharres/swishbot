@@ -1,4 +1,4 @@
-import { Collection, Message } from 'discord.js';
+import { Client, Collection, Message } from 'discord.js';
 import logger from '../tools/logger';
 import profiler from '../tools/profiler';
 import fs from 'fs';
@@ -12,8 +12,8 @@ export class Commands extends Handler {
     commands: Collection<string, Command>;
     cooldowns: Collection<string, Collection<string, number>>;
 
-    constructor() {
-        super('command', true);
+    constructor(client: Client) {
+        super(client, 'command', true);
         this.commandFiles = [];
         this.commands = new Collection<string, Command>();
         this.cooldowns = new Collection<string, Collection<string, number>>();
@@ -25,11 +25,10 @@ export class Commands extends Handler {
         }
 
         for (const file of this.commandFiles) {
-            const command = require(`../commands/${file}`)
-            const names = command.default.names;
+            const command = require(`../commands/${file}`).default as Command;
 
-            names.forEach((name: string) => {
-                this.commands.set(name, command.default);
+            command.names.forEach((name: string) => {
+                this.commands.set(name, command);
             });
         }
     }
@@ -97,4 +96,7 @@ export class Commands extends Handler {
 
 };
 
-export default new Commands();
+
+module.exports = (client: Client) => {
+    return new Commands(client);
+}

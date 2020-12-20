@@ -2,19 +2,22 @@ import fs from 'fs';
 import { Handler } from './handler';
 import profiler from '../tools/profiler';
 import logger from '../tools/logger';
-import { Collection, GuildMember, Message, MessageReaction, User } from 'discord.js';
+import { Client, Collection, GuildMember, Message, MessageReaction, User } from 'discord.js';
 
 export class Handlers extends Handler {
     message_handlers: Collection<string, Handler>;
+    deleteMessage_handlers: Collection<string, Handler>;
     reaction_handlers: Collection<string, Handler>;
     addmember_handlers: Collection<string, Handler>;
+
     handler_files: String[];
 
-    constructor() {
-        super('handlers', true, true);
+    constructor(client: Client) {
+        super(client, 'handlers', true, true);
 
         this.reaction_handlers = new Collection<string, Handler>();
         this.message_handlers = new Collection<string, Handler>();
+        this.deleteMessage_handlers = new Collection<string, Handler>();
         this.addmember_handlers = new Collection<string, Handler>();
 
         this.handler_files = [];
@@ -26,18 +29,22 @@ export class Handlers extends Handler {
         }
 
         for (const file of this.handler_files) {
-            const handler = require(`../handlers/${file}`);
+            const handler = require(`../handlers/${file}`)(this.client) as Handler;
 
-            if (handler.default.catch_reaction) {
-                this.reaction_handlers.set(handler.default.name, handler.default);
+            if (handler.catch_reaction) {
+                this.reaction_handlers.set(handler.name, handler);
             }
 
-            if (handler.default.catch_message) {
-                this.message_handlers.set(handler.default.name, handler.default);
+            if (handler.catch_message) {
+                this.message_handlers.set(handler.name, handler);
             }
 
-            if (handler.default.catch_addmember) {
-                this.addmember_handlers.set(handler.default.name, handler.default);
+            if (handler.catch_addmember) {
+                this.addmember_handlers.set(handler.name, handler);
+            }
+
+            if (handler.catch_message_delete) {
+                this.deleteMessage_handlers.set(handler.name, handler);
             }
 
         }
@@ -75,6 +82,18 @@ export class Handlers extends Handler {
                 });
         });
     }
+
+    async OnMessageDelete(message: Message) {
+        this.deleteMessage_handlers.forEach(async handler => {
+            if (process.env.NODE_ENV === 'development') profiler.startTimer(handler.name);
+            handler.OnMessageDelete(message)
+                .then(() => {
+                    if (process.env.NODE_ENV === 'development') logger.log('info', `[${handler.name}]: time to execute: ${profiler.endTimer(handler.name)} ms`);
+                });
+        });
+    }
 }
 
-export default new Handlers();
+module.exports = (client: Client) => {
+    return new Handlers(client);
+}

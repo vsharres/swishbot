@@ -1,13 +1,16 @@
-import { Message, TextChannel } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 
+let bot_talk: TextChannel;
+
 export class Zaps extends Handler {
 
-    constructor() {
-        super('zaps', true);
+    constructor(client: Client) {
+        super(client, 'zaps', true);
+        bot_talk = <TextChannel>client.channels.cache.get(Configs.channel_bot_talk);
     }
 
     async OnMessage(message: Message) {
@@ -26,12 +29,7 @@ export class Zaps extends Handler {
                 votes: 0,
                 was_awarded: false
             };
-            const guild = message.guild;
-            if (!guild) {
-                return;
-            }
 
-            const bot_talk = <TextChannel>guild.channels.cache.get(Configs.channel_bot_talk);
             bot_talk.send(message.content);
             stat.lightnings.push(question);
             stat
@@ -48,4 +46,6 @@ export class Zaps extends Handler {
 
 };
 
-export default new Zaps();
+module.exports = (client: Client) => {
+    return new Zaps(client);
+}
