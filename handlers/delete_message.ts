@@ -17,9 +17,16 @@ export class DeleteMessage extends Handler {
         //Only respond to messages from the eric munch bot and to messages in the mod talk channel
         if (message.author.bot) return;
 
-        bot_talk.send(`${message.author.toString()} message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()} `);
+        const guild = message.guild;
+        if (!guild) return;
+        const member = guild.members.cache.get(message.author.id);
+        if (!member) return;
 
-        logger.log('info', `[${this.name}]: ${message.author.toString()} message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`);
+        if (member.roles.cache.get(Configs.role_prefect) || member.roles.cache.get(Configs.role_admin)) return;
+
+        bot_talk.send(`${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`);
+
+        logger.log('info', `[${this.name}]: ${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`);
 
     }
 
