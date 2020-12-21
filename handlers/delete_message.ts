@@ -1,4 +1,4 @@
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, Message, MessageAttachment, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
@@ -24,9 +24,15 @@ export class DeleteMessage extends Handler {
 
         if (member.roles.cache.get(Configs.role_prefect) || member.roles.cache.get(Configs.role_admin)) return;
 
-        bot_talk.send(`${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`);
+        const content = `${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`;
 
-        logger.log('info', `[${this.name}]: ${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`);
+        bot_talk.send({
+            content: content,
+            files: message.attachments.array()
+
+        });
+
+        logger.log('info', `[${this.name}]: ${content}`);
 
     }
 
