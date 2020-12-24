@@ -25,7 +25,7 @@ client.once('ready', () => {
 });
 client.on('message', async message => {
 
-    if (process.env.NODE_ENV == 'development') logger.log('info', 'On Message event caught');
+    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Message event caught');
 
     handlers.OnMessage(message);
 
@@ -43,22 +43,21 @@ client.on('messageDelete', async message => {
         }
     }
 
-    if (process.env.NODE_ENV == 'development') logger.log('info', 'On Message deleted event caught');
+    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Message deleted event caught');
 
     handlers.OnMessageDelete(message as Message);
 });
 
 client.on('guildMemberAdd', member => {
-    if (process.env.NODE_ENV == 'development') logger.log('info', 'On Member added event caught');
+    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Member added event caught');
 
     handlers.OnMemberAdd(member);
 });
 
-//NEED TO CHANGE THAT
 //Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
 
-    if (process.env.NODE_ENV == 'development') logger.log('info', 'Reaction caught');
+    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: Reaction add caught');
 
     if (reaction.partial) {
 

@@ -97,12 +97,12 @@ async function printPoints(channel: TextChannel, points: Houses, removeMessages:
             }
         }
     }
-    else {
-        reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
-        reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
-        reply += `${houses[2].house} is in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
-        reply += `${houses[3].house} is in fourth place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
-    }
+
+
+    reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+    reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
+    reply += `${houses[2].house} is in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
+    reply += `${houses[3].house} is in fourth place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
 
     return channel.send(reply)
         .catch(error => logger.log('error', error));

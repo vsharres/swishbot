@@ -62,7 +62,7 @@ export class Points extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: ${Math.abs(points)} points ${points > 0 ? 'awarded' : 'removed'} by ${admin_member.displayName} to ${guild_member.displayName}"`);
+                    logger.log('info', `[${this.name}]: ${Math.abs(points)} points ${points > 0 ? 'awarded' : 'removed'} by ${admin_member.displayName} to ${guild_member.displayName}`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
