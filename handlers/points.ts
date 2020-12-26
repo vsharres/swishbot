@@ -68,7 +68,7 @@ export class Points extends Handler {
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
             const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
-            printPoints(hourglass_channel, stat.points, true);
+            printPoints(hourglass_channel, stat.points);
 
         });
 

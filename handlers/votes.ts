@@ -68,7 +68,7 @@ export class Votes extends Handler {
                 stat.points = addPoints(Configs.points_votes * Math.sign(zap.votes), stat.points, zapmember);
 
                 zap.was_awarded = true;
-                printPoints(hourglass_channel, stat.points, true);
+                printPoints(hourglass_channel, stat.points);
 
             }
 

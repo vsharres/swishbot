@@ -2,12 +2,12 @@ import { TextChannel } from 'discord.js'
 import logger from './logger';
 import { Houses } from '../models/Stat';
 
-async function printcups(channel: TextChannel, cups: Houses, removeMessages: boolean = false) {
+async function printcups(channel: TextChannel, cups: Houses) {
 
-    if (removeMessages) {
-        channel.bulkDelete(4)
-            .catch(error => { return logger.log('error', error) });
-
+    const message = channel.messages.cache.first();
+    if (!message) {
+        logger.log('error', 'Could not find the message for the cups.');
+        return;
     }
 
     const start_time = Date.now();
@@ -44,7 +44,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
         if (gryf_cups === slyth_cups && slyth_cups === raven_cups && raven_cups === huff_cups) {
 
             reply += `All houses are tied with **${gryf_cups} cup${gryf_cups === 1 ? '' : 's'}!**\n\n`;
-            return channel.send(reply)
+            return message.edit(reply)
                 .then(() => {
                     const end_time = Date.now();
                     logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -57,7 +57,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
             if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[1].value === sorted_cups[2].value) {
                 reply += `${sorted_cups[0].house}, ${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in first place with **${sorted_cups[0].value} cup${sorted_cups[0].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[3].house} is in second place with **${sorted_cups[3].value} cup${sorted_cups[3].value === 1 ? '' : 's'}!**\n\n`;
-                return channel.send(reply)
+                return message.edit(reply)
                     .then(() => {
                         const end_time = Date.now();
                         logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -67,7 +67,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
             else {
                 reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cup${sorted_cups[0].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[1].house}, ${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[1].value} cup${sorted_cups[1].value === 1 ? '' : 's'}!**\n\n`;
-                return channel.send(reply)
+                return message.edit(reply)
                     .then(() => {
                         const end_time = Date.now();
                         logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -80,7 +80,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
             if (sorted_cups[0].value === sorted_cups[1].value && sorted_cups[2].value === sorted_cups[3].value) {
                 reply += `${sorted_cups[0].house}, ${sorted_cups[1].house} are tied in first place with **${sorted_cups[0].value} cup${sorted_cups[0].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in second place with **${sorted_cups[2].value} cup${sorted_cups[2].value === 1 ? '' : 's'}!**\n\n`;
-                return channel.send(reply)
+                return message.edit(reply)
                     .then(() => {
                         const end_time = Date.now();
                         logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -91,7 +91,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
                 reply += `${sorted_cups[0].house}, ${sorted_cups[1].house} are tied in first place with **${sorted_cups[0].value} cup${sorted_cups[0].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[2].house} is in second place with **${sorted_cups[2].value} cup${sorted_cups[2].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cup${sorted_cups[3].value === 1 ? '' : 's'}!**\n\n`;
-                return channel.send(reply)
+                return message.edit(reply)
                     .then(() => {
                         const end_time = Date.now();
                         logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -102,7 +102,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
                 reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cup${sorted_cups[0].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[1].house}, ${sorted_cups[2].house} are tied in second place with **${sorted_cups[1].value} cup${sorted_cups[1].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[3].house} is in third place with **${sorted_cups[3].value} cup${sorted_cups[3].value === 1 ? '' : 's'}!**\n\n`;
-                return channel.send(reply)
+                return message.edit(reply)
                     .then(() => {
                         const end_time = Date.now();
                         logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -113,7 +113,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
                 reply += `${sorted_cups[0].house} is in first place with **${sorted_cups[0].value} cup${sorted_cups[0].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[1].house} is in second place with **${sorted_cups[1].value} cup${sorted_cups[1].value === 1 ? '' : 's'}!**\n`;
                 reply += `${sorted_cups[2].house}, ${sorted_cups[3].house} are tied in third place with **${sorted_cups[2].value} cup${sorted_cups[2].value === 1 ? '' : 's'}!**\n\n`;
-                return channel.send(reply)
+                return message.edit(reply)
                     .then(() => {
                         const end_time = Date.now();
                         logger.log('info', `Time to execute: ${end_time - start_time} ms`);
@@ -130,7 +130,7 @@ async function printcups(channel: TextChannel, cups: Houses, removeMessages: boo
         reply += `${sorted_cups[3].house} is in fourth place with **${sorted_cups[3].value} cup${sorted_cups[3].value === 1 ? '' : 's'}!**\n\n`;
     }
 
-    return channel.send(reply)
+    return message.edit(reply)
         .then(() => {
             const end_time = Date.now();
             logger.log('info', `Time to execute: ${end_time - start_time} ms`);

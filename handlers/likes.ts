@@ -51,7 +51,7 @@ export class Likes extends Handler {
 
                     stat.points = addPoints(Configs.points_likes, stat.points, reaction_member);
 
-                    printPoints(hourglass_channel, stat.points, true);
+                    printPoints(hourglass_channel, stat.points);
 
                     logger.log('info', `[${this.name}]: Points awarded to ${reaction_member.displayName} as the message: "${reaction.message.content}" reached ${Configs.number_reactions} reactions! `);
 
