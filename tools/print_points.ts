@@ -4,7 +4,8 @@ import { Houses } from '../models/Stat';
 
 async function printPoints(channel: TextChannel, points: Houses) {
 
-    const message = channel.messages.cache.first();
+    const messages = await channel.messages.fetch();
+    const message = messages.first();
     if (!message) {
         logger.log('error', 'Could not find the message in the points channel.');
         return;

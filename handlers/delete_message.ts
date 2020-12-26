@@ -32,7 +32,7 @@ export class DeleteMessage extends Handler {
 
         });
 
-        logger.log('info', `[${this.name}]: ${content}`);
+        logger.log('info', `[${this.name}]: ${message.author.username}'s message: "${message.content}" Deleted from the channel: ${message.channel.toString()}`);
 
     }
 
