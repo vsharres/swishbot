@@ -2,14 +2,7 @@ import { TextChannel } from 'discord.js'
 import logger from './logger';
 import { Houses } from '../models/Stat';
 
-async function printPoints(channel: TextChannel, points: Houses) {
-
-    const messages = await channel.messages.fetch();
-    const message = messages.first();
-    if (!message) {
-        logger.log('error', 'Could not find the message in the points channel.');
-        return;
-    }
+async function printPoints(channel: TextChannel, points: Houses, is_print_channel: boolean = false) {
 
     let houses = [{
         house: 'Gryffindor 🦁',
@@ -44,8 +37,6 @@ async function printPoints(channel: TextChannel, points: Houses) {
         if (gryf_points === slyth_points && slyth_points === raven_points && raven_points === huff_points) {
 
             reply += `All houses are tied with **${gryf_points} point${gryf_points === 1 ? '' : 's'}!**\n`;
-            return message.edit(reply)
-                .catch(error => logger.log('error', error));
 
         }
         //for the case with 3 houses tied
@@ -56,14 +47,11 @@ async function printPoints(channel: TextChannel, points: Houses) {
             if (houses[0].points === houses[1].points && houses[1].points === houses[2].points) {
                 reply += `${houses[0].house}, ${houses[1].house}, ${houses[2].house} are tied in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[3].house} is in second place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
-                return message.edit(reply)
-                    .catch(error => logger.log('error', error));
+
             }
             else {
                 reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[1].house}, ${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n\n`;
-                return message.edit(reply)
-                    .catch(error => logger.log('error', error));
             }
         }
         //for the case where only two houses are tied
@@ -71,42 +59,49 @@ async function printPoints(channel: TextChannel, points: Houses) {
             if (houses[0].points === houses[1].points && houses[2].points === houses[3].points) {
                 reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[2].house}, ${houses[3].house} are tied in second place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n\n`;
-                return message.edit(reply)
-                    .catch(error => logger.log('error', error));
             }
             else if (houses[0].points === houses[1].points && houses[1].points !== houses[2].points && houses[1].points !== houses[3].points) {
                 reply += `${houses[0].house}, ${houses[1].house} are tied in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[2].house} is in second place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[3].house} is in third place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
-                return message.edit(reply)
-                    .catch(error => logger.log('error', error));
             }
             else if (houses[0].points !== houses[1].points && houses[1].points === houses[2].points && houses[2].points !== houses[3].points) {
                 reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[1].house}, ${houses[2].house} are tied in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[3].house} is in third place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
-                return message.edit(reply)
-                    .catch(error => logger.log('error', error));
             }
             else {
                 reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
                 reply += `${houses[2].house}, ${houses[3].house} are tied in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n\n`;
-                return message.edit(reply)
-                    .catch(error => logger.log('error', error));
             }
         }
     }
+    else {
+        reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
+        reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
+        reply += `${houses[2].house} is in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
+        reply += `${houses[3].house} is in fourth place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
 
+    }
 
-    reply += `${houses[0].house} is in first place with **${houses[0].points} point${houses[0].points === 1 ? '' : 's'}!**\n`;
-    reply += `${houses[1].house} is in second place with **${houses[1].points} point${houses[1].points === 1 ? '' : 's'}!**\n`;
-    reply += `${houses[2].house} is in third place with **${houses[2].points} point${houses[2].points === 1 ? '' : 's'}!**\n`;
-    reply += `${houses[3].house} is in fourth place with **${houses[3].points} point${houses[3].points === 1 ? '' : 's'}!**\n\n`;
+    if (is_print_channel) {
 
-    return message.edit(reply)
-        .catch(error => logger.log('error', error));
+        const messages = await channel.messages.fetch();
+        const message = messages.first();
+        if (!message) {
+            logger.log('error', 'Could not find the message in the points channel.');
+            return;
+        }
 
+        message.edit(reply)
+            .catch(error => logger.log('error', error));
+
+    }
+    else {
+        channel.send(reply)
+            .catch(error => logger.log('error', error));
+    }
 
 }
 

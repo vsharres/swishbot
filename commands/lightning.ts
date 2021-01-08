@@ -41,7 +41,11 @@ export class Lightning extends Command {
                         if (message.channel.id === Configs.channel_bot_talk) {
                             can_show_votes = ` votes: ${Math.abs(stat.lightnings[bolt].votes)} ${stat.lightnings[bolt].votes >= 0 ? 'up' : 'down'}`;
                         }
-                        reply += `${guild.member(stat.lightnings[bolt].member)?.toString()} asks: ${stat.lightnings[bolt].question}${can_show_votes}\n`;
+                        const author = guild.member(stat.lightnings[bolt].member);
+                        if (author) {
+                            reply += `${author.toString()} asks: ${stat.lightnings[bolt].question}${can_show_votes}\n`;
+                        }
+
                     }
 
                     message.channel.send(reply);
