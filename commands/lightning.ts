@@ -12,7 +12,7 @@ export class Lightning extends Command {
 
     async execute(message: Message, arg: string[]) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
+        Stat.findById(Configs.stats_id).then(async stat => {
 
             if (!stat) {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
@@ -24,10 +24,6 @@ export class Lightning extends Command {
                 reply = 'These are the lightning bolts for this recording:\n\n';
 
                 const number_batches = Math.floor(stat.lightnings.length / 10) + 1;
-                const guild = message.guild;
-                if (!guild) {
-                    return logger.log('error', `[${this.names[0]}]: Error getting the guild, check id`);
-                }
 
                 for (let index = 0; index < number_batches; index++) {
                     let end = 10 * (index + 1);
@@ -41,7 +37,7 @@ export class Lightning extends Command {
                         if (message.channel.id === Configs.channel_bot_talk) {
                             can_show_votes = ` votes: ${Math.abs(stat.lightnings[bolt].votes)} ${stat.lightnings[bolt].votes >= 0 ? 'up' : 'down'}`;
                         }
-                        const author = guild.member(stat.lightnings[bolt].member);
+                        const author = await message.client.users.fetch(stat.lightnings[bolt].member, true);
                         if (author) {
                             reply += `${author.toString()} asks: ${stat.lightnings[bolt].question}${can_show_votes}\n`;
                         }
