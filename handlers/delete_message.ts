@@ -9,7 +9,7 @@ export class DeleteMessage extends Handler {
 
     constructor(client: Client) {
         super(client, 'delete', false, false, false, true);
-        bot_talk = <TextChannel>client.channels.cache.get(Configs.channel_bot_talk)
+        bot_talk = <TextChannel>client.channels.cache.get(Configs.channel_bot_talk);
     }
 
     async OnMessageDelete(message: Message) {

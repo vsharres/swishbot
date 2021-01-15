@@ -69,8 +69,7 @@ export class Likes extends Handler {
 
             stat
                 .save()
-                .catch(err => logger.log('error', err));
-
+                .catch(err => logger.log('error', `[${this.name}]:${err}`));
 
         });
 
