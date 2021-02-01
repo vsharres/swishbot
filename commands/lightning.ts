@@ -35,7 +35,7 @@ export class Lightning extends Command {
                         let can_show_votes = ``;
 
                         if (message.channel.id === Configs.channel_bot_talk) {
-                            can_show_votes = ` votes: ${Math.abs(stat.lightnings[bolt].votes)} ${stat.lightnings[bolt].votes >= 0 ? 'up' : 'down'}`;
+                            can_show_votes = ` **votes: ${Math.abs(stat.lightnings[bolt].votes)} ${stat.lightnings[bolt].votes >= 0 ? 'up**' : 'down**'}`;
                         }
                         const author = await message.client.users.fetch(stat.lightnings[bolt].member, true);
                         if (author) {
