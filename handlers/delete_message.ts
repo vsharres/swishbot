@@ -3,13 +3,13 @@ import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
 
-let bot_talk: TextChannel;
+let channel_owlzkabanned: TextChannel;
 
 export class DeleteMessage extends Handler {
 
     constructor(client: Client) {
         super(client, 'delete', false, false, false, true);
-        bot_talk = <TextChannel>client.channels.cache.get(Configs.channel_bot_talk);
+        channel_owlzkabanned = <TextChannel>client.channels.cache.get(Configs.channel_banned);
     }
 
     async OnMessageDelete(message: Message) {
@@ -26,7 +26,7 @@ export class DeleteMessage extends Handler {
 
         const content = `${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`;
 
-        bot_talk.send({
+        channel_owlzkabanned.send({
             content: content,
             files: message.attachments.array()
 
