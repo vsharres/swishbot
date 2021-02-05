@@ -2,7 +2,6 @@ import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
-import { isInterfaceDeclaration } from 'typescript';
 
 export class Kicks extends Handler {
 
