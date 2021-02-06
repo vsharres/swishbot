@@ -11,6 +11,14 @@ const StatSchema = new Schema({
         type: Map,
         of: ArrayAuthors
     },
+    funnies: [{
+        message_id: {
+            type: String
+        },
+        channel_id: {
+            type: String
+        }
+    }],
     lightnings: [{
         member: {
             type: String
@@ -80,8 +88,14 @@ export interface Lightning {
     was_awarded: boolean;
 }
 
+export interface Funny {
+    message_id: string;
+    channel_id: string;
+}
+
 interface IStatSchema extends Document {
     lightnings: Lightning[];
+    funnies: Funny[];
     house_cups: Houses;
     points: Houses;
     likes: Map<string, AuthorsArray>;
