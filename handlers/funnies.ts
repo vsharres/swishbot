@@ -51,16 +51,20 @@ export class Funnies extends Handler {
                 return;
             }
 
+            if (stat.funnies.some(funny => funny.message_id === reaction.message.id)) {
+                return;
+            }
+
             stat.funnies.push({ message_id: reaction.message.id, channel_id: reaction.message.channel.id });
             bot_talk.send({
-                content: `The funny moment was saved: \n\n${reaction.message.content}`,
+                content: `The funny moment was saved:\n\n${reaction.message.content}`,
                 files: reaction.message.attachments.array()
             });
 
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: The funny moment was saved: \n\n${reaction.message.content}`);
+                    logger.log('info', `[${this.name}]: The funny moment was saved: ${reaction.message.content}`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
