@@ -37,9 +37,8 @@ export class Funny extends Command {
 
                         if (funny_message_channel) {
 
-                            const funny_messages = await funny_message_channel.messages.fetch();
+                            const funny_message = await funny_message_channel.messages.fetch(stat.funnies[funny].message_id);
 
-                            const funny_message = funny_messages.get(stat.funnies[funny].message_id);
                             if (funny_message) {
                                 reply += `${funny_message.author.toString()} said: ${funny_message.content}\n${funny_message.attachments.size > 0 ? funny_message.attachments.first()?.url + '\n' : ''}`;
 
