@@ -33,7 +33,7 @@ export class Funny extends Command {
 
                     for (let funny = 10 * index; funny < end; funny++) {
 
-                        const funny_message_channel = <TextChannel>message.client.channels.cache.get(stat.funnies[funny].channel_id);
+                        const funny_message_channel = await message.client.channels.fetch(stat.funnies[funny].channel_id) as TextChannel;
 
                         if (funny_message_channel) {
 
@@ -45,6 +45,10 @@ export class Funny extends Command {
 
                             }
 
+                        }
+                        else {
+                            logger.log('error', `[${this.names[0]}]: Could not find the channel with the id in the funny message`);
+                            return;
                         }
 
                         message.channel.send(reply);
