@@ -2,12 +2,12 @@ import Stat, { AuthorsArray } from '../models/Stat';
 import { Configs } from '../config/configs';
 import logger from '../tools/logger';
 import { Command } from './command';
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 
 export class LikesReset extends Command {
 
-    constructor() {
-        super(["likes_reset", "reset_likes"], false, false, true);
+    constructor(client: Client) {
+        super(client, ["likes_reset", "reset_likes"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -30,4 +30,4 @@ export class LikesReset extends Command {
     }
 };
 
-export default new LikesReset();
+export default (client: Client) => { return new LikesReset(client) };

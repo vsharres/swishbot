@@ -1,13 +1,13 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Lightning extends Command {
 
-    constructor() {
-        super(["lightningbolts", "⚡", "lightingbolts", "lightning_bolts"], false, false, true);
+    constructor(client: Client) {
+        super(client, ["lightningbolts", "⚡", "lightingbolts", "lightning_bolts"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -60,4 +60,4 @@ export class Lightning extends Command {
     }
 };
 
-export default new Lightning();
+export default (client: Client) => { return new Lightning(client); }

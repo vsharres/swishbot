@@ -1,14 +1,14 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message, TextChannel } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 import { printPoints } from '../tools/print_points';
 
 export class Points extends Command {
 
-    constructor() {
-        super(["points"]);
+    constructor(client: Client) {
+        super(client, ["points"]);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -19,7 +19,7 @@ export class Points extends Command {
             }
 
             const points = stat.points;
-            printPoints(<TextChannel>message.channel, points);
+            printPoints(message.channel as TextChannel, points);
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
@@ -27,4 +27,4 @@ export class Points extends Command {
     }
 };
 
-export default new Points();
+export default (client: Client) => { return new Points(client); }

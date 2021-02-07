@@ -25,7 +25,7 @@ export class Commands extends Handler {
         }
 
         for (const file of this.commandFiles) {
-            const command = require(`../commands/${file}`).default as Command;
+            const command = require(`../commands/${file}`).default(this.client) as Command;
 
             command.names.forEach((name: string) => {
                 this.commands.set(name, command);

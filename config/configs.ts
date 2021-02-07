@@ -17,6 +17,7 @@ interface Keys {
   devito_weight: number, // in Kg
   channel_house_points: string,
   channel_trophy_room: string,
+  guild_id: string,
   role_gryffindor: string,
   role_slytherin: string,
   role_ravenclaw: string,

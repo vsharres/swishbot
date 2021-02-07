@@ -1,17 +1,20 @@
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 
 export class Command {
+    client: Client;
     names: string[];
     args: boolean;
     admin: boolean;
     prefect: boolean;
     async execute(message: Message, args: string[]): Promise<any> { }
 
-    constructor(names: string[],
+    constructor(client: Client,
+        names: string[],
         args: boolean = false,
         admin: boolean = false,
         prefect: boolean = false) {
 
+        this.client = client;
         this.names = names;
         this.args = args;
         this.admin = admin;

@@ -19,6 +19,7 @@ export const keys: Keys = {
 	devito_weight: 48000, // in g
 	channel_house_points: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
 	channel_trophy_room: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
+	guild_id: process.env.GUILD_ID ? process.env.GUILD_ID : '',
 	role_gryffindor: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
 	role_slytherin: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
 	role_ravenclaw: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',

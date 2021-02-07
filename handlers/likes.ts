@@ -1,4 +1,4 @@
-import { Client, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -7,8 +7,15 @@ import { printPoints } from '../tools/print_points';
 import { addPoints } from '../tools/add_points';
 
 export class Likes extends Handler {
+
+    hourglass_channel: TextChannel;
+    guild: Guild;
+
     constructor(client: Client) {
         super(client, 'likes', false, true);
+
+        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
@@ -18,7 +25,7 @@ export class Likes extends Handler {
 
         if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) return;
 
-        Stat.findById(Configs.stats_id).then((stat) => {
+        Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
                 return;
             }
@@ -37,21 +44,11 @@ export class Likes extends Handler {
                 value++;
                 if (value === Configs.number_reactions) {
 
-                    const guild = reaction.message.guild;
-                    if (!guild) {
-                        logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
-                        return;
-                    }
-
-                    const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
-                    const reaction_member = guild.members.cache.get(reaction.message.author.id);
-                    if (!reaction_member) {
-                        return;
-                    }
+                    const reaction_member = await this.guild.members.fetch(reaction.message.author.id);
 
                     stat.points = addPoints(Configs.points_likes, stat.points, reaction_member);
 
-                    printPoints(hourglass_channel, stat.points, true);
+                    printPoints(this.hourglass_channel, stat.points, true);
 
                     logger.log('info', `[${this.name}]: Points awarded to ${reaction_member.displayName} as the message: "${reaction.message.content}" reached ${Configs.number_reactions} reactions! `);
 

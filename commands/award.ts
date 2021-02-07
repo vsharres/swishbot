@@ -1,14 +1,18 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message, TextChannel } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 import { printcups } from '../tools/print_cups';
 
 export class Award extends Command {
 
-    constructor() {
-        super(["award_cup", "winner"], true, true, true);
+    trophy_channel: TextChannel;
+
+    constructor(client: Client) {
+        super(client, ["award_cup", "winner"], true, true, true);
+
+        this.trophy_channel = client.channels.cache.get(Configs.channel_trophy_room) as TextChannel;
     }
 
     async execute(message: Message, args: string[],) {
@@ -18,13 +22,6 @@ export class Award extends Command {
             return;
         }
 
-        const guild = message.guild;
-        if (!guild) {
-            logger.log('error', `[${this.names[0]}]: Couldn\'t find the server.`);
-            return;
-        }
-
-        const trophy_channel = <TextChannel>guild.channels.cache.get(Configs.channel_trophy_room);
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
@@ -80,7 +77,7 @@ export class Award extends Command {
 
             stat.house_cups = cups;
 
-            printcups(trophy_channel, cups, true);
+            printcups(this.trophy_channel, cups, true);
 
             stat
                 .save()
@@ -99,4 +96,4 @@ export class Award extends Command {
     }
 };
 
-export default new Award();
+export default (client: Client) => { return new Award(client); }

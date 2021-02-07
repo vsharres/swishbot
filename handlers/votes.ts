@@ -1,4 +1,4 @@
-import { Client, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -7,8 +7,14 @@ import { printPoints } from '../tools/print_points';
 import { addPoints } from '../tools/add_points';
 
 export class Votes extends Handler {
+
+    hourglass_channel: TextChannel;
+    guild: Guild;
+
     constructor(client: Client) {
         super(client, 'votes', false, true);
+        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
@@ -18,23 +24,13 @@ export class Votes extends Handler {
         if (!message.content.startsWith('⚡')) return;
 
         //Only the founderscan add points to houses.
-        const guild = reaction.message.guild;
-        if (!guild) {
-            logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
-            return;
-        }
-        const guildMember = await guild.members.fetch(user.id);
 
-        if (!guildMember) {
-            logger.log('error', `[${this.name}]: Error getting the guildmembers`);
-            return;
-        }
+        const guildMember = await this.guild.members.fetch(user.id);
+
         const isPrefect = guildMember.roles.cache.has(Configs.role_prefect);
         if (!isPrefect) {
             return;
         }
-
-        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
         let votes = 0;
         const emoji = reaction.emoji.toString();
@@ -62,13 +58,13 @@ export class Votes extends Handler {
 
             if (!zap.was_awarded && zap.votes <= -3) {
 
-                const zapmember = guild.members.cache.get(zap.member);
+                const zapmember = this.guild.members.cache.get(zap.member);
                 if (!zapmember) return;
 
                 stat.points = addPoints(Configs.points_votes * Math.sign(zap.votes), stat.points, zapmember);
 
                 zap.was_awarded = true;
-                printPoints(hourglass_channel, stat.points, true);
+                printPoints(this.hourglass_channel, stat.points, true);
 
             }
 

@@ -1,13 +1,13 @@
 import Stat, { Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class LightningReset extends Command {
 
-    constructor() {
-        super(["lightning_reset", "reset_lightning"], false, false, true);
+    constructor(client: Client) {
+        super(client, ["lightning_reset", "reset_lightning"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -32,4 +32,4 @@ export class LightningReset extends Command {
     }
 };
 
-export default new LightningReset();
+export default (client: Client) => { return new LightningReset(client); }

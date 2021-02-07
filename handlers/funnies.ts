@@ -1,16 +1,18 @@
-import { Client, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 
-let bot_talk: TextChannel;
-
 export class Funnies extends Handler {
+
+    bot_talk: TextChannel;
+    guild: Guild;
 
     constructor(client: Client) {
         super(client, 'funnies', false, true);
-        bot_talk = <TextChannel>client.channels.cache.get(Configs.channel_bot_talk);
+        this.bot_talk = client.channels.cache.get(Configs.channel_bot_talk) as TextChannel;
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
@@ -21,19 +23,8 @@ export class Funnies extends Handler {
         }
 
         //Only the prefects can mark something to be funny
-        const guild = reaction.message.guild;
-        if (!guild) {
-            logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
-            return;
-        }
 
-        const guild_member = await guild.members.fetch(reaction.message.author.id);
-        const prefect_member = await guild.members.fetch(user.id);
-
-        if (!guild_member) {
-            logger.log('error', `[${this.name}]: Error getting the guildmember`);
-            return;
-        }
+        const prefect_member = await this.guild.members.fetch(user.id);
         const adminRole = prefect_member.roles.cache.has(Configs.role_prefect);
 
         if (adminRole === false) {
@@ -56,7 +47,7 @@ export class Funnies extends Handler {
             }
 
             stat.funnies.push({ message_id: reaction.message.id, channel_id: reaction.message.channel.id });
-            bot_talk.send({
+            this.bot_talk.send({
                 content: `The funny moment was saved:\n\n${reaction.message.content}`,
                 files: reaction.message.attachments.array()
             });

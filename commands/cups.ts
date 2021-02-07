@@ -1,14 +1,14 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message, TextChannel } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 import { printcups } from '../tools/print_cups';
 
 export class Cups extends Command {
 
-    constructor() {
-        super(["cups"]);
+    constructor(client: Client) {
+        super(client, ["cups"]);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -20,7 +20,7 @@ export class Cups extends Command {
 
             const cups = stat.house_cups;
 
-            printcups(<TextChannel>message.channel, cups);
+            printcups(message.channel as TextChannel, cups);
 
 
         })
@@ -28,4 +28,4 @@ export class Cups extends Command {
     }
 };
 
-export default new Cups();
+export default (client: Client) => { return new Cups(client); }

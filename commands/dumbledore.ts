@@ -1,14 +1,14 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { MessageAttachment, Message, TextChannel } from 'discord.js';
+import { MessageAttachment, Message, TextChannel, Client } from 'discord.js';
 import { printPoints } from '../tools/print_points';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Dumbly extends Command {
 
-    constructor() {
-        super(["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡", "gryffindor", "ravenclaw", "hufflepuff", "slytherin"], true, false, true);
+    constructor(client: Client) {
+        super(client, ["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡", "gryffindor", "ravenclaw", "hufflepuff", "slytherin"], true, false, true);
     }
 
     async execute(message: Message, args: string[]) {
@@ -20,7 +20,7 @@ export class Dumbly extends Command {
 
         const guild = message.guild;
         if (!guild) return;
-        const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
+        const hourglass_channel = guild.channels.cache.get(Configs.channel_house_points) as TextChannel;
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -166,4 +166,4 @@ export class Dumbly extends Command {
     }
 };
 
-export default new Dumbly();
+export default (client: Client) => { return new Dumbly(client); }

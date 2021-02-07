@@ -1,13 +1,13 @@
 import Stat, { Funny } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class FunnyReset extends Command {
 
-    constructor() {
-        super(["funny_reset", "reset_funny"], false, false, true);
+    constructor(client: Client) {
+        super(client, ["funny_reset", "reset_funny"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -32,4 +32,4 @@ export class FunnyReset extends Command {
     }
 };
 
-export default new FunnyReset();
+export default (client: Client) => { return new FunnyReset(client); }

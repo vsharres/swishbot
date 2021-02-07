@@ -1,13 +1,13 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message, TextChannel } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Funny extends Command {
 
-    constructor() {
-        super(["funny", "🥸"], false, false, true);
+    constructor(client: Client) {
+        super(client, ["funny", "🥸"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -21,7 +21,7 @@ export class Funny extends Command {
             let reply = '';
             if (stat.funnies.length > 0) {
 
-                reply = 'These are the funnies for this recording:\n\n';
+                reply = 'These are the funny messages from this recording:\n\n';
 
                 const number_batches = Math.floor(stat.funnies.length / 10) + 1;
 
@@ -67,4 +67,4 @@ export class Funny extends Command {
     }
 };
 
-export default new Funny();
+export default (client: Client) => { return new Funny(client); }

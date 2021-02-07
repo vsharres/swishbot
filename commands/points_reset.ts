@@ -1,14 +1,20 @@
 import Stat, { AuthorsArray, Funny, Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { Message, TextChannel } from 'discord.js';
+import { Client, Guild, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class PointsReset extends Command {
 
-    constructor() {
-        super(["points_reset", "reset_points"], false, false, true);
+    hourglass_channel: TextChannel;
+    guild: Guild;
+
+    constructor(client: Client) {
+        super(client, ["points_reset", "reset_points"], false, false, true);
+
+        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async execute(message: Message, arg: string[]) {
@@ -23,9 +29,9 @@ export class PointsReset extends Command {
 
             const guild = message.guild;
             if (!guild) return;
-            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
 
-            printPoints(hourglass_channel, stat.points, true);
+
+            printPoints(this.hourglass_channel, stat.points, true);
 
             stat
                 .save()
@@ -39,4 +45,4 @@ export class PointsReset extends Command {
     }
 };
 
-export default new PointsReset();
+export default (client: Client) => { return new PointsReset(client) };

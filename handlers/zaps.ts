@@ -4,13 +4,14 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 
-let bot_talk: TextChannel;
-
 export class Zaps extends Handler {
+
+    bot_talk: TextChannel;
 
     constructor(client: Client) {
         super(client, 'zaps', true);
-        bot_talk = <TextChannel>client.channels.cache.get(Configs.channel_bot_talk);
+
+        this.bot_talk = client.channels.cache.get(Configs.channel_bot_talk) as TextChannel;
     }
 
     async OnMessage(message: Message) {
@@ -30,7 +31,7 @@ export class Zaps extends Handler {
                 was_awarded: false
             };
 
-            bot_talk.send(message.content);
+            this.bot_talk.send(message.content);
             stat.lightnings.push(question);
             stat
                 .save()

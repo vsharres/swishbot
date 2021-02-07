@@ -1,4 +1,4 @@
-import { Client, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -8,8 +8,14 @@ import { addPoints } from '../tools/add_points';
 
 export class Points extends Handler {
 
+    hourglass_channel: TextChannel;
+    guild: Guild;
+
     constructor(client: Client) {
         super(client, 'points', false, true);
+
+        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
@@ -20,18 +26,10 @@ export class Points extends Handler {
         }
 
         //Only the founderscan add points to houses.
-        const guild = reaction.message.guild;
-        if (!guild) {
-            logger.log('error', `[${this.name}]: Error getting the guild of the reaction`);
-            return;
-        }
-        const admin_member = await guild.members.fetch(user.id);
-        const guild_member = await guild.members.fetch(reaction.message.author.id);
 
-        if (!guild_member) {
-            logger.log('error', `[${this.name}]: Error getting the guildmember`);
-            return;
-        }
+        const admin_member = await this.guild.members.fetch(user.id);
+        const guild_member = await this.guild.members.fetch(reaction.message.author.id);
+
         const adminRole = admin_member.roles.cache.has(Configs.role_admin);
 
         if (adminRole === false) {
@@ -67,8 +65,8 @@ export class Points extends Handler {
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-            const hourglass_channel = <TextChannel>guild.channels.cache.get(Configs.channel_house_points);
-            printPoints(hourglass_channel, stat.points, true);
+
+            printPoints(this.hourglass_channel, stat.points, true);
 
         });
 

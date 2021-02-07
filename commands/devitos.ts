@@ -1,13 +1,13 @@
 import { Configs } from '../config/configs';
 import { Units } from '../config/units';
-import { Message } from 'discord.js'
+import { Client, Message } from 'discord.js'
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Devitos extends Command {
 
-    constructor() {
-        super(["convert"], true);
+    constructor(client: Client) {
+        super(client, ["convert"], true);
     }
 
     async execute(message: Message, args: string[]) {
@@ -155,4 +155,4 @@ export class Devitos extends Command {
     }
 };
 
-export default new Devitos();
+export default (client: Client) => { return new Devitos(client); }
