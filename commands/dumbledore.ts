@@ -1,14 +1,18 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { MessageAttachment, Message, TextChannel, Client } from 'discord.js';
+import { MessageAttachment, Message, TextChannel, Client, Guild } from 'discord.js';
 import { printPoints } from '../tools/print_points';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Dumbly extends Command {
 
+    hourglass_channel: TextChannel;
+
     constructor(client: Client) {
         super(client, ["dumbly", "dumbledore", "🦁", "🐍", "🦅", "🦡", "gryffindor", "ravenclaw", "hufflepuff", "slytherin"], true, false, true);
+
+        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
     }
 
     async execute(message: Message, args: string[]) {
@@ -17,10 +21,6 @@ export class Dumbly extends Command {
             args.length == 1 && isNaN(parseFloat(args[0]))) {
             return;
         }
-
-        const guild = message.guild;
-        if (!guild) return;
-        const hourglass_channel = guild.channels.cache.get(Configs.channel_house_points) as TextChannel;
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -90,7 +90,7 @@ export class Dumbly extends Command {
                 }
 
                 messageToSent = {
-                    content: `Dumbly awards ${name} **${amount} points!**\n`,
+                    content: `${amount} points** ${amount > 0 ? 'to' : 'from'} ${name}!!`,
                     files: [new MessageAttachment(Configs.emoji_dumbly)]
                 }
             }
@@ -160,7 +160,7 @@ export class Dumbly extends Command {
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             logger.log('info', `[${this.names[0]}]: ${messageToSent.content}`);
 
-            printPoints(hourglass_channel, points, true);
+            printPoints(this.hourglass_channel, points, true);
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }
