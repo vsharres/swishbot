@@ -32,9 +32,9 @@ export class Devitos extends Command {
                 let inches = parseFloat(match[2]) ? parseFloat(match[2]) : 0;
 
                 const devitos = (((feet * 30.48) + (inches * 2.54)) / divisor);
-                const devitos_string = new Intl.NumberFormat('en-IN').format(devitos);
-                const string_feet = new Intl.NumberFormat('en-IN').format(feet);
-                const string_inches = new Intl.NumberFormat('en-IN').format(inches);
+                const devitos_string = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(devitos);
+                const string_feet = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(feet);
+                const string_inches = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(inches);
                 const message_to_send = `${message.author.toString()} ${feet > 0 ? string_feet + "'" : ''}${inches > 0 ? string_inches + '"' : ''} is ${devitos_string} ${Configs.command_prefix}!`;
                 return message.channel.send(message_to_send)
                     .then(() => logger.log('info', message_to_send))
@@ -52,8 +52,8 @@ export class Devitos extends Command {
             parsed = parsed.substring(0, parsed.length - unit.length);
             const amount = parseFloat(parsed);
             const devitos = (amount * multiplier / divisor);
-            const devitos_string = new Intl.NumberFormat('en-IN').format(devitos);
-            const string_amount = new Intl.NumberFormat('en-IN').format(amount);
+            const devitos_string = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(devitos);
+            const string_amount = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(amount);
             const message_to_send = `${message.author.toString()} ${string_amount} ${unit} is ${devitos_string} ${Configs.command_prefix}!`;
 
             return message.channel.send(message_to_send)
@@ -86,8 +86,8 @@ export class Devitos extends Command {
             divisor = Unit.divisor;
 
             const devitos = (amount * multiplier / divisor);
-            const string_devitos = new Intl.NumberFormat('en-IN').format(devitos);
-            const string_amount = new Intl.NumberFormat('en-IN').format(amount);
+            const string_devitos = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(devitos);
+            const string_amount = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(amount);
             const message_to_send = `${message.author.toString()} ${string_amount} ${unit} is ${string_devitos} ${Configs.command_prefix}!`;
 
             return message.channel.send(message_to_send)
@@ -140,9 +140,9 @@ export class Devitos extends Command {
             }
 
             const amount = (firstAmount * firstmultiplier + secondAmount * secondMultiplier) / divisor;
-            const devitos = new Intl.NumberFormat('en-IN').format(amount);
-            const string_firstamount = new Intl.NumberFormat('en-IN').format(firstAmount);
-            const string_secondamount = new Intl.NumberFormat('en-IN').format(secondAmount);
+            const devitos = new Intl.NumberFormat('en-US').format(amount);
+            const string_firstamount = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(firstAmount);
+            const string_secondamount = new Intl.NumberFormat('en-US', { style: 'decimal' }).format(secondAmount);
             const message_to_send = `${message.author.toString()} ${string_firstamount} ${firstunit} ${string_secondamount} ${secondunit} is ${devitos} ${Configs.command_prefix}!`;
 
             return message.channel.send(message_to_send)
