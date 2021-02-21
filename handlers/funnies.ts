@@ -1,4 +1,4 @@
-import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Guild, Message, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -10,9 +10,37 @@ export class Funnies extends Handler {
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, 'funnies', false, true);
+        super(client, 'funnies', true, true);
         this.bot_talk = client.channels.cache.get(Configs.channel_bot_talk) as TextChannel;
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
+    }
+
+    async OnMessage(message: Message) {
+
+        if (!message.content.startsWith('🥸') || message.author.bot) return;
+
+        Stat.findById(Configs.stats_id).then((stat) => {
+
+            if (!stat) {
+                return;
+            }
+
+            this.bot_talk.send({
+                content: `The funny moment was saved:\n\n${message.content}`,
+                files: message.attachments.array()
+            });
+
+            stat.funnies.push({ message_id: message.id, channel_id: message.channel.id });
+            stat
+                .save()
+                .then(() => {
+                    logger.log('info', `[${this.name}]: Funny message saved: ${message.content}`);
+
+                })
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+        }).catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
