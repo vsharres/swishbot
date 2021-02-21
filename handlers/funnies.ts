@@ -19,6 +19,13 @@ export class Funnies extends Handler {
 
         if (!message.content.startsWith('🥸') || message.author.bot) return;
 
+        const guildMember = await this.guild.members.fetch(message.author.id);
+
+        const isPrefect = guildMember.roles.cache.has(Configs.role_prefect);
+        if (!isPrefect) {
+            return;
+        }
+
         Stat.findById(Configs.stats_id).then((stat) => {
 
             if (!stat) {
