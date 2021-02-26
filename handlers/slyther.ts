@@ -41,6 +41,10 @@ export class Slyther extends Handler {
                 return;
             }
 
+            if (this.recording_voice.members.size === 0) {
+                return;
+            }
+
             this.recording_voice.members.forEach(member => {
 
                 const memberRoles = member.roles.cache;
