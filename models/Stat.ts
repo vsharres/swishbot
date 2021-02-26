@@ -19,6 +19,14 @@ const StatSchema = new Schema({
             type: String
         }
     }],
+    listening_members: [{
+        member: {
+            type: String
+        },
+        house: {
+            type: String
+        }
+    }],
     lightnings: [{
         member: {
             type: String
@@ -72,6 +80,11 @@ export interface Houses {
     hufflepuff: number;
 }
 
+export interface Listener {
+    member: string;
+    house: string;
+}
+
 export interface AuthorsArray {
     authors: string[]
 }
@@ -95,6 +108,7 @@ export interface Funny {
 
 interface IStatSchema extends Document {
     lightnings: Lightning[];
+    listening_members: Listener[];
     funnies: Funny[];
     house_cups: Houses;
     points: Houses;
