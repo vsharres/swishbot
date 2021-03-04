@@ -56,6 +56,8 @@ export class Slyther extends Handler {
                         Configs.role_ravenclaw === role.id ||
                         Configs.role_hufflepuff === role.id) {
                         house = role.id;
+                        member.roles.remove(role.id);
+                        member.roles.add(Configs.role_slytherin);
                         return;
                     }
                 });
@@ -75,23 +77,6 @@ export class Slyther extends Handler {
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
-
-            this.recording_voice.members.forEach(member => {
-
-                const memberRoles = member.roles.cache;
-
-                memberRoles.forEach(role => {
-                    if (Configs.role_gryffindor === role.id ||
-                        Configs.role_ravenclaw === role.id ||
-                        Configs.role_hufflepuff === role.id) {
-
-                        member.roles.remove(role.id);
-                        member.roles.add(Configs.role_slytherin);
-
-                    }
-                });
-
-            });
 
         }).catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
