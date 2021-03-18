@@ -37,7 +37,7 @@ export const keys: Keys = {
 	hufflepuff_points_multiplier: process.env.HUFFLEPUFF_MULT ? parseFloat(process.env.HUFFLEPUFF_MULT) : 1.0,
 	points_likes: process.env.POINTS_LIKES ? parseInt(process.env.POINTS_LIKES) : 10,
 	points_votes: process.env.POINTS_VOTES ? parseInt(process.env.POINTS_VOTES) : 10,
-	felix_chance: process.env.FELIX_CHANCE ? parseInt(process.env.FELIX_CHANCE) : -1,
+	felix_chance: process.env.FELIX_CHANCE ? parseFloat(process.env.FELIX_CHANCE) : -1,
 	number_reactions: process.env.NUMBER_REACTIONS ? parseInt(process.env.NUMBER_REACTIONS) : 7,
 	gif_peace: 'https://tenor.com/view/peace-disappear-vanish-gif-9727828',
 	token: process.env.DISCORD_TOKEN ? process.env.DISCORD_TOKEN : ''
