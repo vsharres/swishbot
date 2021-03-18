@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { MessageAttachment, Message, TextChannel, Client, Guild } from 'discord.js';
+import { MessageAttachment, Message, TextChannel, Client } from 'discord.js';
 import { printPoints } from '../tools/print_points';
 import logger from '../tools/logger';
 import { Command } from './command';

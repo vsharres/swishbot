@@ -1,4 +1,4 @@
-import { Client, Guild, Message, MessageAttachment, TextChannel } from 'discord.js';
+import { Client, Guild, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
