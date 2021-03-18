@@ -34,7 +34,7 @@ interface Keys {
   hufflepuff_points_multiplier: number,
   points_votes: number,
   points_likes: number,
-  felix_chance: number,
+  felix_chance: number, // 0-100
   number_reactions: number,
   reactions_timer: number,
   gif_peace: string,

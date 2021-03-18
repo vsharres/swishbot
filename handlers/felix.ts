@@ -21,6 +21,7 @@ export class Felix extends Handler {
     async OnMessage(message: Message) {
 
         if (message.author.bot) return;
+        if (message.channel.id !== Configs.channel_recording) return;
 
         const guild_member = await this.guild.members.fetch('663373766537117716');
         if (!guild_member) return;
@@ -43,7 +44,7 @@ export class Felix extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: Lightning bolt saved: ${message.content}`);
+                    logger.log('info', `[${this.name}]:  😈`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
