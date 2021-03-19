@@ -26,7 +26,7 @@ export class Felix extends Handler {
         const guild_member = await this.guild.members.fetch('663373766537117716');
         if (!guild_member) return;
 
-        const chance = Math.floor(Math.random() * 100);
+        const chance = Math.random() * 100;
 
         if (chance > Configs.felix_chance) {
             return;
