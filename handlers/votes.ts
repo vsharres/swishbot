@@ -4,7 +4,7 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { addPoints } from '../tools/add_points';
+import { AddPointsToMember } from '../tools/add_points';
 
 export class Votes extends Handler {
 
@@ -61,7 +61,7 @@ export class Votes extends Handler {
                 const zapmember = this.guild.members.cache.get(zap.member);
                 if (!zapmember) return;
 
-                stat.points = addPoints(Configs.points_votes * Math.sign(zap.votes), stat.points, zapmember);
+                stat.points = AddPointsToMember(Configs.points_votes * Math.sign(zap.votes), stat.points, zapmember);
 
                 zap.was_awarded = true;
                 printPoints(this.hourglass_channel, stat.points, true);

@@ -4,7 +4,7 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { addPoints } from '../tools/add_points';
+import { AddPointsToMember } from '../tools/add_points';
 
 export class Likes extends Handler {
 
@@ -46,7 +46,7 @@ export class Likes extends Handler {
 
                     const reaction_member = await this.guild.members.fetch(reaction.message.author.id);
 
-                    stat.points = addPoints(Configs.points_likes, stat.points, reaction_member);
+                    stat.points = AddPointsToMember(Configs.points_likes, stat.points, reaction_member);
 
                     printPoints(this.hourglass_channel, stat.points, true);
 

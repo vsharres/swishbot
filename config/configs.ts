@@ -29,12 +29,15 @@ interface Keys {
   emojis_vote_no: string[],
   emojis_negative_reactions: string[],
   slytherin_points_multiplier: number,
+  slytherin_felix_chance: number, // 0-100
   ravenclaw_points_multiplier: number,
+  ravenclaw_felix_chance: number, // 0-100
   gryffindor_points_multiplier: number,
+  gryffindor_felix_chance: number, // 0-100
   hufflepuff_points_multiplier: number,
+  hufflepuff_felix_chance: number, // 0-100
   points_votes: number,
   points_likes: number,
-  felix_chance: number, // 0-100
   number_reactions: number,
   reactions_timer: number,
   gif_peace: string,

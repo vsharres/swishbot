@@ -4,7 +4,7 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { addPoints } from '../tools/add_points';
+import { AddPointsToMember } from '../tools/add_points';
 
 export class Points extends Handler {
 
@@ -55,7 +55,7 @@ export class Points extends Handler {
                 return;
             }
 
-            stat.points = addPoints(points, stat.points, guild_member);
+            stat.points = AddPointsToMember(points, stat.points, guild_member);
 
             stat
                 .save()

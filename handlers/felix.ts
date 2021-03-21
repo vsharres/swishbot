@@ -3,18 +3,16 @@ import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { addPoints } from '../tools/add_points';
+import { AddPointsToMember, addPointsToHouse } from '../tools/add_points';
 import { printPoints } from '../tools/print_points';
 
 export class Felix extends Handler {
 
-    guild: Guild;
     hourglass_channel: TextChannel;
 
     constructor(client: Client) {
         super(client, 'felix', true);
 
-        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
     }
 
@@ -23,12 +21,34 @@ export class Felix extends Handler {
         if (message.author.bot) return;
         if (message.channel.id !== Configs.channel_recording) return;
 
-        const guild_member = await this.guild.members.fetch('663373766537117716');
-        if (!guild_member) return;
+        const chance_slytherin = Math.random() * 100;
+        const chance_ravenclaw = Math.random() * 100;
+        const chance_gryffindor = Math.random() * 100;
+        const chance_hufflepuff = Math.random() * 100;
 
-        const chance = Math.random() * 100;
+        let change_slytherin = false;
+        let change_ravenclaw = false;
+        let change_gryffindor = false;
+        let change_hufflepuff = false;
 
-        if (chance > Configs.felix_chance) {
+
+        if (chance_slytherin < Configs.slytherin_felix_chance) {
+            change_slytherin = true;
+        }
+
+        if (chance_ravenclaw < Configs.ravenclaw_felix_chance) {
+            change_ravenclaw = true;
+        }
+
+        if (chance_gryffindor < Configs.gryffindor_felix_chance) {
+            change_gryffindor = true;
+        }
+
+        if (chance_hufflepuff < Configs.hufflepuff_felix_chance) {
+            change_hufflepuff = true;
+        }
+
+        if (!change_slytherin && !change_ravenclaw && !change_gryffindor && !change_hufflepuff) {
             return;
         }
 
@@ -38,7 +58,22 @@ export class Felix extends Handler {
                 return;
             }
 
-            stat.points = addPoints(Configs.points_likes, stat.points, guild_member);
+            if (change_slytherin) {
+                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_slytherin);
+            }
+
+            if (change_ravenclaw) {
+                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_ravenclaw);
+            }
+
+            if (change_hufflepuff) {
+                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_hufflepuff);
+            }
+
+            if (change_gryffindor) {
+                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_gryffindor);
+            }
+
             printPoints(this.hourglass_channel, stat.points, true);
 
             stat
