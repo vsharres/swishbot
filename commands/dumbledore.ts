@@ -55,33 +55,33 @@ export class Dumbly extends Command {
 
                 switch (house) {
                     case 'gryffindor':
-                        points.gryffindor += amount;
+                        points.gryffindor += amount * Configs.gryffindor_points_multiplier;
                         break;
                     case "🦁":
-                        points.gryffindor += amount;
+                        points.gryffindor += amount * Configs.gryffindor_points_multiplier;
                         break;
                     case 'slytherin':
-                        points.slytherin += amount;
+                        points.slytherin += amount * Configs.slytherin_points_multiplier;
                         name = 'Slytherin 🐍';
                         break;
                     case '🐍':
-                        points.slytherin += amount;
+                        points.slytherin += amount * Configs.slytherin_points_multiplier;
                         name = 'Slytherin 🐍';
                         break;
                     case 'ravenclaw':
-                        points.ravenclaw += amount;
+                        points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
                         name = 'Ravenclaw 🦅';
                         break;
                     case '🦅':
-                        points.ravenclaw += amount;
+                        points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
                         name = 'Ravenclaw 🦅';
                         break;
                     case 'hufflepuff':
-                        points.hufflepuff += amount;
+                        points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
                         name = 'Hufflepuff 🦡';
                         break;
                     case '🦡':
-                        points.hufflepuff += amount;
+                        points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
                         name = 'Hufflepuff 🦡';
                         break;
                     default:

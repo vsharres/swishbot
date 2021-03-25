@@ -15,7 +15,7 @@ export class Points extends Command {
 
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]:Error getting the stat, check the stat id`);
+                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
             const points = stat.points;
