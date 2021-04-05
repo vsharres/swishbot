@@ -1,9 +1,9 @@
-import { Client, Guild, Message, TextChannel } from 'discord.js';
+import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { AddPointsToMember, addPointsToHouse } from '../tools/add_points';
+import { addPointsToHouse } from '../tools/add_points';
 import { printPoints } from '../tools/print_points';
 
 export class Felix extends Handler {
@@ -30,6 +30,7 @@ export class Felix extends Handler {
         let change_ravenclaw = false;
         let change_gryffindor = false;
         let change_hufflepuff = false;
+        let log_message = '';
 
 
         if (chance_slytherin < Configs.slytherin_felix_chance) {
@@ -60,18 +61,22 @@ export class Felix extends Handler {
 
             if (change_slytherin) {
                 stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_slytherin);
+                log_message = `Felix points added to Slytherin 😈`;
             }
 
             if (change_ravenclaw) {
                 stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_ravenclaw);
+                log_message = `Felix points added to Ravenclaw 😈`;
             }
 
             if (change_hufflepuff) {
                 stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_hufflepuff);
+                log_message = `Felix points added to Hufflepuff 😈`;
             }
 
             if (change_gryffindor) {
                 stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_gryffindor);
+                log_message = `Felix points added to Gryffindor 😈`;
             }
 
             printPoints(this.hourglass_channel, stat.points, true);
@@ -79,7 +84,7 @@ export class Felix extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]:  😈`);
+                    logger.log('info', `[${this.name}]: ${log_message}`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));

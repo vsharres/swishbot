@@ -1,16 +1,16 @@
-import Stat from '../models/Stat';
+import Stat, { AuthorsArray, Funny, Lightning, Poll } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
-export class PointsReset extends Command {
+export class Reset extends Command {
 
     hourglass_channel: TextChannel;
 
     constructor(client: Client) {
-        super(client, ["points_reset", "reset_points"], false, false, true);
+        super(client, ["reset"], false, false, true);
 
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
     }
@@ -21,6 +21,10 @@ export class PointsReset extends Command {
             if (!stat) return;
 
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+            stat.likes = new Map<string, AuthorsArray>();
+            stat.lightnings = new Array<Lightning>();
+            stat.polls = new Array<Poll>();
+            stat.funnies = new Array<Funny>();
 
             printPoints(this.hourglass_channel, stat.points, true);
 
@@ -36,4 +40,4 @@ export class PointsReset extends Command {
     }
 };
 
-export default (client: Client) => { return new PointsReset(client) };
+export default (client: Client) => { return new Reset(client) };

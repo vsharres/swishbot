@@ -14,12 +14,13 @@ export const keys: Keys = {
 	channel_welcome: process.env.CHANNEL_WELCOME ? process.env.CHANNEL_WELCOME : '',
 	channel_banned: process.env.CHANNEL_BANNED ? process.env.CHANNEL_BANNED : '',
 	channel_voice_recording: process.env.CHANNEL_VOICE_RECORDING ? process.env.CHANNEL_VOICE_RECORDING : '',
+	channel_polls: process.env.CHANNEL_POLLS ? process.env.CHANNEL_POLLS : '',
+	channel_house_points: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
+	channel_trophy_room: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
 	emoji_dumbly: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_17.png',
 	emoji_snape: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
-	channel_house_points: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
-	channel_trophy_room: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
 	guild_id: process.env.GUILD_ID ? process.env.GUILD_ID : '',
 	role_gryffindor: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
 	role_slytherin: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',

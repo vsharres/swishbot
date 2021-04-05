@@ -8,7 +8,7 @@ import { printPoints } from '../tools/print_points';
 export class Points extends Command {
 
     constructor(client: Client) {
-        super(client, ["points"]);
+        super(client, ["points"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {

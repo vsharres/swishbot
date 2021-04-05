@@ -12,6 +12,7 @@ interface Keys {
   channel_welcome: string,
   channel_banned: string,
   channel_voice_recording: string,
+  channel_polls: string,
   emoji_dumbly: string,
   emoji_snape: string,
   devito_height: number, // in cm

@@ -73,7 +73,7 @@ export class Slyther extends Handler {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: Lightning bolt saved: ${message.content}`);
+                    logger.log('info', `[${this.name}]: I'm always slytherin`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));

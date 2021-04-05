@@ -10,7 +10,7 @@ export class Award extends Command {
     trophy_channel: TextChannel;
 
     constructor(client: Client) {
-        super(client, ["award_cup", "winner"], true, true, true);
+        super(client, ["award_cup", "winner"], true, false, true);
 
         this.trophy_channel = client.channels.cache.get(Configs.channel_trophy_room) as TextChannel;
     }

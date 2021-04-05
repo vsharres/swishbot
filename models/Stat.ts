@@ -3,7 +3,6 @@ import { Document, model, Schema } from 'mongoose';
 const ArrayAuthors = new Schema({
     authors: [String],
 
-
 }, { _id: false });
 
 const StatSchema = new Schema({
@@ -18,6 +17,22 @@ const StatSchema = new Schema({
         channel_id: {
             type: String
         }
+    }],
+    polls: [{
+        poll_id: {
+            type: String
+        },
+        question: {
+            type: String
+        },
+        options: [{
+            emoji_id: {
+                type: String
+            },
+            votes: {
+                type: Number
+            }
+        }]
     }],
     listening_members: [{
         member: {
@@ -80,13 +95,24 @@ export interface Houses {
     hufflepuff: number;
 }
 
+export interface Option {
+    emoji_id: string;
+    votes: number;
+}
+
+export interface Poll {
+    poll_id: string;
+    question: string;
+    options: Option[];
+}
+
 export interface Listener {
     member: string;
     house: string;
 }
 
 export interface AuthorsArray {
-    authors: string[]
+    authors: string[];
 }
 
 export interface LikedMessage {
@@ -110,6 +136,7 @@ interface IStatSchema extends Document {
     lightnings: Lightning[];
     listening_members: Listener[];
     funnies: Funny[];
+    polls: Poll[];
     house_cups: Houses;
     points: Houses;
     likes: Map<string, AuthorsArray>;

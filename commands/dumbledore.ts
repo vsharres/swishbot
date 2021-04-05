@@ -52,7 +52,6 @@ export class Dumbly extends Command {
                 amount = parseFloat(parsed);
                 house = house.toLowerCase();
 
-
                 switch (house) {
                     case 'gryffindor':
                         points.gryffindor += amount * Configs.gryffindor_points_multiplier;
