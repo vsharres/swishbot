@@ -6,25 +6,31 @@ import { Configs } from '../config/configs';
 
 export class PollVote extends Handler {
 
-    hourglass_channel: TextChannel;
-    guild: Guild;
-
     constructor(client: Client) {
         super(client, 'poll_votes', false, true);
 
-        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
-        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async OnReaction(user: User, reaction: MessageReaction) {
 
-        //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
-        if (reaction.message.author.bot) return;
+        //Can only vote on the poll channel and ignore bot reactions.
+        if (user.bot || reaction.message.channel.id !== Configs.channel_polls) return;
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
                 return;
             }
+
+            const poll_index = stat.polls.findIndex(poll => poll.poll_id === reaction.message.id);
+            if (poll_index === -1) {
+                return;
+            }
+            const option_index = stat.polls[poll_index].options.findIndex(option => option.emoji_id === reaction.emoji.toString());
+            if (option_index === -1) {
+                return;
+            }
+
+            stat.polls[poll_index].options[option_index].votes++;
 
             stat
                 .save()
