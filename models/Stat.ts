@@ -10,14 +10,6 @@ const StatSchema = new Schema({
         type: Map,
         of: ArrayAuthors
     },
-    funnies: [{
-        message_id: {
-            type: String
-        },
-        channel_id: {
-            type: String
-        }
-    }],
     polls: [{
         poll_id: {
             type: String

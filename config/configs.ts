@@ -13,6 +13,7 @@ interface Keys {
   channel_banned: string,
   channel_voice_recording: string,
   channel_polls: string,
+  channel_wheezes: string,
   emoji_dumbly: string,
   emoji_snape: string,
   devito_height: number, // in cm
@@ -26,6 +27,7 @@ interface Keys {
   role_hufflepuff: string,
   emoji_addpoints: string[],
   emoji_removepoints: string[],
+  emoji_wheeze: string,
   emojis_vote_yes: string[],
   emojis_vote_no: string[],
   emojis_negative_reactions: string[],

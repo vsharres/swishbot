@@ -17,8 +17,10 @@ export const keys: Keys = {
 	channel_polls: process.env.CHANNEL_POLLS ? process.env.CHANNEL_POLLS : '',
 	channel_house_points: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
 	channel_trophy_room: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
+	channel_wheezes: process.env.CHANNEL_WHEEZES ? process.env.CHANNEL_WHEEZES : '',
 	emoji_dumbly: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_17.png',
 	emoji_snape: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
+	emoji_wheeze: process.env.EMOJI_WHEEZE ? process.env.EMOJI_WHEEZE : '🥸',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
 	guild_id: process.env.GUILD_ID ? process.env.GUILD_ID : '',
