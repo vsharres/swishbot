@@ -25,6 +25,7 @@ const StatSchema = new Schema({
         question: {
             type: String
         },
+        voters: [String],
         options: [{
             emoji_id: {
                 type: String
@@ -103,6 +104,7 @@ export interface Option {
 export interface Poll {
     poll_id: string;
     question: string;
+    voters: string[];
     options: Option[];
 }
 

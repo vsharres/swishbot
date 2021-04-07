@@ -25,7 +25,7 @@ export class Poll extends Command {
 
             let content = `**POLL**\n\n${poll.question}\n\n**RESULTS**\n\n`;
             poll.options.forEach(option => {
-                content += `${option.emoji_id} with **${option.votes} votes**\n\n`;
+                content += `${option.emoji_id} with **${option.votes} ${option.votes > 1 ? 'votes' : 'vote'}**\n\n`;
             })
 
             message.channel.send(content);

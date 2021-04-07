@@ -25,12 +25,20 @@ export class PollVote extends Handler {
             if (poll_index === -1) {
                 return;
             }
+
+            //A voter can only vote once
+            if (stat.polls[poll_index].voters.some(voter => voter === user.id)) {
+                return;
+            }
+
             const option_index = stat.polls[poll_index].options.findIndex(option => option.emoji_id === reaction.emoji.toString());
             if (option_index === -1) {
                 return;
             }
 
             stat.polls[poll_index].options[option_index].votes++;
+            stat.polls[poll_index].voters.push(user.id);
+            logger.log('info', `[${this.name}]: Vote added to the Poll: ${stat.polls[poll_index].poll_id} with the emoji: ${stat.polls[poll_index].options[option_index].emoji_id}`);
 
             stat
                 .save()

@@ -36,7 +36,7 @@ export class StartPoll extends Command {
 
         description = description.replace('"', '');
         description = description.replace('"', '');
-        const prompt = `**POLL\n\nVote by reaction to one of the options emoji:**\n\n${description}`;
+        const prompt = `**POLL\n\nVote by reacting to one of the emojis:**\n\n${description}`;
 
         const options_count = arg.length;
         let options = new Array<Option>();
@@ -57,7 +57,8 @@ export class StartPoll extends Command {
                     stat.polls.push({
                         poll_id: message.id,
                         question: description,
-                        options: options
+                        options: options,
+                        voters: []
                     });
 
                     options.forEach(option => {
