@@ -9,17 +9,14 @@ interface Keys {
   channel_recording: string,
   channel_mod_talk: string,
   channel_bot_talk: string,
-  channel_welcome: string,
   channel_banned: string,
   channel_voice_recording: string,
   channel_polls: string,
   channel_wheezes: string,
-  emoji_dumbly: string,
-  emoji_snape: string,
-  devito_height: number, // in cm
-  devito_weight: number, // in Kg
   channel_house_points: string,
   channel_trophy_room: string,
+  devito_height: number, // in cm
+  devito_weight: number, // in Kg
   guild_id: string,
   role_gryffindor: string,
   role_slytherin: string,
@@ -42,7 +39,6 @@ interface Keys {
   points_votes: number,
   points_likes: number,
   number_reactions: number,
-  reactions_timer: number,
   gif_peace: string,
   token: string,
 }

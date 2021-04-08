@@ -121,15 +121,9 @@ export interface Lightning {
     was_awarded: boolean;
 }
 
-export interface Funny {
-    message_id: string;
-    channel_id: string;
-}
-
 interface IStatSchema extends Document {
     lightnings: Lightning[];
     listening_members: Listener[];
-    funnies: Funny[];
     polls: Poll[];
     house_cups: Houses;
     points: Houses;

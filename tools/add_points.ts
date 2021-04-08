@@ -1,7 +1,6 @@
 import { GuildMember } from 'discord.js';
 import { Houses } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { createSemanticDiagnosticsBuilderProgram } from 'typescript';
 
 /**
  * Function responsible for giving points to members of a specific house.

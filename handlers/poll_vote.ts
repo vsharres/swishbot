@@ -1,4 +1,4 @@
-import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, MessageReaction, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';

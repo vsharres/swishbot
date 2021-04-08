@@ -89,8 +89,7 @@ export class Dumbly extends Command {
                 }
 
                 messageToSent = {
-                    content: `${amount} points** ${amount > 0 ? 'to' : 'from'} ${name}!!`,
-                    files: [new MessageAttachment(Configs.emoji_dumbly)]
+                    content: `${amount} points** ${amount > 0 ? 'to' : 'from'} ${name}!!`
                 }
             }
             else {

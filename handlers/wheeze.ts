@@ -32,6 +32,8 @@ export class Wheeze extends Handler {
             files: reaction.message.attachments.array()
         });
 
+        logger.log('info', `[${this.name}]: Wheeze moment saved: ${reaction.message.id}"`);
+
     }
 }
 

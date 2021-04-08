@@ -11,15 +11,12 @@ export const keys: Keys = {
 	channel_recording: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
 	channel_mod_talk: process.env.MOD_TALK_CHANNEL ? process.env.MOD_TALK_CHANNEL : '',
 	channel_bot_talk: process.env.BOT_TALK_CHANNEL ? process.env.BOT_TALK_CHANNEL : '',
-	channel_welcome: process.env.CHANNEL_WELCOME ? process.env.CHANNEL_WELCOME : '',
 	channel_banned: process.env.CHANNEL_BANNED ? process.env.CHANNEL_BANNED : '',
 	channel_voice_recording: process.env.CHANNEL_VOICE_RECORDING ? process.env.CHANNEL_VOICE_RECORDING : '',
 	channel_polls: process.env.CHANNEL_POLLS ? process.env.CHANNEL_POLLS : '',
 	channel_house_points: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',
 	channel_trophy_room: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
 	channel_wheezes: process.env.CHANNEL_WHEEZES ? process.env.CHANNEL_WHEEZES : '',
-	emoji_dumbly: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_17.png',
-	emoji_snape: 'https://telegramchannels.me/storage/stickers/boywholived/big_boywholived_2.png',
 	emoji_wheeze: process.env.EMOJI_WHEEZE ? process.env.EMOJI_WHEEZE : '🥸',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
@@ -28,7 +25,6 @@ export const keys: Keys = {
 	role_slytherin: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
 	role_ravenclaw: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',
 	role_hufflepuff: process.env.HUFFLEPUFF_ROLE ? process.env.HUFFLEPUFF_ROLE : '',
-	reactions_timer: process.env.REACTIONS_TIMER ? parseInt(process.env.REACTIONS_TIMER) : 60000,
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],

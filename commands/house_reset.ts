@@ -1,4 +1,4 @@
-import Stat, { AuthorsArray } from '../models/Stat';
+import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import logger from '../tools/logger';
 import { Command } from './command';
