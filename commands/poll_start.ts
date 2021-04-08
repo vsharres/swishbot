@@ -7,11 +7,13 @@ import { Command } from './command';
 export class StartPoll extends Command {
 
     polls_channel: TextChannel;
+    recording_channel: TextChannel;
 
     constructor(client: Client) {
         super(client, ["make_poll", "start_poll"], true, false, true);
 
         this.polls_channel = client.channels.cache.get(Configs.channel_polls) as TextChannel;
+        this.recording_channel = client.channels.cache.get(Configs.channel_recording) as TextChannel;
     }
 
     async execute(message: Message, arg: string[]) {
@@ -67,6 +69,7 @@ export class StartPoll extends Command {
 
                     stat.save().then(() => {
                         logger.log('info', `[${this.names[0]}]: Poll added!`);
+                        this.recording_channel.send(`@here **A new poll started! \n\n Go to the ${this.polls_channel.toString()} channel and vote!**`);
 
                     })
                         .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
