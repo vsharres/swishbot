@@ -44,7 +44,7 @@ export class StartPoll extends Command {
         let options = new Array<Option>();
 
         for (let index = 0; index < options_count; index++) {
-            options.push({ emoji_id: arg[index], votes: 1 });
+            options.push({ emoji_id: arg[index], votes: { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 } });
 
         }
 
@@ -69,13 +69,12 @@ export class StartPoll extends Command {
 
                     stat.save().then(() => {
                         logger.log('info', `[${this.names[0]}]: Poll added!`);
-                        this.recording_channel.send(`@here **A new poll started! \n\n Go to the ${this.polls_channel.toString()} channel and vote!**`);
+                        this.recording_channel.send(`@here **A new poll started! \n\nGo to the ${this.polls_channel.toString()} channel and vote!**`);
 
                     })
                         .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
                 });
-
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

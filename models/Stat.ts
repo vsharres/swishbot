@@ -23,7 +23,18 @@ const StatSchema = new Schema({
                 type: String
             },
             votes: {
-                type: Number
+                gryffindor: {
+                    type: Number
+                },
+                slytherin: {
+                    type: Number
+                },
+                ravenclaw: {
+                    type: Number
+                },
+                hufflepuff: {
+                    type: Number
+                }
             }
         }]
     }],
@@ -90,7 +101,7 @@ export interface Houses {
 
 export interface Option {
     emoji_id: string;
-    votes: number;
+    votes: Houses;
 }
 
 export interface Poll {

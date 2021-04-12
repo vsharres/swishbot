@@ -7,10 +7,15 @@ import { Command } from './command';
 export class Poll extends Command {
 
     constructor(client: Client) {
-        super(client, ["poll"], false, false, true);
+        super(client, ["poll"], true, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
+
+        let with_houses = false;
+        if (arg.length > 0 && arg.shift() === '-houses') {
+            with_houses = true;
+        }
 
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) {
@@ -25,8 +30,16 @@ export class Poll extends Command {
 
             let content = `**POLL**\n\n${poll.question}\n\n**RESULTS**\n\n`;
             poll.options.forEach(option => {
-                content += `${option.emoji_id} with **${option.votes} ${option.votes > 1 ? 'votes' : 'vote'}**\n\n`;
-            })
+                const number_votes = option.votes.gryffindor + option.votes.ravenclaw + option.votes.hufflepuff + option.votes.slytherin + 1;
+                content += `${option.emoji_id} with a total of **${number_votes} ${number_votes === 1 ? 'vote' : 'votes'}**\n\n`;
+                if (with_houses) {
+                    content += `Gryffindor 🦁 with ${option.votes.gryffindor} ${option.votes.gryffindor === 1 ? 'vote' : 'votes'}\n`;
+                    content += `Slytherin 🐍 with ${option.votes.slytherin} ${option.votes.slytherin === 1 ? 'vote' : 'votes'}\n`;
+                    content += `Ravenclaw 🦅 with ${option.votes.ravenclaw} ${option.votes.ravenclaw === 1 ? 'vote' : 'votes'}\n`;
+                    content += `Hufflepuff 🦡 with ${option.votes.hufflepuff} ${option.votes.hufflepuff === 1 ? 'vote' : 'votes'}\n\n`;
+                }
+
+            });
 
             message.channel.send(content);
 

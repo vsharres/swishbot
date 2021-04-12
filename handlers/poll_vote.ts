@@ -1,4 +1,4 @@
-import { Client, MessageReaction, User } from 'discord.js';
+import { Client, Guild, MessageReaction, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -6,8 +6,12 @@ import { Configs } from '../config/configs';
 
 export class PollVote extends Handler {
 
+    guild: Guild;
+
     constructor(client: Client) {
         super(client, 'poll_votes', false, true);
+
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
 
     }
 
@@ -36,7 +40,31 @@ export class PollVote extends Handler {
                 return;
             }
 
-            stat.polls[poll_index].options[option_index].votes++;
+            const guildmember = await this.guild.members.fetch(user.id);
+
+            guildmember.roles.cache.forEach(role => {
+
+                switch (role.id) {
+                    case Configs.role_slytherin:
+                        stat.polls[poll_index].options[option_index].votes.slytherin++;
+                        break;
+                    case Configs.role_gryffindor:
+                        stat.polls[poll_index].options[option_index].votes.gryffindor++;
+                        break;
+                    case Configs.role_ravenclaw:
+                        stat.polls[poll_index].options[option_index].votes.ravenclaw++;
+                        break;
+                    case Configs.role_hufflepuff:
+                        stat.polls[poll_index].options[option_index].votes.hufflepuff++;
+                        break;
+
+                    default:
+                        break;
+                }
+
+            });
+
+
             stat.polls[poll_index].voters.push(user.id);
             logger.log('info', `[${this.name}]: Vote added to the Poll: ${stat.polls[poll_index].poll_id} with the emoji: ${stat.polls[poll_index].options[option_index].emoji_id}`);
 
