@@ -36,6 +36,7 @@ interface Keys {
   gryffindor_felix_chance: number, // 0-100
   hufflepuff_points_multiplier: number,
   hufflepuff_felix_chance: number, // 0-100
+  points_zap_votes: number,
   points_votes: number,
   points_likes: number,
   number_reactions: number,

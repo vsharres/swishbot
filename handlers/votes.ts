@@ -61,7 +61,7 @@ export class Votes extends Handler {
                 const zapmember = this.guild.members.cache.get(zap.member);
                 if (!zapmember) return;
 
-                stat.points = AddPointsToMember(Configs.points_votes * Math.sign(zap.votes), stat.points, zapmember);
+                stat.points = AddPointsToMember(Configs.points_zap_votes * Math.sign(zap.votes), stat.points, zapmember);
 
                 zap.was_awarded = true;
                 printPoints(this.hourglass_channel, stat.points, true);
