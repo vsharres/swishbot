@@ -51,17 +51,17 @@ export class PollVote extends Handler {
                 stat.polls[poll_index].options[option_index].votes.slytherin++;
                 house = Configs.role_slytherin;
             }
-            else if (guildmember.roles.cache.has(Configs.role_slytherin)) {
+            else if (guildmember.roles.cache.has(Configs.role_gryffindor)) {
                 stat.polls[poll_index].options[option_index].votes.gryffindor++;
-                house = Configs.role_slytherin;
+                house = Configs.role_gryffindor;
             }
-            else if (guildmember.roles.cache.has(Configs.role_slytherin)) {
+            else if (guildmember.roles.cache.has(Configs.role_ravenclaw)) {
                 stat.polls[poll_index].options[option_index].votes.ravenclaw++;
-                house = Configs.role_slytherin;
+                house = Configs.role_ravenclaw;
             }
-            else if (guildmember.roles.cache.has(Configs.role_slytherin)) {
+            else if (guildmember.roles.cache.has(Configs.role_hufflepuff)) {
                 stat.polls[poll_index].options[option_index].votes.hufflepuff++;
-                house = Configs.role_slytherin;
+                house = Configs.role_hufflepuff;
             }
             else {
                 //There is no house role
