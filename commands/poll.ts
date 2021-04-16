@@ -13,7 +13,7 @@ export class Poll extends Command {
     async execute(message: Message, arg: string[]) {
 
         let with_houses = false;
-        if (arg.length > 0 && arg.shift() === '-houses') {
+        if (arg.some(arg => arg === '-houses')) {
             with_houses = true;
         }
 

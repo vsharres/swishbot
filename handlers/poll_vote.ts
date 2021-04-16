@@ -4,7 +4,7 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { addPointsToHouse, AddPointsToMember } from '../tools/add_points';
+import { addPointsToHouse } from '../tools/add_points';
 
 export class PollVote extends Handler {
 
