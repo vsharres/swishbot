@@ -42,6 +42,8 @@ export class Scheduler {
                     timezone: "America/New_York"
                 });
 
+                logger.log('info', `[Scheduler]: Recording loaded for the recording: ${recording.message} on the date: ${recording.date}`);
+
             });
 
         })
