@@ -19,6 +19,9 @@ export class Scheduler {
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) return;
 
+            if (!stat.recordings) {
+                return;
+            }
             stat.recordings.forEach((recording) => {
 
                 cron.schedule(recording.date, () => {
