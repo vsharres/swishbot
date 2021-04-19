@@ -29,7 +29,7 @@ export class Scheduler {
                     if (!stat.recordings.has(recording.date)) {
                         return;
                     }
-                    this.noticeboard_channel.send(`@here **A new recording will start in 1 hour!**`);
+                    this.noticeboard_channel.send(`@here **A new recording will start in 1 hour!\n\n${recording.message}**`);
                     stat.recordings.delete(recording.date);
 
                     stat.save()
