@@ -12,10 +12,7 @@ export class Poll extends Command {
 
     async execute(message: Message, arg: string[]) {
 
-        let with_houses = false;
-        if (arg.some(arg => arg === '-houses')) {
-            with_houses = true;
-        }
+        let with_houses = arg.some(arg => arg === '-houses');
 
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) {

@@ -11,6 +11,7 @@ interface Keys {
   channel_bot_talk: string,
   channel_banned: string,
   channel_voice_recording: string,
+  channel_noticeboard: string,
   channel_polls: string,
   channel_wheezes: string,
   channel_house_points: string,

@@ -24,6 +24,7 @@ export class PollsReset extends Command {
                 .save()
                 .then(() => {
                     logger.log('info', `[${this.names[0]}]: All of the polls are reset.`);
+                    message.channel.send(`All of the poll was reset.`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 

@@ -1,13 +1,13 @@
-import Stat, { Lightning } from '../models/Stat';
+import Stat, { Recording } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
-export class LightningReset extends Command {
+export class ScheduleReset extends Command {
 
     constructor(client: Client) {
-        super(client, ["lightning_reset", "reset_lightning"], false, false, true);
+        super(client, ["schedule_reset", "reset_schedule"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -18,13 +18,13 @@ export class LightningReset extends Command {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
-            stat.lightnings = new Array<Lightning>();
+            stat.recordings = new Map<string, Recording>();
 
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.names[0]}]: All of the lightning bolts are reset.`);
-                    message.channel.send(`All of the lightning bolts are reset.`);
+                    logger.log('info', `[${this.names[0]}]: The scheduler was reset.`);
+                    message.channel.send(`The Scheduler was reset.`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
@@ -33,4 +33,4 @@ export class LightningReset extends Command {
     }
 };
 
-export default (client: Client) => { return new LightningReset(client); }
+export default (client: Client) => { return new ScheduleReset(client); }

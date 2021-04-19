@@ -28,6 +28,7 @@ export class PointsReset extends Command {
                 .save()
                 .then(() => {
                     logger.log('info', `[${this.names[0]}]:A new year has begun! All house points are reset.`);
+                    message.channel.send(`A new year has begun! All house points are reset.`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 

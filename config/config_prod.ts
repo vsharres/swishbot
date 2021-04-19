@@ -12,6 +12,7 @@ export const keys: Keys = {
 	channel_mod_talk: process.env.MOD_TALK_CHANNEL ? process.env.MOD_TALK_CHANNEL : '',
 	channel_bot_talk: process.env.BOT_TALK_CHANNEL ? process.env.BOT_TALK_CHANNEL : '',
 	channel_banned: process.env.CHANNEL_BANNED ? process.env.CHANNEL_BANNED : '',
+	channel_noticeboard: process.env.CHANNEL_NOTICE_BOARD ? process.env.CHANNEL_NOTICE_BOARD : '',
 	channel_voice_recording: process.env.CHANNEL_VOICE_RECORDING ? process.env.CHANNEL_VOICE_RECORDING : '',
 	channel_polls: process.env.CHANNEL_POLLS ? process.env.CHANNEL_POLLS : '',
 	channel_house_points: process.env.HOUSE_POINTS_CHANNEL ? process.env.HOUSE_POINTS_CHANNEL : '',

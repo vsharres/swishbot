@@ -1,4 +1,4 @@
-import Stat, { AuthorsArray, Lightning, Poll } from '../models/Stat';
+import Stat, { AuthorsArray, Lightning, Poll, Recording } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Client, Message, TextChannel } from 'discord.js';
@@ -30,7 +30,8 @@ export class Reset extends Command {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.names[0]}]:A new year has begun! All house points are reset.`);
+                    logger.log('info', `[${this.names[0]}]: Points, Likes, zaps and polls are all reset.`);
+                    message.channel.send(`Points, Likes, zaps and polls are all reset.`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 

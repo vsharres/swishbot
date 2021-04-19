@@ -22,6 +22,7 @@ export class LikesReset extends Command {
                 .save()
                 .then(() => {
                     logger.log('info', `[${this.names[0]}]:The map of likes has been reset.`);
+                    message.channel.send(`The counter of likes was reset.`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
