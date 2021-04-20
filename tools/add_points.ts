@@ -3,10 +3,11 @@ import { Houses } from '../models/Stat';
 import { Configs } from '../config/configs';
 
 /**
- * Function responsible for giving points to members of a specific house.
- * @param points - This param is number of points to be added to the house.
- * @param house_points - The current totals of house points
- * @param member - The member of the discord server to give out points to
+ * Function responsible for giving points to members of every house a user has a role.
+ * @param points This param is number of points to be added to the house.
+ * @param house_points The current totals of house points
+ * @param member The member of the discord server to give out points to
+ * @returns The total number of points
  */
 export function AddPointsToMember(points: number, house_points: Houses, member: GuildMember): Houses {
 
@@ -37,6 +38,13 @@ export function AddPointsToMember(points: number, house_points: Houses, member: 
     return house_points;
 }
 
+/**
+ * Function responsible for giving points to a specific house
+ * @param points This param is number of points to be added to the house.
+ * @param house_points The current totals of house points
+ * @param house The house role id
+ * @returns The total number of points
+ */
 export function addPointsToHouse(points: number, house_points: Houses, house: string): Houses {
 
     let pointsToAdd: Houses = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };

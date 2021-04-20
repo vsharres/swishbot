@@ -40,8 +40,21 @@ export class Schedule extends Command {
         description = description.replace('"', '');
         description = description.replace('"', '');
 
-        const minutes = arg.shift();
-        let hours = arg.shift();
+        const hours_minute = arg.shift();
+        if (!hours_minute) {
+            return;
+        }
+
+        const regx = /^([01][0-9]|2[0-3]):([0-5][0-9])$/;
+        const matches = regx.exec(hours_minute);
+
+        if (!matches) {
+            return;
+        }
+
+        let hours = matches[1];
+        const minutes = matches[2];
+
         if (hours) {
             hours = `${(parseInt(hours) - 1) % 24}`;
         }
