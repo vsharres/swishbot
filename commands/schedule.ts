@@ -52,12 +52,8 @@ export class Schedule extends Command {
             return;
         }
 
-        let hours = matches[1];
         const minutes = matches[2];
-
-        if (hours) {
-            hours = `${(parseInt(hours) - 1) % 24}`;
-        }
+        const hours = `${(parseInt(matches[1]) - 1) % 24}`;
         const days = arg.shift();
         const month = arg.shift();
 
@@ -68,15 +64,12 @@ export class Schedule extends Command {
             return;
         }
 
-        //MAKE THE CRON TIME
-
-
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) return;
 
             let new_recording: Recording = { message: description, date: parsed_time };
 
-            stat.recordings.set(new_recording.date, new_recording);
+            stat.recordings.set(new_recording.message, new_recording);
 
             stat
                 .save()
