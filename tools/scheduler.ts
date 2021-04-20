@@ -30,7 +30,7 @@ export class Scheduler {
                         return;
                     }
                     this.noticeboard_channel.send(`@here **A new recording will start in 1 hour!**\n\n${recording.message}`);
-                    stat.recordings.delete(recording.date);
+                    stat.recordings.delete(recording.message);
 
                     stat.save()
                         .then(() => {

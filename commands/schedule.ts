@@ -22,7 +22,10 @@ export class Schedule extends Command {
             return;
         }
 
-        let is_replay = arg.some(arg => arg === '-replay');
+        let type = 'recording';
+        arg.some(arg => arg === '-replay') ? type = 'replay' : type = type;
+        arg.some(arg => arg === '-hangout') ? type = 'hangout' : type = type;
+        arg.some(arg => arg === '-trivia') ? type = 'trivia' : type = type;
 
         let description_end = false;
         let description = '';
@@ -74,12 +77,12 @@ export class Schedule extends Command {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.names[0]}]: A new recording was set: ${new_recording.message}`);
-                    message.channel.send(`A new recording was set\n\n${new_recording.message}`);
+                    logger.log('info', `[${this.names[0]}]: A new ${type} is set: ${new_recording.message}`);
+                    message.channel.send(`A new ${type} was set\n\n${new_recording.message}`);
 
                     cron.schedule(parsed_time, () => {
 
-                        this.noticeboard_channel.send(`@here **A new ${is_replay ? 'replay' : 'recording'} will start in 1 hour!\n\n${new_recording.message}**`);
+                        this.noticeboard_channel.send(`@here **A new ${type} will start in 1 hour!\n\n${new_recording.message}**`);
                         stat.recordings.delete(new_recording.date);
 
                         stat.save()
