@@ -42,6 +42,7 @@ export class Schedule extends Command {
 
         description = description.replace('"', '');
         description = description.replace('"', '');
+        description = description.trim();
 
         const hours_minute = arg.shift();
         if (!hours_minute) {

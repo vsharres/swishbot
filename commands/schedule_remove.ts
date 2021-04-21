@@ -28,11 +28,11 @@ export class ScheduleRemove extends Command {
             if (word?.endsWith('"')) {
                 description_end = true;
             }
-
         }
 
         description = description.replace('"', '');
         description = description.replace('"', '');
+        description = description.trim();
 
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) return;

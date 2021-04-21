@@ -26,11 +26,13 @@ export class PollVote extends Handler {
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
+                logger.log('error', `[${this.name}]: Error getting the database.`);
                 return;
             }
 
             const poll_index = stat.polls.findIndex(poll => poll.poll_id === reaction.message.id);
             if (poll_index === -1) {
+                logger.log('warn', `[${this.name}]: Couldn't find a poll with the id: ${reaction.message.id}`);
                 return;
             }
 
@@ -41,6 +43,7 @@ export class PollVote extends Handler {
 
             const option_index = stat.polls[poll_index].options.findIndex(option => option.emoji_id === reaction.emoji.toString());
             if (option_index === -1) {
+                logger.log('warn', `[${this.name}]: Couldn't find a poll the emoji option provided to the poll`);
                 return;
             }
 
