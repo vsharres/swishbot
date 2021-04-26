@@ -19,6 +19,8 @@ export const keys: Keys = {
 	channel_trophy_room: process.env.TROPHY_ROOM_CHANNEL ? process.env.TROPHY_ROOM_CHANNEL : '',
 	channel_wheezes: process.env.CHANNEL_WHEEZES ? process.env.CHANNEL_WHEEZES : '',
 	channel_come_go: process.env.CHANNEL_COME_GO ? process.env.CHANNEL_COME_GO : '',
+	channel_welcome: process.env.CHANNEL_WELCOME ? process.env.CHANNEL_WELCOME : '',
+	channel_sorting: process.env.CHANNEL_SORTING ? process.env.CHANNEL_SORTING : '',
 	emoji_wheeze: process.env.EMOJI_WHEEZE ? process.env.EMOJI_WHEEZE : '🥸',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
