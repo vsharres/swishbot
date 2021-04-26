@@ -1,4 +1,4 @@
-import { Client, GuildMember, TextChannel } from 'discord.js';
+import { Client, GuildMember, Role, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import { Configs } from '../config/configs';
@@ -19,8 +19,13 @@ export class Welcome extends Handler {
 
     async OnMemberAdd(member: GuildMember) {
 
+        const role_prefects = await member.guild.roles.fetch(Configs.role_prefect);
+        if (!role_prefects) {
+            return;
+        }
+
         //Sending a welcome messsage to the come and go channel.
-        this.channel_come_go.send(`**Welcome ${member.toString()}!** Don't forget to sort yourself into a house ${this.channel_sorting.toString()} and check out the ${this.channel_welcome.toString()} channel for info about the different channels ... and if you need help just say @Prefects 🔷 ... and we will do our best to point you in the right direction! :LGBT:`);
+        this.channel_come_go.send(`**Welcome ${member.toString()}!** Don't forget to sort yourself into a house ${this.channel_sorting.toString()} and check out the ${this.channel_welcome.toString()} channel for info about the different channels ... and if you need help just say ${role_prefects.toString()}... and we will do our best to point you in the right direction! :LGBT:`);
         logger.log('info', `[${this.name}]: ${member.toString()} added to the server!`);
 
     }
