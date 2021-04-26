@@ -16,6 +16,7 @@ interface Keys {
   channel_wheezes: string,
   channel_house_points: string,
   channel_trophy_room: string,
+  channel_come_go: string,
   devito_height: number, // in cm
   devito_weight: number, // in Kg
   guild_id: string,

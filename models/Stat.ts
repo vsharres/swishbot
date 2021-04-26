@@ -5,24 +5,10 @@ const ArrayAuthors = new Schema({
 
 }, { _id: false });
 
-const Recording = new Schema({
-    message: {
-        type: String
-    },
-    date: {
-        type: String
-    }
-
-}, { _id: false });
-
 const StatSchema = new Schema({
     likes: {
         type: Map,
         of: ArrayAuthors
-    },
-    recordings: {
-        type: Map,
-        of: Recording
     },
     polls: [{
         poll_id: {
@@ -134,11 +120,6 @@ export interface AuthorsArray {
     authors: string[];
 }
 
-export interface Recording {
-    message: string;
-    date: string;
-}
-
 export interface LikedMessage {
     _id: string;
     message_id: string;
@@ -157,7 +138,6 @@ interface IStatSchema extends Document {
     polls: Poll[];
     house_cups: Houses;
     points: Houses;
-    recordings: Map<string, Recording>;
     likes: Map<string, AuthorsArray>;
 }
 

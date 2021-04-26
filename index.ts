@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { Configs } from './config/configs';
 import { Handlers } from './handlers/handlers';
 import logger from './tools/logger';
-import { Scheduler } from './tools/scheduler';
 
 mongoose
     .connect(
@@ -18,16 +17,10 @@ mongoose
 
 const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'] });
 let handlers: Handlers;
-let scheduler: Scheduler
 
 client.once('ready', () => {
     logger.log('info', 'Ready!');
     handlers = require('./handlers/handlers')(client);
-    scheduler = require(`./tools/scheduler`)(client);
-    if (scheduler) {
-        scheduler.LoadSchedule();
-    }
-
 });
 client.on('message', async message => {
 
