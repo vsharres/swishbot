@@ -17,7 +17,7 @@ export class Welcome extends Handler {
 
         //Only respond to messages from the eric munch bot and to messages in the mod talk channel
 
-        this.channel_come_go.send(`Welcome ${member.toString()} Don't forget to sort yourself into a house #🧙│sorting-hat and check out the #👋│welcome  channel for info about the different channels ... and if you need help just say @Prefects 🔷 ... and we will do our best to point you in the right direction! :LGBT:`);
+        this.channel_come_go.send(`**Welcome ${member.toString()}!** Don't forget to sort yourself into a house #🧙│sorting-hat and check out the #👋│welcome  channel for info about the different channels ... and if you need help just say @Prefects 🔷 ... and we will do our best to point you in the right direction! :LGBT:`);
         logger.log('info', `[${this.name}]: ${member.toString()}`);
 
     }
