@@ -30,9 +30,7 @@ export class Points extends Handler {
         const admin_member = await this.guild.members.fetch(user.id);
         const guild_member = await this.guild.members.fetch(reaction.message.author.id);
 
-        const adminRole = admin_member.roles.cache.has(Configs.role_admin);
-
-        if (adminRole === false) {
+        if (!admin_member.roles.cache.has(Configs.role_admin)) {
             return;
         }
 

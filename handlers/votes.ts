@@ -27,8 +27,7 @@ export class Votes extends Handler {
 
         const guildMember = await this.guild.members.fetch(user.id);
 
-        const isPrefect = guildMember.roles.cache.has(Configs.role_prefect);
-        if (!isPrefect) {
+        if (!guildMember.roles.cache.has(Configs.role_prefect)) {
             return;
         }
 

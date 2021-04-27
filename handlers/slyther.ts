@@ -1,4 +1,4 @@
-import { Client, Guild, Message, TextChannel, VoiceChannel } from 'discord.js';
+import { Client, Guild, Message, VoiceChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat, { Listener } from '../models/Stat';
