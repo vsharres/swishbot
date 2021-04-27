@@ -1,4 +1,4 @@
-import Discord, { Message, User } from 'discord.js';
+import Discord, { GuildMember, Message, User } from 'discord.js';
 import mongoose from 'mongoose';
 import { Configs } from './config/configs';
 import { Handlers } from './handlers/handlers';
@@ -56,7 +56,19 @@ client.on('guildMemberAdd', member => {
 client.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Member updated caught.');
 
+    if (oldMember.partial) {
 
+        try {
+            await oldMember.fetch();
+        }
+        catch (error) {
+            logger.log('error', `[Index]: Something went wrong when fetching the member: ${error}`);
+            return;
+
+        }
+    }
+
+    handlers.OnMemberUpdate(oldMember as GuildMember, newMember);
 });
 
 //Checking for reactions
