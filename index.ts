@@ -53,6 +53,12 @@ client.on('guildMemberAdd', member => {
     handlers.OnMemberAdd(member);
 });
 
+client.on('guildMemberUpdate', async (oldMember, newMember) => {
+    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Member updated caught.');
+
+
+});
+
 //Checking for reactions
 client.on('messageReactionAdd', async (reaction, user) => {
 

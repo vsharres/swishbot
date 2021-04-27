@@ -8,7 +8,8 @@ export class Handlers extends Handler {
     message_handlers: Collection<string, Handler>;
     deleteMessage_handlers: Collection<string, Handler>;
     reaction_handlers: Collection<string, Handler>;
-    addmember_handlers: Collection<string, Handler>;
+    addMember_handlers: Collection<string, Handler>;
+    updateMember_handlers: Collection<string, Handler>;
 
     handler_files: String[];
 
@@ -18,7 +19,9 @@ export class Handlers extends Handler {
         this.reaction_handlers = new Collection<string, Handler>();
         this.message_handlers = new Collection<string, Handler>();
         this.deleteMessage_handlers = new Collection<string, Handler>();
-        this.addmember_handlers = new Collection<string, Handler>();
+        this.addMember_handlers = new Collection<string, Handler>();
+        this.updateMember_handlers = new Collection<string, Handler>();
+
 
         this.handler_files = [];
 
@@ -40,11 +43,15 @@ export class Handlers extends Handler {
             }
 
             if (handler.catch_addmember) {
-                this.addmember_handlers.set(handler.name, handler);
+                this.addMember_handlers.set(handler.name, handler);
             }
 
             if (handler.catch_message_delete) {
                 this.deleteMessage_handlers.set(handler.name, handler);
+            }
+
+            if (handler.catch_member_update) {
+                this.updateMember_handlers.set(handler.name, handler);
             }
 
         }
@@ -74,7 +81,7 @@ export class Handlers extends Handler {
     }
 
     async OnMemberAdd(member: GuildMember) {
-        this.addmember_handlers.forEach(async handler => {
+        this.addMember_handlers.forEach(async handler => {
             if (process.env.NODE_ENV === 'development') profiler.startTimer(handler.name);
             handler.OnMemberAdd(member)
                 .then(() => {
@@ -91,6 +98,18 @@ export class Handlers extends Handler {
                     if (process.env.NODE_ENV === 'development') logger.log('info', `[${handler.name}]: time to execute: ${profiler.endTimer(handler.name)} ms`);
                 });
         });
+    }
+
+    async OnMemberUpdate(oldMember: GuildMember, newMember: GuildMember) {
+        this.updateMember_handlers.forEach(async handler => {
+            if (process.env.NODE_ENV === 'development') profiler.startTimer(handler.name);
+            handler.OnMemberUpdate(oldMember, newMember)
+                .then(() => {
+                    if (process.env.NODE_ENV === 'development') logger.log('info', `[${handler.name}]: time to execute: ${profiler.endTimer(handler.name)} ms`);
+                });
+
+        });
+
     }
 }
 
