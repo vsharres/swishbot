@@ -27,10 +27,10 @@ export class StartPoll extends Command {
         let description = '';
 
         while (!description_end) {
-            let word = arg.shift();
+            let word = arg.shift() as string;
             description += `${word} `;
 
-            if (word?.endsWith('"')) {
+            if (word.endsWith('"')) {
                 description_end = true;
             }
 
