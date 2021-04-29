@@ -24,7 +24,7 @@ export class Welcome extends Handler {
     async OnMemberAdd(member: GuildMember) {
 
         //Sending a welcome messsage to the come and go channel.
-        this.channel_come_go.send(`Welcome ${member.toString()}! Don't forget to sort yourself into a house ${this.channel_sorting.toString()} and check out the ${this.channel_welcome.toString()} channel for info about the different channels ... and if you need help just say ${this.role_prefect.toString()}... and we will do our best to point you in the right direction! :LGBT:`);
+        this.channel_come_go.send(`Welcome ${member.toString()}! Don't forget to sort yourself into a house ${this.channel_sorting.toString()} and check out the ${this.channel_welcome.toString()} channel for info about the different channels ... and if you need help just say ${this.role_prefect.toString()}... and we will do our best to point you in the right direction! <:LGBT:723635019868012545>`);
         logger.log('info', `[${this.name}]: ${member.toString()} added to the server!`);
 
     }
