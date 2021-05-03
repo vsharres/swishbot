@@ -105,7 +105,7 @@ export class Slyther extends Handler {
                         slytherins.members.push(member.user.id);
 
                         member.createDM().then(channel => {
-                            channel.send('Hello there fellow Slytherin! :snake:\n\nThis is your Prefect, Vini speaking.\n\nI\'ve set up a separate server so that all members of the Slytherin house can talk, and maybe set up some shenanigans to do during recordings. :smiling_imp: \n\nhttps://discord.gg/vg9ZxXSEGg')
+                            channel.send('Hello there fellow Slytherin! :snake:\n\nThis is your Prefect, Vini speaking.\n\nI\'ve set up a separate **SECRET** server so that all members of the Slytherin house can talk, and maybe set up some shenanigans to do during recordings. :smiling_imp: \n\nhttps://discord.gg/vg9ZxXSEGg')
                                 .catch(err => logger.error(err));
                         })
                             .catch(err => logger.error(err));
