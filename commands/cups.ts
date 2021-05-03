@@ -8,7 +8,7 @@ import { printcups } from '../tools/print_cups';
 export class Cups extends Command {
 
     constructor(client: Client) {
-        super(client, ["cups"], false, false, true);
+        super(client, ["cups", "cup"], false, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -18,10 +18,7 @@ export class Cups extends Command {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
-            const cups = stat.house_cups;
-
-            printcups(message.channel as TextChannel, cups);
-
+            printcups(message.channel as TextChannel, stat.house_cups);
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

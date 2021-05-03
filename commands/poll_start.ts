@@ -40,10 +40,9 @@ export class StartPoll extends Command {
         description = description.replace('"', '');
         const prompt = `**POLL\n\nVote by reacting to one of the emojis:**\n\n${description}`;
 
-        const options_count = arg.length;
         let options = new Array<Option>();
 
-        for (let index = 0; index < options_count; index++) {
+        for (let index = 0; index < arg.length; index++) {
             options.push({ emoji_id: arg[index], votes: { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 } });
 
         }

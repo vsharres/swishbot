@@ -18,8 +18,7 @@ export class Points extends Command {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
-            const points = stat.points;
-            printPoints(message.channel as TextChannel, points);
+            printPoints(message.channel as TextChannel, stat.points);
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

@@ -100,7 +100,7 @@ export class Dumbly extends Command {
                     return;
                 }
                 amount = parseFloat(parsed);
-                let messageCommands = message.content.slice(Configs.command_prefix.length).split(/ +/);
+                const messageCommands = message.content.slice(Configs.command_prefix.length).split(/ +/);
                 const house = messageCommands[1].toLowerCase();
 
                 switch (house) {

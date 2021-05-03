@@ -15,7 +15,7 @@ mongoose
     .then(() => logger.log('info', 'MongoDB Connected'))
     .catch(err => logger.log('error', err));
 
-const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'] });
+const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'], ws: { intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MEMBERS'] } });
 let handlers: Handlers;
 
 client.once('ready', () => {

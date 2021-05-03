@@ -24,6 +24,7 @@ export const keys: Keys = {
 	emoji_wheeze: process.env.EMOJI_WHEEZE ? process.env.EMOJI_WHEEZE : '🥸',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
+	document_slythern: process.env.DOCUMENT_SLYTHERIN ? process.env.DOCUMENT_SLYTHERIN : '',
 	guild_id: process.env.GUILD_ID ? process.env.GUILD_ID : '',
 	role_gryffindor: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
 	role_slytherin: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',

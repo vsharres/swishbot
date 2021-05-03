@@ -36,10 +36,7 @@ export class Commands extends Handler {
     async OnMessage(message: Message) {
         const commands = this.commands;
 
-        //Ignores all messages and commands send to the bot from DM
-        if (!message.guild) return;
-
-        if (!message.content.startsWith(Configs.command_prefix) || message.author.bot) return;
+        if (!message.content.startsWith(Configs.command_prefix) || message.author.bot || !message.guild) return;
 
         const args = message.content.slice(Configs.command_prefix.length).split(/ +/);
         args.shift();

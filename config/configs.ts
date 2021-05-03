@@ -21,6 +21,7 @@ interface Keys {
   channel_sorting: string,
   devito_height: number, // in cm
   devito_weight: number, // in Kg
+  document_slythern: string,
   guild_id: string,
   role_gryffindor: string,
   role_slytherin: string,
