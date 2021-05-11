@@ -44,7 +44,8 @@ export class Likes extends Handler {
                 value++;
                 if (value === Configs.number_reactions) {
 
-                    const reaction_member = await this.guild.members.fetch(reaction.message.author.id);
+                    const reaction_member = reaction.message.member;
+                    if (!reaction_member) return;
 
                     stat.points = AddPointsToMember(Configs.points_likes, stat.points, reaction_member);
 

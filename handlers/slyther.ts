@@ -27,7 +27,7 @@ export class Slyther extends Handler {
 
         switch (secret_command) {
             case 'make it green':
-                const admin_member = await this.guild.members.fetch(message.author.id);
+                const admin_member = message.member as GuildMember;
                 const adminRole = admin_member.roles.cache.has(Configs.role_admin);
 
                 if (adminRole === false) {
@@ -83,18 +83,20 @@ export class Slyther extends Handler {
 
                 break;
             case 'https://tenor.com/view/hp-gif-18818544':
-                const guild_members = await this.guild.members.fetch();
-                const prefect_member = guild_members.get(message.author.id) as GuildMember;
+
+                const prefect_member = message.member as GuildMember;
                 const is_prefect = prefect_member.roles.cache.has(Configs.role_prefect);
                 const is_slytherin = prefect_member.roles.cache.has(Configs.role_slytherin);
 
                 if (!is_prefect || !is_slytherin) return;
 
-                Slytherin.findById(Configs.document_slythern).then(slytherins => {
+                Slytherin.findById(Configs.document_slythern).then(async slytherins => {
                     if (!slytherins) {
 
                         return;
                     }
+
+                    const guild_members = await this.guild.members.fetch();
 
                     const members_to_message = guild_members.filter(member => member.roles.cache.has(Configs.role_slytherin) && !slytherins.members.includes(member.user.id));
 
@@ -105,7 +107,7 @@ export class Slyther extends Handler {
                         slytherins.members.push(member.user.id);
 
                         member.createDM().then(channel => {
-                            channel.send('Hello there fellow Slytherin! :snake:\n\nThis is your Prefect, Vini speaking.\n\nI\'ve set up a separate **SECRET** server so that all members of the Slytherin house can talk, and maybe set up some shenanigans to do during recordings. :smiling_imp: \n\nhttps://discord.gg/vg9ZxXSEGg')
+                            channel.send('Hello there fellow Slytherin! :snake:\n\nThis is your Prefect, Vini speaking.\n\nI\'ve set up a separate **SECRET** server so that all members of the Slytherin house can talk, and maybe set up some shenanigans to do during recordings. :smiling_imp: \n\nhttps://discord.gg/w92YVKNGVG')
                                 .catch(err => logger.error(err));
                         })
                             .catch(err => logger.error(err));
