@@ -42,7 +42,7 @@ export class Likes extends Handler {
                 let value = authors_array.authors.length;
                 //Increment the value of reactions
                 value++;
-                if (value === Configs.number_reactions) {
+                if (value % Configs.number_reactions === 0) {
 
                     const reaction_member = await this.guild.members.fetch(reaction.message.author);
 
@@ -50,7 +50,7 @@ export class Likes extends Handler {
 
                     printPoints(this.hourglass_channel, stat.points, true);
 
-                    logger.log('info', `[${this.name}]: Points awarded to ${reaction_member.displayName} as the message: "${reaction.message.content}" reached ${Configs.number_reactions} reactions! `);
+                    logger.log('info', `[${this.name}]: Points awarded to ${reaction_member.displayName} as the message: "${reaction.message.content}" reached ${value} reactions! `);
 
                 }
 
