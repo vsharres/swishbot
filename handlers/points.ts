@@ -27,9 +27,8 @@ export class Points extends Handler {
 
         //Only the founderscan add points to houses.
 
-        const admin_member = await this.guild.members.fetch(user);
-        const guild_member = reaction.message.member;
-        if (!guild_member) return;
+        const admin_member = await this.guild.members.fetch(user.id);
+        const guild_member = await this.guild.members.fetch(reaction.message.author.id);
 
         if (!admin_member.roles.cache.has(Configs.role_admin)) {
             return;

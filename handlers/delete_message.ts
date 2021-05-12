@@ -19,7 +19,7 @@ export class DeleteMessage extends Handler {
         //Only respond to messages from the eric munch bot and to messages in the mod talk channel
         if (message.author.bot) return;
 
-        const member = message.member;
+        const member = this.guild.members.cache.get(message.author.id);
         if (!member) return;
 
         if (member.roles.cache.get(Configs.role_prefect) || member.roles.cache.get(Configs.role_admin)) return;
