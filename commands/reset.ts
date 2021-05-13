@@ -1,4 +1,4 @@
-import Stat, { AuthorsArray, Lightning, Poll } from '../models/Stat';
+import Stat, { AuthorsArray, Lightning, Listener, Poll } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Client, Message, TextChannel } from 'discord.js';
@@ -23,6 +23,7 @@ export class Reset extends Command {
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
             stat.likes = new Map<string, AuthorsArray>();
             stat.lightnings = new Array<Lightning>();
+            stat.listening_members = new Array<Listener>();
             stat.polls = new Array<Poll>();
 
             printPoints(this.hourglass_channel, stat.points, true);
