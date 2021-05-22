@@ -4,7 +4,6 @@ import { Houses } from '../models/Stat';
 
 async function printcups(channel: TextChannel, cups: Houses, is_print_channel: boolean = false) {
 
-
     const start_time = Date.now();
 
     let reply = '**House Cups**\n\n';
@@ -39,7 +38,6 @@ async function printcups(channel: TextChannel, cups: Houses, is_print_channel: b
         if (gryf_cups === slyth_cups && slyth_cups === raven_cups && raven_cups === huff_cups) {
 
             reply += `All houses are tied with **${gryf_cups} cup${gryf_cups === 1 ? '' : 's'}!**\n\n`;
-
 
         }
         //for the case with 3 houses tied
