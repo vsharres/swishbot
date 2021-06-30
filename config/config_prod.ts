@@ -19,6 +19,7 @@ export const keys: Keys = {
 	channel_welcome: process.env.CHANNEL_WELCOME ? process.env.CHANNEL_WELCOME : '',
 	channel_sorting: process.env.CHANNEL_SORTING ? process.env.CHANNEL_SORTING : '',
 	emoji_wheeze: process.env.EMOJI_WHEEZE ? process.env.EMOJI_WHEEZE : '🥸',
+	chaos: process.env.CHAOS ? parseInt(process.env.CHAOS) === 1 : false,
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emoji_removepoints: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],

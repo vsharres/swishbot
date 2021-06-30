@@ -4,7 +4,7 @@ import { Handler } from './handler';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { AddPointsToMember } from '../tools/add_points';
+import { addPointsRandomHouse, AddPointsToMember } from '../tools/add_points';
 
 export class Points extends Handler {
 
@@ -53,7 +53,33 @@ export class Points extends Handler {
                 return;
             }
 
-            stat.points = AddPointsToMember(points, stat.points, guild_member);
+            if (Configs.chaos) {
+
+                const member_roles = guild_member.roles.cache;
+                let member_house: string;
+
+                if (member_roles.has(Configs.role_slytherin)) {
+                    member_house = Configs.role_slytherin;
+                }
+                else if (member_roles.has(Configs.role_gryffindor)) {
+                    member_house = Configs.role_slytherin;
+                }
+                else if (member_roles.has(Configs.role_ravenclaw)) {
+                    member_house = Configs.role_slytherin;
+                }
+                else if (member_roles.has(Configs.role_hufflepuff)) {
+                    member_house = Configs.role_slytherin;
+                }
+                else {
+                    return;
+                }
+
+                stat.points = addPointsRandomHouse(points, stat.points, member_house);
+
+            }
+            else {
+                stat.points = AddPointsToMember(points, stat.points, guild_member);
+            }
 
             stat
                 .save()

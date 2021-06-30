@@ -19,6 +19,7 @@ interface Keys {
   channel_come_go: string,
   channel_welcome: string,
   channel_sorting: string,
+  chaos: boolean,
   devito_height: number, // in cm
   devito_weight: number, // in Kg
   document_slythern: string,
@@ -49,7 +50,7 @@ interface Keys {
   points_likes: number,
   number_reactions: number,
   gif_peace: string,
-  token: string,
+  token: string
 }
 
 let Configs: Keys;
