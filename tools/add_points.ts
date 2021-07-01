@@ -65,7 +65,8 @@ export function addPointsToHouse(points: number, house_points: Houses, house: st
 export function addPointsRandomHouse(points: number, house_points: Houses, house_ignore: string): Houses {
 
     const allowed_houses = house_array.filter(house => house !== house_ignore);
-    const selected_house = allowed_houses[(Math.random() * 100) % 3];
+    const house_index = Math.floor(Math.random() * 100);
+    const selected_house = allowed_houses[house_index % 3];
 
     switch (selected_house) {
         case Configs.role_gryffindor:

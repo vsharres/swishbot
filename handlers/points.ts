@@ -62,13 +62,13 @@ export class Points extends Handler {
                     member_house = Configs.role_slytherin;
                 }
                 else if (member_roles.has(Configs.role_gryffindor)) {
-                    member_house = Configs.role_slytherin;
+                    member_house = Configs.role_gryffindor;
                 }
                 else if (member_roles.has(Configs.role_ravenclaw)) {
-                    member_house = Configs.role_slytherin;
+                    member_house = Configs.role_ravenclaw;
                 }
                 else if (member_roles.has(Configs.role_hufflepuff)) {
-                    member_house = Configs.role_slytherin;
+                    member_house = Configs.role_hufflepuff;
                 }
                 else {
                     return;
