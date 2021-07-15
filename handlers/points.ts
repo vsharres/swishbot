@@ -25,12 +25,17 @@ export class Points extends Handler {
             return;
         }
 
-        //Only the founderscan add points to houses.
+        const point_giver_member = await this.guild.members.fetch(user.id);
+        const message_author_member = await this.guild.members.fetch(reaction.message.author.id);
 
-        const admin_member = await this.guild.members.fetch(user.id);
-        const guild_member = await this.guild.members.fetch(reaction.message.author.id);
+        const can_give_points = point_giver_member.roles.cache.has(Configs.role_admin) ||
+            (point_giver_member.roles.cache.has(Configs.role_helper_gryffindor) && message_author_member.roles.cache.has(Configs.role_gryffindor)) ||
+            (point_giver_member.roles.cache.has(Configs.role_helper_slytherin) && message_author_member.roles.cache.has(Configs.role_slytherin)) ||
+            (point_giver_member.roles.cache.has(Configs.role_helper_ravenclaw) && message_author_member.roles.cache.has(Configs.role_ravenclaw)) ||
+            (point_giver_member.roles.cache.has(Configs.role_helper_hufflepuff) && message_author_member.roles.cache.has(Configs.role_hufflepuff));
 
-        if (!admin_member.roles.cache.has(Configs.role_admin)) {
+        //Only founders or the helpers can give out points
+        if (!can_give_points) {
             return;
         }
 
@@ -55,19 +60,19 @@ export class Points extends Handler {
 
             if (Configs.chaos) {
 
-                const member_roles = guild_member.roles.cache;
+                const author_roles = message_author_member.roles.cache;
                 let member_house: string;
 
-                if (member_roles.has(Configs.role_slytherin)) {
+                if (author_roles.has(Configs.role_slytherin)) {
                     member_house = Configs.role_slytherin;
                 }
-                else if (member_roles.has(Configs.role_gryffindor)) {
+                else if (author_roles.has(Configs.role_gryffindor)) {
                     member_house = Configs.role_gryffindor;
                 }
-                else if (member_roles.has(Configs.role_ravenclaw)) {
+                else if (author_roles.has(Configs.role_ravenclaw)) {
                     member_house = Configs.role_ravenclaw;
                 }
-                else if (member_roles.has(Configs.role_hufflepuff)) {
+                else if (author_roles.has(Configs.role_hufflepuff)) {
                     member_house = Configs.role_hufflepuff;
                 }
                 else {
@@ -78,13 +83,13 @@ export class Points extends Handler {
 
             }
             else {
-                stat.points = AddPointsToMember(points, stat.points, guild_member);
+                stat.points = AddPointsToMember(points, stat.points, message_author_member);
             }
 
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.name}]: ${Math.abs(points)} points ${points > 0 ? 'awarded' : 'removed'} by ${admin_member.displayName} to ${guild_member.displayName}`);
+                    logger.log('info', `[${this.name}]: ${Math.abs(points)} points ${points > 0 ? 'awarded' : 'removed'} by ${point_giver_member.displayName} to ${message_author_member.displayName}`);
 
                 })
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
