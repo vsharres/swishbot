@@ -16,14 +16,14 @@ export class Patreon extends Handler {
 
             if (!is_phoenix) {
                 newMember.roles.remove(Configs.role_phoenix_emoji);
-                logger.log('info', `[${this.name}]: ${newMember.toString()} phoenix role was removed from patreon.`);
+                logger.log('info', `[${this.name}]: ${newMember.displayName} phoenix role was removed from patreon.`);
             }
 
         }
 
         if (!newMember.roles.cache.has(Configs.role_patron) && newMember.roles.cache.has(Configs.role_ageline)) {
             newMember.roles.remove(Configs.role_ageline);
-            logger.log('info', `[${this.name}]: ${newMember.toString()} age line role removed as the user is no longer a patron.`);
+            logger.log('info', `[${this.name}]: ${newMember.displayName} age line role removed as the user is no longer a patron.`);
         }
 
     }
