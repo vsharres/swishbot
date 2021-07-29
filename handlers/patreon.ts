@@ -16,7 +16,7 @@ export class Patreon extends Handler {
 
             if (!is_phoenix) {
                 newMember.roles.remove(Configs.role_phoenix_emoji);
-                logger.log('info', `[${this.name}]: ${newMember.displayName} phoenix role was removed from patreon.`);
+                logger.log('info', `[${this.name}]: ${newMember.displayName} phoenix role was removed from patron.`);
             }
 
         }
