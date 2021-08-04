@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Guild, Message, Role, TextChannel } from 'discord.js';
+import { Client, Guild, GuildMember, Message, Role, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 import { printcups } from '../tools/print_cups';
@@ -10,21 +10,19 @@ export class Award extends Command {
     trophy_channel: TextChannel;
     recording_channel: TextChannel;
     guild: Guild;
+    is_trivia: boolean;
 
     constructor(client: Client) {
         super(client, ["award_cup", "winner"], true, false, true);
-
+        this.is_trivia = false;
         this.trophy_channel = client.channels.cache.get(Configs.channel_trophy_room) as TextChannel;
         this.recording_channel = client.channels.cache.get(Configs.channel_recording) as TextChannel;
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
-    async execute(message: Message, args: string[],) {
+    async execute(message: Message, args: string[]) {
 
-        if (args.length !== 1 || !isNaN(parseFloat(args[0]))) {
-            logger.log('error', `[${this.names[0]}]: Incorrect usage.`);
-            return;
-        }
+        this.is_trivia = args.some(arg => arg === '-trivia');
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
@@ -39,6 +37,13 @@ export class Award extends Command {
                 return;
             }
             house = house.toLowerCase();
+
+            let trivia_winner;
+            if (this.is_trivia) {
+
+                const winner_id = args.shift() as string;
+                trivia_winner = this.guild.members.cache.get(winner_id);
+            }
 
             let name = '🦁';
             let cups = stat.house_cups;
@@ -89,6 +94,15 @@ export class Award extends Command {
             stat.house_cups = cups;
 
             printcups(this.trophy_channel, cups, true);
+
+            let award_message;
+
+            if (this.is_trivia && trivia_winner) {
+                award_message = `Congratulations! The house cup for winning the trivia goes to **${trivia_winner.displayName} ${house_role.toString()}!** \n`
+            }
+            else {
+                award_message = `Congratulations! The house cup for this recording goes to **${house_role.toString()} ${name}!** \n`
+            }
 
             stat
                 .save()
