@@ -45,7 +45,7 @@ export class Award extends Command {
                 trivia_winner = this.guild.members.cache.get(winner_id);
             }
 
-            let name = '🦁';
+            let house_emoji = '🦁';
             let cups = stat.house_cups;
             let house_role = this.guild.roles.cache.get(Configs.role_gryffindor) as Role;
 
@@ -58,32 +58,32 @@ export class Award extends Command {
                     break;
                 case 'slytherin':
                     cups.slytherin++;
-                    name = '🐍';
+                    house_emoji = '🐍';
                     house_role = this.guild.roles.cache.get(Configs.role_slytherin) as Role;
                     break;
                 case '🐍':
                     cups.slytherin++;
-                    name = '🐍';
+                    house_emoji = '🐍';
                     house_role = this.guild.roles.cache.get(Configs.role_slytherin) as Role;
                     break;
                 case '🦅':
                     cups.ravenclaw++;
                     house_role = this.guild.roles.cache.get(Configs.role_ravenclaw) as Role;
-                    name = '🦅';
+                    house_emoji = '🦅';
                     break;
                 case 'ravenclaw':
                     cups.ravenclaw++;
-                    name = '🦅';
+                    house_emoji = '🦅';
                     house_role = this.guild.roles.cache.get(Configs.role_ravenclaw) as Role;
                     break;
                 case 'hufflepuff':
                     cups.hufflepuff++;
-                    name = '🦡';
+                    house_emoji = '🦡';
                     house_role = this.guild.roles.cache.get(Configs.role_hufflepuff) as Role;
                     break;
                 case '🦡':
                     cups.hufflepuff++;
-                    name = '🦡';
+                    house_emoji = '🦡';
                     house_role = this.guild.roles.cache.get(Configs.role_hufflepuff) as Role;
                     break;
                 default:
@@ -95,22 +95,33 @@ export class Award extends Command {
 
             printcups(this.trophy_channel, cups, true);
 
-            let award_message;
+            let award_message: string;
 
             if (this.is_trivia && trivia_winner) {
-                award_message = `Congratulations! The house cup for winning the trivia goes to **${trivia_winner.displayName} ${house_role.toString()}!** \n`
+                award_message = `Congratulations! The house cup for winning the trivia goes to **${trivia_winner.displayName} from ${house_role.toString()}!** \n`
             }
             else {
-                award_message = `Congratulations! The house cup for this recording goes to **${house_role.toString()} ${name}!** \n`
+                award_message = `Congratulations! The house cup for this recording goes to **${house_role.toString()} ${house_emoji}!** \n`
             }
 
             stat
                 .save()
                 .then(() => {
-                    this.recording_channel
-                        .send(`Congratulations! The house cup for this recording goes to **${house_role.toString()} ${name}!** \n`)
-                        .then(() => logger.log('info', `[${this.names[0]}]: The house cup for this recording goes to **${house_role.toString()} ${name}!** \n`))
-                        .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+
+                    if (message.channel.id !== Configs.channel_mod_talk) {
+                        this.recording_channel
+                            .send(award_message)
+                            .then(() => logger.log('info', `[${this.names[0]}]: The house cup added to ${house_role.toString()}\n`))
+                            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+                    }
+                    else {
+                        message.channel
+                            .send(award_message)
+                            .then(() => logger.log('info', `[${this.names[0]}]: The house cup added to ${house_role.toString()}\n`))
+                            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+
+                    }
+
                 })
                 .catch(err => logger.log('error', err));
 
