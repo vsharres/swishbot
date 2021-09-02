@@ -12,9 +12,9 @@ export class Patreon extends Handler {
     async OnMemberUpdate(oldMember: GuildMember, newMember: GuildMember) {
 
         if (newMember.roles.cache.has(Configs.role_phoenix_emoji)) {
-            const is_phoenix = newMember.roles.cache.has(Configs.role_phoenix) || newMember.roles.cache.has(Configs.role_phoenix_plus);
+            const is_phoenix_and_up = newMember.roles.cache.has(Configs.role_phoenix) || newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_thunderbird);
 
-            if (!is_phoenix) {
+            if (!is_phoenix_and_up) {
                 newMember.roles.remove(Configs.role_phoenix_emoji);
                 logger.log('info', `[${this.name}]: ${newMember.displayName} phoenix role was removed from patron.`);
             }

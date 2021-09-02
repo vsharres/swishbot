@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Guild, GuildMember, Message, Role, TextChannel } from 'discord.js';
+import { Client, Guild, Message, Role, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 import { printcups } from '../tools/print_cups';
