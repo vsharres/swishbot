@@ -101,7 +101,7 @@ export class Award extends Command {
                 award_message = `Congratulations! The house cup for winning the trivia goes to **${trivia_winner.displayName} from ${house_role.toString()}!** \n`
             }
             else {
-                award_message = `Congratulations! The house cup for this recording goes to **${house_role.toString()} ${house_emoji}!** \n`
+                award_message = `Congratulations! The house cup for this recording goes to **${house_role.toString()}!** \n`
             }
 
             stat

@@ -99,6 +99,7 @@ export class Slyther extends Handler {
                     const guild_members = await this.guild.members.fetch();
 
                     const members_to_message = guild_members.filter(member => member.roles.cache.has(Configs.role_slytherin) && !slytherins.members.includes(member.user.id));
+                    const members_to_remove = slytherins.members.filter(member => !this.guild.members.cache.has(member.toString()));
 
                     if (members_to_message.size === 0) return;
 
@@ -113,6 +114,10 @@ export class Slyther extends Handler {
                             .catch(err => logger.error(err));
 
                     });
+
+                    if (members_to_remove.length > 0) {
+
+                    }
 
                     slytherins.save()
                         .then(() => {
