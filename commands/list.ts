@@ -6,22 +6,18 @@ import { Command } from './command';
 
 export class List extends Command {
 
-    guild: Guild;
-
     constructor(client: Client) {
         super(client, ["🙅‍♀️", 'megan_list'], true, false, true);
-
-        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
     async execute(message: Message, arg: string[]) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
+        Stat.findById(Configs.stats_id).then(async stat => {
             if (!stat) {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
-            const meg = this.guild.members.cache.get('663373766537117716') as GuildMember;
+            const meg = await message.client.users.fetch('663373766537117716', true);
 
             let content = `${meg.toString()} List of Undesirables:\n\n`;
 
