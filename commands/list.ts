@@ -28,8 +28,11 @@ export class List extends Command {
             let new_item;
             if (arg.length > 0) {
                 new_item = arg.shift();
-                content += new_item;
-                stat.list.push(new_item);
+                if (new_item) {
+                    content += new_item;
+                    stat.list.push(new_item);
+                }
+
             }
 
             stat.list.forEach((item) => content += `${item} - 🙅‍♀️\n`);
