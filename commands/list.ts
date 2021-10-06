@@ -9,7 +9,7 @@ export class List extends Command {
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, ["list"], true, false, true);
+        super(client, ["🙅‍♀️", 'megan_list'], true, false, true);
 
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
