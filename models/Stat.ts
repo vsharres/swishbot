@@ -10,6 +10,7 @@ const StatSchema = new Schema({
         type: Map,
         of: ArrayAuthors
     },
+    list: [String],
     polls: [{
         poll_id: {
             type: String
@@ -139,6 +140,7 @@ interface IStatSchema extends Document {
     house_cups: Houses;
     points: Houses;
     likes: Map<string, AuthorsArray>;
+    list: string[];
 }
 
 export default model<IStatSchema>("stats", StatSchema);

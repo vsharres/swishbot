@@ -4,18 +4,22 @@
         "es2020": true,
         "node": true
     },
+    "parser": "@typescript-eslint/parser",
     "extends": [
         "prettier",
+        "plugin:@typescript-eslint/recommended",
         "airbnb-base"
     ],
     "plugins": [
-        "prettier"
+        "prettier",
+        "@typescript-eslint"
     ],
     "parserOptions": {
         "ecmaVersion": 11
     },
     "rules": {
         "prettier/prettier": "error",
+        "@typescript-eslint/rule-name": "error",
         "no-console": "error"
     }
 }
