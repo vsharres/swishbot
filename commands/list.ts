@@ -19,15 +19,14 @@ export class List extends Command {
 
             const meg = await message.client.users.fetch('663373766537117716', true);
 
-            let content = `${meg.toString()} List of Undesirables:\n\n`;
+            let content = `${meg.toString()}'s List of Undesirables:\n\n`;
 
-            let new_item;
+            let new_item: string;
             if (arg.length > 0) {
-                new_item = arg.shift();
-                if (new_item) {
-                    content += new_item;
-                    stat.list.push(new_item);
-                }
+
+                new_item = arg.join(' ');
+                content += new_item;
+                stat.list.push(new_item);
 
             }
 
