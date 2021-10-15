@@ -25,7 +25,6 @@ export class List extends Command {
             if (arg.length > 0) {
 
                 new_item = arg.join(' ');
-                content += new_item;
                 stat.list.push(new_item);
 
             }
