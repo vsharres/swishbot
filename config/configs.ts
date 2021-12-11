@@ -30,6 +30,7 @@ interface Keys {
   role_hufflepuff: string,
   role_phoenix: string,
   role_patron: string,
+  role_dragon: string,
   role_thunderbird: string,
   role_unicorn: string,
   role_phoenix_emoji: string,

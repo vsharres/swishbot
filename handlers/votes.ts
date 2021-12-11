@@ -1,4 +1,4 @@
-import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Guild, Message, MessageReaction, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
 import { Handler } from './handler';
 import Stat from '../models/Stat';
@@ -19,7 +19,7 @@ export class Votes extends Handler {
 
     async OnReaction(user: User, reaction: MessageReaction) {
 
-        const message = reaction.message;
+        const message = reaction.message as Message;
         //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
         if (!message.content.startsWith('⚡')) return;
 

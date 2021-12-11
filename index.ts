@@ -1,4 +1,4 @@
-import Discord, { GuildMember, Message, User } from 'discord.js';
+import Discord, { GuildMember, Message, MessageReaction, User } from 'discord.js';
 import mongoose from 'mongoose';
 import { Configs } from './config/configs';
 import { Handlers } from './handlers/handlers';
@@ -6,16 +6,12 @@ import logger from './tools/logger';
 
 mongoose
     .connect(
-        Configs.mongoURI,
-        {
-            useUnifiedTopology: true,
-            useNewUrlParser: true
-        }
+        Configs.mongoURI
     )
     .then(() => logger.log('info', 'MongoDB Connected'))
     .catch(err => logger.log('error', err));
 
-const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'], ws: { intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_MESSAGE_REACTIONS'] } });
+const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'],  intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_MESSAGE_REACTIONS'] });
 let handlers: Handlers;
 
 client.once('ready', () => {
@@ -98,7 +94,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             return;
         }
     }
-    handlers.OnReaction(user as User, reaction);
+    handlers.OnReaction(user as User, reaction as MessageReaction);
 
 });
 

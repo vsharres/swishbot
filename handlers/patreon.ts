@@ -11,6 +11,11 @@ export class Patreon extends Handler {
 
     async OnMemberUpdate(oldMember: GuildMember, newMember: GuildMember) {
 
+        //Ignore for admins
+        if (newMember.roles.cache.has(Configs.role_prefect) || newMember.roles.cache.has(Configs.role_admin)){
+            return;
+        }
+
         if (newMember.roles.cache.has(Configs.role_phoenix_emoji)) {
             const is_phoenix_and_up = newMember.roles.cache.has(Configs.role_phoenix) || newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_thunderbird);
 
@@ -20,10 +25,13 @@ export class Patreon extends Handler {
             }
 
         }
+        
+        const is_no_longer_patron = !newMember.roles.cache.has(Configs.role_patron);
+        const is_dragon_and_up = newMember.roles.cache.has(Configs.role_phoenix) || newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_thunderbird) || newMember.roles.cache.has(Configs.role_dragon);
 
-        if (!newMember.roles.cache.has(Configs.role_patron) && newMember.roles.cache.has(Configs.role_ageline)) {
+        if ((!is_no_longer_patron || !is_dragon_and_up) && newMember.roles.cache.has(Configs.role_ageline)) {
             newMember.roles.remove(Configs.role_ageline);
-            logger.log('info', `[${this.name}]: ${newMember.displayName} age line role removed as the user is no longer a patron.`);
+            logger.log('info', `[${this.name}]: ${newMember.displayName} age line role removed as the user no longer has access.`);
         }
 
     }

@@ -26,10 +26,10 @@ export class DeleteMessage extends Handler {
 
         const content = `${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`;
 
+        const files = message.attachments.map<string>(attachment=> attachment.url);
         this.channel_owlzkabanned.send({
             content: content,
-            files: message.attachments.array()
-
+            files: files
         });
 
         logger.log('info', `[${this.name}]: ${message.author.username}'s message: "${message.content}" Deleted from the channel: ${message.channel.toString()}`);
