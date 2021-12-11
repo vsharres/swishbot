@@ -32,10 +32,10 @@ export class Tergeo extends Command {
 
             }
         
-            const is_no_longer_patron = !member.roles.cache.has(Configs.role_patron);
+            const is_patron = member.roles.cache.has(Configs.role_patron);
             const is_dragon_and_up = member.roles.cache.has(Configs.role_phoenix) || member.roles.cache.has(Configs.role_unicorn) || member.roles.cache.has(Configs.role_thunderbird) || member.roles.cache.has(Configs.role_dragon);
 
-            if ((!is_no_longer_patron || !is_dragon_and_up) && member.roles.cache.has(Configs.role_ageline)) {
+            if ((!is_patron || !is_dragon_and_up) && member.roles.cache.has(Configs.role_ageline)) {
                 member.roles.remove(Configs.role_ageline);
                 logger.log('info', `[${this.names[0]}]: ${member.displayName} age line role removed as the user no longer has access.`);
             }
