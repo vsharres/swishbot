@@ -18,7 +18,8 @@ export class Wheeze extends Handler {
     async OnReaction(user: User, reaction: MessageReaction) {
 
         //Can only vote on the bot talk channel
-        if (reaction.message.author.bot || reaction.emoji.toString() !== Configs.emoji_wheeze) return;
+        const author = reaction.message.author as User;
+        if (!author || author.bot || reaction.emoji.toString() !== Configs.emoji_wheeze) return;
 
         const prefect_member = await this.guild.members.fetch(user.id);
         const adminRole = prefect_member.roles.cache.has(Configs.role_prefect);
@@ -28,8 +29,8 @@ export class Wheeze extends Handler {
         }
 
         this.wheeze_channel.send({
-            content: `${reaction.message.author.toString()}'s message: \n\n${reaction.message.content}`,
-            files: reaction.message.attachments.array()
+            content: `${author.toString()}'s message: \n\n${reaction.message.content}`,
+            files: reaction.message.attachments.toJSON()
         });
 
         logger.log('info', `[${this.name}]: Wheeze moment saved: ${reaction.message.id}"`);

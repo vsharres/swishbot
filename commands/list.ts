@@ -17,7 +17,7 @@ export class List extends Command {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
-            const meg = await message.client.users.fetch('663373766537117716', true);
+            const meg = await message.client.users.fetch('663373766537117716');
 
             let content = `${meg.toString()}'s List of Undesirables:\n\n`;
 

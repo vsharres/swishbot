@@ -21,7 +21,7 @@ export class Likes extends Handler {
     async OnReaction(user: User, reaction: MessageReaction) {
 
         //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
-        if (reaction.message.author.bot) return;
+        if ((reaction.message.author as User).bot) return;
 
         if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) return;
 
@@ -44,7 +44,7 @@ export class Likes extends Handler {
                 value++;
                 if (value % Configs.number_reactions === 0) {
 
-                    const reaction_member = await this.guild.members.fetch(reaction.message.author);
+                    const reaction_member = await this.guild.members.fetch(reaction.message.author as User);
 
                     stat.points = AddPointsToMember(Configs.points_likes, stat.points, reaction_member);
 

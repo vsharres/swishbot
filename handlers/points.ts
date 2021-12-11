@@ -21,12 +21,13 @@ export class Points extends Handler {
     async OnReaction(user: User, reaction: MessageReaction) {
 
         //No reactions on your own message or no points given to a bot message
-        if (reaction.message.author.id === user.id || reaction.message.author.bot) {
+        const author = reaction.message.author as User;
+        if (!author || author.id === user.id || author.bot) {
             return;
         }
 
         const point_giver_member = await this.guild.members.fetch(user.id);
-        const message_author_member = await this.guild.members.fetch(reaction.message.author.id);
+        const message_author_member = await this.guild.members.fetch(author.id);
 
         const can_give_points = point_giver_member.roles.cache.has(Configs.role_admin) ||
             (point_giver_member.roles.cache.has(Configs.role_helper_gryffindor) && message_author_member.roles.cache.has(Configs.role_gryffindor)) ||
