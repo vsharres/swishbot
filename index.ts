@@ -18,7 +18,7 @@ client.once('ready', () => {
     logger.log('info', 'Ready!');
     handlers = require('./handlers/handlers')(client);
 });
-client.on('message', async message => {
+client.on('messageCreate', async message => {
 
     if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Message event caught');
 
