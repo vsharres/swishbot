@@ -46,7 +46,11 @@ export class Likes extends Handler {
 
                     const reaction_member = await this.guild.members.fetch(reaction.message.author as User);
 
-                    stat.points = AddPointsToMember(Configs.points_likes, stat.points, reaction_member);
+                    const points = AddPointsToMember(Configs.points_likes, stat.points, reaction_member);
+                    stat.points.gryffindor = points.gryffindor;
+                    stat.points.hufflepuff = points.hufflepuff;
+                    stat.points.slytherin = points.slytherin;
+                    stat.points.ravenclaw = points.ravenclaw;
 
                     printPoints(this.hourglass_channel, stat.points, true);
 

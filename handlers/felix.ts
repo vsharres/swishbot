@@ -60,22 +60,38 @@ export class Felix extends Handler {
             }
 
             if (change_slytherin) {
-                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_slytherin);
+                const points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_slytherin);
+                stat.points.gryffindor = points.gryffindor;
+                stat.points.hufflepuff = points.hufflepuff;
+                stat.points.slytherin = points.slytherin;
+                stat.points.ravenclaw = points.ravenclaw;
                 log_message = `Felix points added to Slytherin 😈`;
             }
 
             if (change_ravenclaw) {
-                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_ravenclaw);
+                const points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_ravenclaw);
+                stat.points.gryffindor = points.gryffindor;
+                stat.points.hufflepuff = points.hufflepuff;
+                stat.points.slytherin = points.slytherin;
+                stat.points.ravenclaw = points.ravenclaw;
                 log_message = `Felix points added to Ravenclaw 😈`;
             }
 
             if (change_hufflepuff) {
-                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_hufflepuff);
+                const points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_hufflepuff);
+                stat.points.gryffindor = points.gryffindor;
+                stat.points.hufflepuff = points.hufflepuff;
+                stat.points.slytherin = points.slytherin;
+                stat.points.ravenclaw = points.ravenclaw;
                 log_message = `Felix points added to Hufflepuff 😈`;
             }
 
             if (change_gryffindor) {
                 stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_gryffindor);
+                stat.points.gryffindor = points.gryffindor;
+                stat.points.hufflepuff = points.hufflepuff;
+                stat.points.slytherin = points.slytherin;
+                stat.points.ravenclaw = points.ravenclaw;
                 log_message = `Felix points added to Gryffindor 😈`;
             }
 

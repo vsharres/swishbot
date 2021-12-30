@@ -80,11 +80,19 @@ export class Points extends Handler {
                     return;
                 }
 
-                stat.points = addPointsRandomHouse(points, stat.points, member_house);
+                const total_points = addPointsRandomHouse(points, stat.points, member_house);
+                stat.points.gryffindor = total_points.gryffindor;
+                stat.points.hufflepuff = total_points.hufflepuff;
+                stat.points.slytherin = total_points.slytherin;
+                stat.points.ravenclaw = total_points.ravenclaw;   
 
             }
             else {
-                stat.points = AddPointsToMember(points, stat.points, message_author_member);
+                const total_points = AddPointsToMember(points, stat.points, message_author_member);
+                stat.points.gryffindor = total_points.gryffindor;
+                stat.points.hufflepuff = total_points.hufflepuff;
+                stat.points.slytherin = total_points.slytherin;
+                stat.points.ravenclaw = total_points.ravenclaw;
             }
 
             stat
