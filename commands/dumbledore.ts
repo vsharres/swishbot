@@ -143,7 +143,11 @@ export class Dumbly extends Command {
 
             }
 
-            stat.points = points;
+           //stat.points = points;
+            stat.points.gryffindor = points.gryffindor;
+            stat.points.hufflepuff = points.hufflepuff;
+            stat.points.slytherin = points.slytherin;
+            stat.points.ravenclaw = points.ravenclaw;
 
             stat
                 .save()
