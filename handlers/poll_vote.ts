@@ -71,7 +71,11 @@ export class PollVote extends Handler {
                 return;
             }
 
-            stat.points = addPointsToHouse(Configs.points_votes, stat.points, house);
+            const points = addPointsToHouse(Configs.points_votes, stat.points, house);
+            stat.points.gryffindor = points.gryffindor;
+            stat.points.hufflepuff = points.hufflepuff;
+            stat.points.slytherin = points.slytherin;
+            stat.points.ravenclaw = points.ravenclaw;
             stat.polls[poll_index].voters.push(user.id);
 
             printPoints(this.hourglass_channel, stat.points, true);

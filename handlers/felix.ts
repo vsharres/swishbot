@@ -87,7 +87,7 @@ export class Felix extends Handler {
             }
 
             if (change_gryffindor) {
-                stat.points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_gryffindor);
+                const points = addPointsToHouse(Configs.points_likes, stat.points, Configs.role_gryffindor);
                 stat.points.gryffindor = points.gryffindor;
                 stat.points.hufflepuff = points.hufflepuff;
                 stat.points.slytherin = points.slytherin;

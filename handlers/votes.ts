@@ -60,7 +60,11 @@ export class Votes extends Handler {
                 const zapmember = this.guild.members.cache.get(zap.member);
                 if (!zapmember) return;
 
-                stat.points = AddPointsToMember(Configs.points_zap_votes * Math.sign(zap.votes), stat.points, zapmember);
+                const points = AddPointsToMember(Configs.points_zap_votes * Math.sign(zap.votes), stat.points, zapmember);
+                stat.points.gryffindor = points.gryffindor;
+                stat.points.hufflepuff = points.hufflepuff;
+                stat.points.slytherin = points.slytherin;
+                stat.points.ravenclaw = points.ravenclaw;
 
                 zap.was_awarded = true;
                 printPoints(this.hourglass_channel, stat.points, true);
