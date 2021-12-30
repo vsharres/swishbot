@@ -21,7 +21,7 @@ export class Reset extends Command {
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) return;
 
-            stat.points = {} as Houses;
+            stat.points = {gryffindor: 0, ravenclaw:0, slytherin:0, hufflepuff:0} ;
             stat.likes = new Map<string, AuthorsArray>();
             stat.lightnings = new Array<Lightning>();
             stat.listening_members = new Array<Listener>();
