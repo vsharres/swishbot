@@ -1,7 +1,7 @@
 interface Keys {
   mongoURI: string,
   stats_id: string,
-  id_eric_munch: string,
+  eric_munch_id: string,
   command_prefix: string,
   role_admin: string,
   role_prefect: string,

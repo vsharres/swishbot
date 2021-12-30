@@ -12,7 +12,7 @@ export class Kicks extends Handler {
     async OnMessage(message: Message) {
 
         //Only respond to messages from the eric munch bot and to messages in the mod talk channel
-        if (message.author.id !== Configs.id_eric_munch ||
+        if (message.author.id !== Configs.eric_munch_id ||
             message.channel.id !== Configs.channel_mod_talk) return;
 
         message.channel.send(Configs.gif_peace);

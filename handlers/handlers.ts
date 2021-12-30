@@ -28,7 +28,7 @@ export class Handlers extends Handler {
         if (process.env.NODE_ENV === "production") {
             this.handler_files = fs.readdirSync('./build/handlers').filter(file => !file.includes('handler'));
         } else {
-            this.handler_files = fs.readdirSync('./build/handlers').filter(file => !file.includes('handler'));
+            this.handler_files = fs.readdirSync('./handlers').filter(file => !file.includes('handler'));
         }
 
         for (const file of this.handler_files) {

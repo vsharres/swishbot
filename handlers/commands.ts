@@ -21,7 +21,7 @@ export class Commands extends Handler {
         if (process.env.NODE_ENV === "production") {
             this.commandFiles = fs.readdirSync('./build/commands').filter(file => !file.includes('command'));
         } else {
-            this.commandFiles = fs.readdirSync('./build/commands').filter(file => !file.includes('command'));
+            this.commandFiles = fs.readdirSync('./commands').filter(file => !file.includes('command'));
         }
 
         for (const file of this.commandFiles) {

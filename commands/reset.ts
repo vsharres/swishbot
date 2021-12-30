@@ -1,9 +1,10 @@
-import Stat, { AuthorsArray, Lightning, Listener, Poll } from '../models/Stat';
+import Stat, { AuthorsArray, Lightning, Listener, Poll, Houses } from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { Client, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
+import { HouseReset } from './house_reset';
 
 export class Reset extends Command {
 
@@ -20,7 +21,7 @@ export class Reset extends Command {
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) return;
 
-            stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+            stat.points = {} as Houses;
             stat.likes = new Map<string, AuthorsArray>();
             stat.lightnings = new Array<Lightning>();
             stat.listening_members = new Array<Listener>();

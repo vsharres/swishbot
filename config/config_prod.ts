@@ -3,7 +3,7 @@ import { Keys } from './configs';
 export const keys: Keys = {
 	mongoURI: process.env.MONGO_URI ? process.env.MONGO_URI : '',
 	stats_id: process.env.STATS_ID ? process.env.STATS_ID : '',
-	id_eric_munch: process.env.ERIC_MUNCH_ID ? process.env.ERIC_MUNCH_ID : '',
+	eric_munch_id: process.env.ERIC_MUNCH_ID ? process.env.ERIC_MUNCH_ID : '',
 	command_prefix: process.env.COMMAND_PREFIX ? process.env.COMMAND_PREFIX : '',
 	channel_recording: process.env.GENERAL_CHANNEL_ID ? process.env.GENERAL_CHANNEL_ID : '',
 	channel_mod_talk: process.env.MOD_TALK_CHANNEL ? process.env.MOD_TALK_CHANNEL : '',
