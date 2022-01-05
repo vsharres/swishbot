@@ -1,4 +1,4 @@
-import { Document, model, Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const ArrayAuthors = new Schema({
     authors: [String],
@@ -133,7 +133,7 @@ export interface Lightning {
     was_awarded: boolean;
 }
 
-interface IStatSchema extends Document {
+interface Stats {
     lightnings: Lightning[];
     listening_members: Listener[];
     polls: Poll[];
@@ -143,4 +143,5 @@ interface IStatSchema extends Document {
     list: string[];
 }
 
-export default model<IStatSchema>("stats", StatSchema);
+
+export default model<Stats>("stats", StatSchema);
