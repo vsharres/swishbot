@@ -43,8 +43,23 @@ const UnitsArray: Unit[] = [
         divisor: Configs.devito_height
     },
     {
+        name: 'mm',
+        multiplier: 0.1,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'milimeter',
+        multiplier: 0.1,
+        divisor: Configs.devito_height
+    },
+    {
+        name: 'milimetre',
+        multiplier: 0.1,
+        divisor: Configs.devito_height
+    },
+    {
         name: 'centimetres',
-        multiplier: 1,
+        multiplier: 0.1,
         divisor: Configs.devito_height
     },
     {
