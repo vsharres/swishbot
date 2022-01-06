@@ -29,13 +29,9 @@ export class Points extends Handler {
         const point_giver_member = await this.guild.members.fetch(user.id);
         const message_author_member = await this.guild.members.fetch(author.id);
 
-        const can_give_points = point_giver_member.roles.cache.has(Configs.role_admin) ||
-            (point_giver_member.roles.cache.has(Configs.role_helper_gryffindor) && message_author_member.roles.cache.has(Configs.role_gryffindor)) ||
-            (point_giver_member.roles.cache.has(Configs.role_helper_slytherin) && message_author_member.roles.cache.has(Configs.role_slytherin)) ||
-            (point_giver_member.roles.cache.has(Configs.role_helper_ravenclaw) && message_author_member.roles.cache.has(Configs.role_ravenclaw)) ||
-            (point_giver_member.roles.cache.has(Configs.role_helper_hufflepuff) && message_author_member.roles.cache.has(Configs.role_hufflepuff));
+        const can_give_points = point_giver_member.roles.cache.has(Configs.role_admin);
 
-        //Only founders or the helpers can give out points
+        //Only founders can give out points
         if (!can_give_points) {
             return;
         }
