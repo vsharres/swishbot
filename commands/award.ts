@@ -44,46 +44,37 @@ export class Award extends Command {
                 const winner_id = args.shift() as string;
                 trivia_winner = this.guild.members.cache.get(winner_id);
             }
-
-            let house_emoji = '🦁';
-            let cups = stat.house_cups;
             let house_role = this.guild.roles.cache.get(Configs.role_gryffindor) as Role;
 
             switch (house) {
                 case 'gryffindor':
-                    cups.gryffindor++;
+                    stat.house_cups.gryffindor++;
                     break;
                 case '🦁':
-                    cups.gryffindor++;
+                    stat.house_cups.gryffindor++;
                     break;
                 case 'slytherin':
-                    cups.slytherin++;
-                    house_emoji = '🐍';
+                    stat.house_cups.slytherin++;
                     house_role = this.guild.roles.cache.get(Configs.role_slytherin) as Role;
                     break;
                 case '🐍':
-                    cups.slytherin++;
-                    house_emoji = '🐍';
+                    stat.house_cups.slytherin++;
                     house_role = this.guild.roles.cache.get(Configs.role_slytherin) as Role;
                     break;
                 case '🦅':
-                    cups.ravenclaw++;
+                    stat.house_cups.ravenclaw++;
                     house_role = this.guild.roles.cache.get(Configs.role_ravenclaw) as Role;
-                    house_emoji = '🦅';
                     break;
                 case 'ravenclaw':
-                    cups.ravenclaw++;
-                    house_emoji = '🦅';
+                    stat.house_cups.ravenclaw++;
                     house_role = this.guild.roles.cache.get(Configs.role_ravenclaw) as Role;
                     break;
                 case 'hufflepuff':
-                    cups.hufflepuff++;
-                    house_emoji = '🦡';
+                    stat.house_cups.hufflepuff++;
                     house_role = this.guild.roles.cache.get(Configs.role_hufflepuff) as Role;
                     break;
                 case '🦡':
-                    cups.hufflepuff++;
-                    house_emoji = '🦡';
+                    stat.house_cups.hufflepuff++;
                     house_role = this.guild.roles.cache.get(Configs.role_hufflepuff) as Role;
                     break;
                 default:
@@ -91,9 +82,7 @@ export class Award extends Command {
                     return;
             }
 
-            stat.house_cups = cups;
-
-            printcups(this.trophy_channel, cups, true);
+            printcups(this.trophy_channel, stat.house_cups, true);
 
             let award_message: string;
 
