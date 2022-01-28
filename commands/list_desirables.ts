@@ -4,7 +4,7 @@ import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
-export class ListUndesirables extends Command {
+export class Listdesirables extends Command {
 
     constructor(client: Client) {
         super(client, ["<:meg:796919766408495104>", 'megan_desirables'], true, false, true);
@@ -41,4 +41,4 @@ export class ListUndesirables extends Command {
     }
 };
 
-export default (client: Client) => { return new ListUndesirables(client); }
+export default (client: Client) => { return new Listdesirables(client); }
