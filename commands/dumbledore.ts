@@ -29,7 +29,6 @@ export class Dumbly extends Command {
                 return;
             }
 
-            let points = stat.points;
             let parsed: string | undefined;
             let amount = 0;
             let name = 'Gryffindor 🦁';
@@ -54,33 +53,33 @@ export class Dumbly extends Command {
 
                 switch (house) {
                     case 'gryffindor':
-                        points.gryffindor += amount * Configs.gryffindor_points_multiplier;
+                        stat.points.gryffindor += amount * Configs.gryffindor_points_multiplier;
                         break;
                     case "🦁":
-                        points.gryffindor += amount * Configs.gryffindor_points_multiplier;
+                        stat.points.gryffindor += amount * Configs.gryffindor_points_multiplier;
                         break;
                     case 'slytherin':
-                        points.slytherin += amount * Configs.slytherin_points_multiplier;
+                        stat.points.slytherin += amount * Configs.slytherin_points_multiplier;
                         name = 'Slytherin 🐍';
                         break;
                     case '🐍':
-                        points.slytherin += amount * Configs.slytherin_points_multiplier;
+                        stat.points.slytherin += amount * Configs.slytherin_points_multiplier;
                         name = 'Slytherin 🐍';
                         break;
                     case 'ravenclaw':
-                        points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
+                        stat.points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
                         name = 'Ravenclaw 🦅';
                         break;
                     case '🦅':
-                        points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
+                        stat.points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
                         name = 'Ravenclaw 🦅';
                         break;
                     case 'hufflepuff':
-                        points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
+                        stat.points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
                         name = 'Hufflepuff 🦡';
                         break;
                     case '🦡':
-                        points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
+                        stat.points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
                         name = 'Hufflepuff 🦡';
                         break;
                     default:
@@ -105,33 +104,33 @@ export class Dumbly extends Command {
 
                 switch (house) {
                     case "🦁":
-                        points.gryffindor += amount * Configs.gryffindor_points_multiplier;
+                        stat.points.gryffindor += amount * Configs.gryffindor_points_multiplier;
                         break;
                     case "gryffindor":
-                        points.gryffindor += amount * Configs.gryffindor_points_multiplier;
+                        stat.points.gryffindor += amount * Configs.gryffindor_points_multiplier;
                         break;
                     case "🐍":
-                        points.slytherin += amount * Configs.slytherin_points_multiplier;
+                        stat.points.slytherin += amount * Configs.slytherin_points_multiplier;
                         name = 'Slytherin 🐍';
                         break;
                     case "slytherin":
-                        points.slytherin += amount * Configs.slytherin_points_multiplier;
+                        stat.points.slytherin += amount * Configs.slytherin_points_multiplier;
                         name = 'Slytherin 🐍';
                         break;
                     case "🦅":
-                        points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
+                        stat.points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
                         name = 'Ravenclaw 🦅';
                         break;
                     case "ravenclaw":
-                        points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
+                        stat.points.ravenclaw += amount * Configs.ravenclaw_points_multiplier;
                         name = 'Ravenclaw 🦅';
                         break;
                     case "hufflepuff":
-                        points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
+                        stat.points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
                         name = 'Hufflepuff 🦡';
                         break;
                     case "🦡":
-                        points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
+                        stat.points.hufflepuff += amount * Configs.hufflepuff_points_multiplier;
                         name = 'Hufflepuff 🦡';
                         break;
 
@@ -142,12 +141,6 @@ export class Dumbly extends Command {
                 };
 
             }
-
-           //stat.points = points;
-            stat.points.gryffindor = points.gryffindor;
-            stat.points.hufflepuff = points.hufflepuff;
-            stat.points.slytherin = points.slytherin;
-            stat.points.ravenclaw = points.ravenclaw;
 
             stat
                 .save()
@@ -162,7 +155,7 @@ export class Dumbly extends Command {
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
             logger.log('info', `[${this.names[0]}]: ${messageToSent.content}`);
 
-            printPoints(this.hourglass_channel, points, true);
+            printPoints(this.hourglass_channel, stat.points, true);
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
     }

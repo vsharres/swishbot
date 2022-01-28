@@ -4,10 +4,10 @@ import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
-export class List extends Command {
+export class ListUndesirables extends Command {
 
     constructor(client: Client) {
-        super(client, ["🙅‍♀️", 'megan_list'], true, false, true);
+        super(client, ["🙅‍♀️", 'megan_undesirables'], true, false, true);
     }
 
     async execute(message: Message, arg: string[]) {
@@ -41,4 +41,4 @@ export class List extends Command {
     }
 };
 
-export default (client: Client) => { return new List(client); }
+export default (client: Client) => { return new ListUndesirables(client); }

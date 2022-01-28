@@ -11,6 +11,7 @@ const StatSchema = new Schema({
         of: ArrayAuthors
     },
     list: [String],
+    desirables: [String],
     polls: [{
         poll_id: {
             type: String
@@ -141,6 +142,7 @@ interface Stats {
     points: Houses;
     likes: Map<string, AuthorsArray>;
     list: string[];
+    desirables: string[];
 }
 
 
