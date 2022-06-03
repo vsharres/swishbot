@@ -25,24 +25,20 @@ export class Slyther extends Handler {
 
         const secret_command = message.content.toLowerCase();
 
-        switch (secret_command) {
-            case 'make it green':
-                const admin_member = message.member as GuildMember;
-                const adminRole = admin_member.roles.cache.has(Configs.role_admin);
+        const member = message.member as GuildMember;
+        const is_prefect = member.roles.cache.has(Configs.role_prefect);
+        const is_slytherin = member.roles.cache.has(Configs.role_slytherin);
 
-                if (adminRole === false) {
-                    return;
-                }
+        if (!is_prefect || !is_slytherin) return;
+
+        switch (secret_command) {
+            case 'make it green':   
 
                 this.members_houses = [];
 
                 Stat.findById(Configs.stats_id).then((stat) => {
 
-                    if (!stat) {
-                        return;
-                    }
-
-                    if (this.recording_voice.members.size === 0) {
+                    if (!stat || this.recording_voice.members.size === 0) {
                         return;
                     }
 
@@ -84,11 +80,7 @@ export class Slyther extends Handler {
                 break;
             case 'https://tenor.com/view/hp-gif-18818544':
 
-                const prefect_member = message.member as GuildMember;
-                const is_prefect = prefect_member.roles.cache.has(Configs.role_prefect);
-                const is_slytherin = prefect_member.roles.cache.has(Configs.role_slytherin);
-
-                if (!is_prefect || !is_slytherin) return;
+               
 
                 Slytherin.findById(Configs.document_slythern).then(async slytherins => {
                     if (!slytherins) {
