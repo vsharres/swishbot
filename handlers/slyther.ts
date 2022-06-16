@@ -32,7 +32,7 @@ export class Slyther extends Handler {
         if (!is_prefect || !is_slytherin) return;
 
         switch (secret_command) {
-            case 'make it green':   
+            case 'we are all slytherins':   
 
                 this.members_houses = [];
 
