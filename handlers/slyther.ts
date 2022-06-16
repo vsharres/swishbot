@@ -7,14 +7,12 @@ import { Configs } from '../config/configs';
 
 export class Slyther extends Handler {
 
-    recording_voice: VoiceChannel;
     members_houses: Listener[];
     guild: Guild;
 
     constructor(client: Client) {
         super(client, 'slyther', true);
 
-        this.recording_voice = client.channels.cache.get(Configs.channel_voice_recording) as VoiceChannel;
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
         this.members_houses = [];
     }
@@ -32,17 +30,19 @@ export class Slyther extends Handler {
         if (!is_prefect || !is_slytherin) return;
 
         switch (secret_command) {
-            case 'we are all slytherins':   
+            case 'we are all slytherin':   
+
+                const recording_voice = await this.client.channels.fetch(Configs.channel_voice_recording) as VoiceChannel;
 
                 this.members_houses = [];
 
                 Stat.findById(Configs.stats_id).then((stat) => {
 
-                    if (!stat || this.recording_voice.members.size === 0) {
+                    if (!stat || recording_voice.members.size === 0) {
                         return;
                     }
 
-                    this.recording_voice.members.forEach(member => {
+                    recording_voice.members.forEach(member => {
 
                         const memberRoles = member.roles.cache;
                         let house: string = '';
