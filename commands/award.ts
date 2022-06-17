@@ -13,7 +13,7 @@ export class Award extends Command {
     is_trivia: boolean;
 
     constructor(client: Client) {
-        super(client, ["award_cup", "winner"], true, false, true);
+        super(client, ["award_cup", "winner", "🏆"], true, false, true);
         this.is_trivia = false;
         this.trophy_channel = client.channels.cache.get(Configs.channel_trophy_room) as TextChannel;
         this.recording_channel = client.channels.cache.get(Configs.channel_recording) as TextChannel;

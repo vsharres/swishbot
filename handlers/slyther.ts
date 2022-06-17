@@ -39,7 +39,7 @@ export class Slyther extends Handler {
                 Stat.findById(Configs.stats_id).then((stat) => {
 
                     if (!stat || recording_voice.members.size === 0) {
-                        return;
+                        return logger.log('error', `[${this.name}]: could not find stat or the voice recording channel`);
                     }
 
                     recording_voice.members.forEach(member => {

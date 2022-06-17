@@ -1,13 +1,18 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message } from 'discord.js';
+import { Client, Message, Guild, Role } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
 export class Lightning extends Command {
 
+    guild: Guild;
+
     constructor(client: Client) {
         super(client, ["lightningbolts", "⚡", "lightingbolts", "lightning_bolts"], false, false, true);
+
+        this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
+
     }
 
     async execute(message: Message, arg: string[]) {
@@ -32,14 +37,18 @@ export class Lightning extends Command {
                     }
 
                     for (let bolt = 10 * index; bolt < end; bolt++) {
-                        let can_show_votes = ``;
 
-                        if (message.channel.id === Configs.channel_bot_talk) {
-                            can_show_votes = ` **votes: ${Math.abs(stat.lightnings[bolt].votes)} ${stat.lightnings[bolt].votes >= 0 ? 'up**' : 'down**'}`;
-                        }
                         const author = await message.client.users.fetch(stat.lightnings[bolt].member);
+                        const member = await this.guild.members.fetch(stat.lightnings[bolt].member);
+
+                        let house:Role | undefined;
+                        house = member.roles.cache.find(role=> role.id === Configs.role_gryffindor || 
+                            role.id === Configs.role_ravenclaw ||
+                            role.id === Configs.role_hufflepuff ||
+                            role.id === Configs.role_ravenclaw);                       
+                        
                         if (author) {
-                            reply += `${author.toString()} asks: ${stat.lightnings[bolt].question}${can_show_votes}\n`;
+                            reply += `${author.toString()}${house?.toString()} asks: ${stat.lightnings[bolt].question}\n`;
                         }
 
                     }
