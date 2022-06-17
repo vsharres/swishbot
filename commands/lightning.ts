@@ -48,7 +48,7 @@ export class Lightning extends Command {
                             role.id === Configs.role_ravenclaw);                       
                         
                         if (author) {
-                            reply += `${author.toString()}${house?.toString()} asks: ${stat.lightnings[bolt].question}\n`;
+                            reply += `${author.toString()}${house ? " from " + house.toString():''} asks: ${stat.lightnings[bolt].question}\n`;
                         }
 
                     }
