@@ -27,8 +27,6 @@ export class Points extends Handler {
         }
 
         const point_giver_member = await this.guild.members.fetch(user.id);
-        const message_author_member = await this.guild.members.fetch(author.id);
-
         const can_give_points = point_giver_member.roles.cache.has(Configs.role_admin);
 
         //Only founders can give out points
@@ -49,6 +47,7 @@ export class Points extends Handler {
             return;
         }
 
+        const message_author_member = await this.guild.members.fetch(author.id);
 
         Stat.findById(Configs.stats_id).then((stat) => {
             if (!stat) {

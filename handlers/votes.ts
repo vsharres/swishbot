@@ -17,6 +17,7 @@ export class Votes extends Handler {
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
+    /*
     async OnReaction(user: User, reaction: MessageReaction) {
 
         const message = reaction.message as Message;
@@ -86,6 +87,9 @@ export class Votes extends Handler {
 
 
     }
+
+    */
+
 }
 
 module.exports = (client: Client) => {

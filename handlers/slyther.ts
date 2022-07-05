@@ -80,7 +80,6 @@ export class Slyther extends Handler {
                 break;
             case 'https://tenor.com/view/hp-gif-18818544':
 
-               
 
                 Slytherin.findById(Configs.document_slythern).then(async slytherins => {
                     if (!slytherins) {
