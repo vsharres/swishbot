@@ -43,7 +43,7 @@ export class Lightning extends Command {
 
                         let house:Role | undefined;
                         house = member.roles.cache.find(role=> role.id === Configs.role_gryffindor || 
-                            role.id === Configs.role_ravenclaw ||
+                            role.id === Configs.role_slytherin ||
                             role.id === Configs.role_hufflepuff ||
                             role.id === Configs.role_ravenclaw);                       
                         
