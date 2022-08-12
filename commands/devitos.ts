@@ -105,37 +105,38 @@ export class Devitos extends Command {
             let parsed = args.shift();
             let divisor = Configs.devito_height;
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`);
                 return;
             }
 
             firstAmount = parseFloat(parsed);
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`);
                 return;
             }
-            firstunit = parsed;
 
+            firstunit = parsed;
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`);
                 return;
             }
+
             secondAmount = parseFloat(parsed);
             parsed = args.shift();
             if (!parsed) {
-                logger.log('error', `[${this.names[0]}]: Error parsing the message.`)
+                logger.log('error', `[${this.names[0]}]: Error parsing the message.`);
                 return;
             }
-            secondunit = parsed;
 
+            secondunit = parsed;
             if (firstunit === 'feet' && secondunit === 'inches' || secondunit === 'inch') {
                 firstmultiplier = 30.48;
                 secondMultiplier = 2.54;
             }
             else {
-                logger.log('error', `[${this.names[0]}]: The first unit and the second unit were not feet and inches`)
+                logger.log('error', `[${this.names[0]}]: The first unit and the second unit were not feet and inches`);
                 return;
             }
 

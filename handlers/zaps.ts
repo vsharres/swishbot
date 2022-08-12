@@ -16,7 +16,7 @@ export class Zaps extends Handler {
 
     async OnMessage(message: Message) {
 
-        if (!message.content.startsWith('⚡') || message.author.bot) return;
+        if (!message.content.startsWith('⚡') || message.author.bot || message.content.length <= 2) return;
 
         Stat.findById(Configs.stats_id).then((stat) => {
 
