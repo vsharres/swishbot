@@ -26,9 +26,8 @@ export class Plebs extends Command {
                 logger.log('error', `[${this.names[0]}]: We need a message to send to the plebs.`);
                 return;
             }
-            channel_to_send_message = channel_to_send_message.substring(1);
 
-            let channel =  this.client.channels.cache.find(channel => channel.toString() === channel_to_send_message) as TextChannel;
+            let channel =  this.client.channels.cache.get(channel_to_send_message) as TextChannel;
             if(!channel){
                 logger.log('error', `[${this.names[0]}]: Could not find the channel with name ${channel_to_send_message}`);
                 return;
