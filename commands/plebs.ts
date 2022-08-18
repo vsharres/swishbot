@@ -21,18 +21,29 @@ export class Plebs extends Command {
                 return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
             }
 
-            let plebMessage = args.join();
-            if (!plebMessage) {
-                logger.log('error', `[${this.names[0]}]: Error shifting the house.`);
+            let channel_to_send_message = args.shift();
+            if(!channel_to_send_message){
+                logger.log('error', `[${this.names[0]}]: We need a message to send to the plebs.`);
+                return;
+            }
+            channel_to_send_message = channel_to_send_message.substring(1);
+
+            let channel =  this.client.channels.cache.find(channel => channel.toString() === channel_to_send_message) as TextChannel;
+            if(!channel){
+                logger.log('error', `[${this.names[0]}]: Could not find the channel with name ${channel_to_send_message}`);
                 return;
             }
 
-            let plebs_message = `@everyone a recording will start shortly!** \n`;
+            let plebMessage = args.join(' ');
+            if (!plebMessage) {
+                logger.log('error', `[${this.names[0]}]: We need a message to send to the plebs.`);
+                return;
+            }
 
-            this.recording_channel
-                            .send(plebs_message)
-                            .then(() => logger.log('info', `${plebMessage}`))
-                            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            channel
+                    .send(plebMessage)
+                    .then(() => logger.log('info', `${plebMessage}`))
+                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
