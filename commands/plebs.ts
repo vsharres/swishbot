@@ -27,6 +27,8 @@ export class Plebs extends Command {
                 return;
             }
 
+            channel_to_send_message = channel_to_send_message.replace(/[^a-zA-Z ]/g, "");
+
             let channel =  this.client.channels.cache.get(channel_to_send_message) as TextChannel;
             if(!channel){
                 logger.log('error', `[${this.names[0]}]: Could not find the channel with name ${channel_to_send_message}`);
