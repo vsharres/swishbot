@@ -7,8 +7,11 @@ import { printcups } from '../tools/print_cups';
 
 export class Cups extends Command {
 
+    trophy_channel: TextChannel;
+
     constructor(client: Client) {
         super(client, ["cups", "cup"], false, false, true);
+        this.trophy_channel = client.channels.cache.get(Configs.channel_trophy_room) as TextChannel;
     }
 
     async execute(message: Message, arg: string[]) {
@@ -19,6 +22,7 @@ export class Cups extends Command {
             }
 
             printcups(message.channel as TextChannel, stat.house_cups);
+            printcups(this.trophy_channel, stat.house_cups, true);
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));

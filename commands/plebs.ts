@@ -41,8 +41,13 @@ export class Plebs extends Command {
                 return;
             }
 
+
+
             channel
-                    .send(plebMessage)
+                    .send({
+                        content: plebMessage,
+                        attachments: Array.from(message.attachments.values())
+                    })
                     .then(() => logger.log('info', `${plebMessage}`))
                     .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
