@@ -7,12 +7,9 @@ import { Command } from './command';
 
 export class Reset extends Command {
 
-    hourglass_channel: TextChannel;
-
     constructor(client: Client) {
         super(client, ["reset"], false, false, true);
 
-        this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
     }
 
     async execute(message: Message, arg: string[]) {
@@ -20,13 +17,11 @@ export class Reset extends Command {
         Stat.findById(Configs.stats_id).then(stat => {
             if (!stat) return;
 
-            stat.points = {gryffindor: 0, ravenclaw:0, slytherin:0, hufflepuff:0} ;
+            //stat.points = {gryffindor: 0, ravenclaw:0, slytherin:0, hufflepuff:0} ;
             stat.likes = new Map<string, AuthorsArray>();
             stat.lightnings = new Array<Lightning>();
             stat.listening_members = new Array<Listener>();
             //stat.polls = new Array<Poll>();
-
-            printPoints(this.hourglass_channel, stat.points, true);
 
             stat
                 .save()
