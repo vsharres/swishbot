@@ -20,13 +20,20 @@ export class Likes extends Handler {
 
     async OnReaction(user: User, reaction: MessageReaction) {
 
-        //Can only vote on the bot talk channel, ignore bot messages and only consider lightningbolts
         if ((reaction.message.author as User).bot) return;
 
-        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) return;
+        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) {    
+            return;
+        }
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
+                return;
+            }
+
+            if(stat.annoying_users.some((annoying)=> annoying == user.id)) 
+            {
+                logger.log('info', `[${this.name}]: Likes from ${user.toString()} ignored. `);
                 return;
             }
 

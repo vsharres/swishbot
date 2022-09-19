@@ -12,6 +12,7 @@ const StatSchema = new Schema({
     },
     list: [String],
     desirables: [String],
+    annoying_users:[String],
     polls: [{
         poll_id: {
             type: String
@@ -141,6 +142,7 @@ interface Stats {
     house_cups: Houses;
     points: Houses;
     likes: Map<string, AuthorsArray>;
+    annoying_users: string[],
     list: string[];
     desirables: string[];
 }

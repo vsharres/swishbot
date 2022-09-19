@@ -1,7 +1,6 @@
-import Stat, { AuthorsArray, Lightning, Listener, Poll } from '../models/Stat';
+import Stat, { AuthorsArray, Lightning, Listener } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { printPoints } from '../tools/print_points';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, Message } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from './command';
 
