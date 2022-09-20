@@ -142,7 +142,7 @@ interface Stats {
     house_cups: Houses;
     points: Houses;
     likes: Map<string, AuthorsArray>;
-    annoying_users: string[],
+    annoying_users: string[];
     list: string[];
     desirables: string[];
 }

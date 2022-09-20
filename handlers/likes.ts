@@ -31,7 +31,7 @@ export class Likes extends Handler {
                 return;
             }
 
-            if(stat.annoying_users.some((annoying)=> annoying == user.id)) 
+            if(stat.annoying_users.some((annoying)=> annoying == reaction.message.author?.id)) 
             {
                 logger.log('info', `[${this.name}]: Likes from ${user.toString()} ignored. `);
                 return;
