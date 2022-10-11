@@ -13,6 +13,17 @@ const StatSchema = new Schema({
     list: [String],
     desirables: [String],
     annoying_users:[String],
+    cokes: {
+        tiff_megan: {
+            type: Number
+        },
+        tiff_katie: {
+            type: Number
+        },
+        megan_katie: {
+            type: Number
+        }
+    },
     polls: [{
         poll_id: {
             type: String
@@ -135,12 +146,19 @@ export interface Lightning {
     was_awarded: boolean;
 }
 
+export interface Cokes {
+    tiff_megan: number;
+    tiff_katie: number;
+    megan_katie: number;
+}
+
 interface Stats {
     lightnings: Lightning[];
     listening_members: Listener[];
     polls: Poll[];
     house_cups: Houses;
     points: Houses;
+    cokes: Cokes;
     likes: Map<string, AuthorsArray>;
     annoying_users: string[];
     list: string[];

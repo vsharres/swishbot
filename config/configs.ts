@@ -19,11 +19,15 @@ interface Keys {
   channel_come_go: string,
   channel_welcome: string,
   channel_sorting: string,
+  channel_cokes: string,
   chaos: boolean,
   devito_height: number, // in cm
   devito_weight: number, // in Kg
   document_slythern: string,
   guild_id: string,
+  id_megan: string,
+  id_katie: string,
+  id_tiff: string,
   role_gryffindor: string,
   role_slytherin: string,
   role_ravenclaw: string,
@@ -38,6 +42,7 @@ interface Keys {
   emoji_addpoints: string[],
   emoji_removepoints: string[],
   emoji_wheeze: string,
+  emoji_coke: string,
   emojis_vote_yes: string[],
   emojis_vote_no: string[],
   emojis_negative_reactions: string[],

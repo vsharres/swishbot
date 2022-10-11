@@ -18,6 +18,7 @@ export const keys: Keys = {
 	channel_come_go: process.env.CHANNEL_COME_GO ? process.env.CHANNEL_COME_GO : '',
 	channel_welcome: process.env.CHANNEL_WELCOME ? process.env.CHANNEL_WELCOME : '',
 	channel_sorting: process.env.CHANNEL_SORTING ? process.env.CHANNEL_SORTING : '',
+	channel_cokes: process.env.CHANNEL_COKES ? process.env.CHANNEL_COKES : '',
 	emoji_wheeze: process.env.EMOJI_WHEEZE ? process.env.EMOJI_WHEEZE : '🥸',
 	chaos: process.env.CHAOS ? parseInt(process.env.CHAOS) === 1 : false,
 	emoji_addpoints: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
@@ -25,10 +26,14 @@ export const keys: Keys = {
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emojis_vote_no: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_negative_reactions: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿', '🤮', '🤢'],
+	emoji_coke: '',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
 	document_slythern: process.env.DOCUMENT_SLYTHERIN ? process.env.DOCUMENT_SLYTHERIN : '',
 	guild_id: process.env.GUILD_ID ? process.env.GUILD_ID : '',
+	id_megan: process.env.ID_MEGAN ? process.env.ID_MEGAN : '',
+	id_katie: process.env.ID_KATIE ? process.env.ID_KATIE : '',
+	id_tiff: process.env.ID_TIFF ? process.env.ID_TIFF : '',
 	role_gryffindor: process.env.GRYFFINDOR_ROLE ? process.env.GRYFFINDOR_ROLE : '',
 	role_slytherin: process.env.SLYTHERIN_ROLE ? process.env.SLYTHERIN_ROLE : '',
 	role_ravenclaw: process.env.RAVENCLAW_ROLE ? process.env.RAVENCLAW_ROLE : '',
