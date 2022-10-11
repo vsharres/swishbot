@@ -111,7 +111,7 @@ export class Jinx extends Command {
 
             const owed_member = this.guild.members.cache.get(owed_id);
             const owes_member = this.guild.members.cache.get(owes_id);
-            const messageToSent = `${owed_member?.toString()} owes a ${Configs.emoji_coke} to ${owes_member?.toString()}!`;
+            const messageToSent = `${owes_member?.toString()} owes a ${Configs.emoji_coke} to ${owed_member?.toString()}!`;
 
             stat
                 .save()
