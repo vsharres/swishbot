@@ -27,8 +27,8 @@ export class CokesReset extends Command {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.names[0]}]: All house points are reset.`);
-                    message.channel.send(` All house points are reset.`);
+                    logger.log('info', `[${this.names[0]}]: Disney Coke tally reset.`);
+                    message.channel.send(`Disney Coke tally reset.`);
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
 
