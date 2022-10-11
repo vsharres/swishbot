@@ -65,7 +65,6 @@ export class Jinx extends Command {
             }
 
             let cokes = stat.cokes;
-
             switch (owes_id) {
                 case Configs.id_katie:
                     {

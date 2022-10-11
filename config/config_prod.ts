@@ -26,7 +26,7 @@ export const keys: Keys = {
 	emojis_vote_yes: ['👍', '👍🏻', '👍🏼', '👍🏽', '👍🏾', '👍🏿'],
 	emojis_vote_no: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿'],
 	emojis_negative_reactions: ['👎', '👎🏻', '👎🏼', '👎🏽', '👎🏾', '👎🏿', '🤮', '🤢'],
-	emoji_coke: '',
+	emoji_coke: process.env.EMOJI_COKE ? process.env.EMOJI_COKE : '',
 	devito_height: 147, // in cm
 	devito_weight: 48000, // in g
 	document_slythern: process.env.DOCUMENT_SLYTHERIN ? process.env.DOCUMENT_SLYTHERIN : '',
