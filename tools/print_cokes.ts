@@ -10,17 +10,17 @@ async function printcokes(channel: TextChannel, cokes: Cokes, is_print_channel: 
     let reply = `**Disney Cokes Tally ${Configs.emoji_coke}!**\n\n`;
 
     let sorted_cokes = [{
-        owes: cokes.megan_katie > 0 ? `<@${Configs.id_megan}>` : `<@${Configs.id_katie}`,
-        owed: cokes.megan_katie > 0 ? `<@${Configs.id_katie}>` : `<@${Configs.id_megan}`,
+        owes: cokes.megan_katie > 0 ? `<@${Configs.id_megan}>` : `<@${Configs.id_katie}>`,
+        owed: cokes.megan_katie > 0 ? `<@${Configs.id_katie}>` : `<@${Configs.id_megan}>`,
         value: cokes.megan_katie
     }, {
-        owes: cokes.tiff_katie > 0 ? `<@${Configs.id_tiff}>` : `<@${Configs.id_katie}`,
-        owed: cokes.tiff_katie > 0 ? `<@${Configs.id_katie}>` : `<@${Configs.id_tiff}`,
+        owes: cokes.tiff_katie > 0 ? `<@${Configs.id_tiff}>` : `<@${Configs.id_katie}>`,
+        owed: cokes.tiff_katie > 0 ? `<@${Configs.id_katie}>` : `<@${Configs.id_tiff}>`,
         value: cokes.tiff_katie
     },
     {
-        owes: cokes.tiff_megan > 0 ? `<@${Configs.id_tiff}>` : `<@${Configs.id_megan}`,
-        owed: cokes.tiff_megan > 0 ? `<@${Configs.id_megan}>` : `<@${Configs.id_tiff}`,
+        owes: cokes.tiff_megan > 0 ? `<@${Configs.id_tiff}>` : `<@${Configs.id_megan}>`,
+        owed: cokes.tiff_megan > 0 ? `<@${Configs.id_megan}>` : `<@${Configs.id_tiff}>`,
         value: cokes.tiff_megan
     }];
 
