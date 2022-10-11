@@ -32,8 +32,6 @@ export class Jinx extends Command {
                 return;
             }
 
-            let messageToSent: any;
-
             let owes_id = args.shift();
             if (!owes_id) {
                 logger.log('error', `[${this.names[0]}]: Error shifting the owning host.`);
@@ -113,20 +111,17 @@ export class Jinx extends Command {
 
             const owed_member = this.guild.members.cache.get(owed_id);
             const owes_member = this.guild.members.cache.get(owes_id);
-            messageToSent = `${owed_member?.toString()} owes a ${Configs.emoji_coke} to ${owes_member?.toString()}!`;
+            const messageToSent = `${owed_member?.toString()} owes a ${Configs.emoji_coke} to ${owes_member?.toString()}!`;
 
             stat
                 .save()
                 .then(() => {
                     message.channel
-                        .send({
-                            content: messageToSent.content,
-                            files: messageToSent.files
-                        })
+                        .send(messageToSent)
                         .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
                 })
                 .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
-            logger.log('info', `[${this.names[0]}]: ${messageToSent.content}`);
+            logger.log('info', `[${this.names[0]}]: ${messageToSent}`);
 
             printcokes(this.cokes_channel, stat.cokes, true);
         })

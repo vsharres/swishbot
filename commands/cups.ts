@@ -22,7 +22,6 @@ export class Cups extends Command {
             }
 
             printcups(message.channel as TextChannel, stat.house_cups);
-            printcups(this.trophy_channel, stat.house_cups, true);
 
         })
             .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
