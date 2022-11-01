@@ -17,17 +17,17 @@ export class Patreon extends Handler {
         }
 
         if (newMember.roles.cache.has(Configs.role_phoenix_emoji)) {
-            const is_dragon_and_up = newMember.roles.cache.has(Configs.role_dragon) || newMember.roles.cache.has(Configs.role_phoenix)
+            const is_phoenix_and_up = newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_phoenix)
 
-            if (!is_dragon_and_up) {
+            if (!is_phoenix_and_up) {
                 newMember.roles.remove(Configs.role_phoenix_emoji);
-                logger.log('info', `[${this.name}]: ${newMember.displayName} dragon role was removed from patron.`);
+                logger.log('info', `[${this.name}]: ${newMember.displayName} phoenix role was removed from patron.`);
             }
 
         }
         
         const is_patron = newMember.roles.cache.has(Configs.role_patron);
-        const is_hippogriff_and_up = newMember.roles.cache.has(Configs.role_phoenix) || newMember.roles.cache.has(Configs.role_dragon) || newMember.roles.cache.has(Configs.role_hippogriff);
+        const is_hippogriff_and_up = newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_phoenix) || newMember.roles.cache.has(Configs.role_dragon) || newMember.roles.cache.has(Configs.role_hippogriff);
 
         if ((!is_patron || !is_hippogriff_and_up) && newMember.roles.cache.has(Configs.role_ageline)) {
             newMember.roles.remove(Configs.role_ageline);

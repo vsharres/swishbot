@@ -41,6 +41,7 @@ export const keys: Keys = {
 	role_phoenix: process.env.ROLE_PHOENIX ? process.env.ROLE_PHOENIX : '',
 	role_patron: process.env.ROLE_PATRON ? process.env.ROLE_PATRON : '',
 	role_dragon: process.env.ROLE_DRAGON ? process.env.ROLE_DRAGON : '', 
+	role_unicorn: process.env.ROLE_UNICORN ? process.env.ROLE_UNICORN : '', 
 	role_hippogriff: process.env.ROLE_HIPPOGRIFF ? process.env.ROLE_HIPPOGRIFF : '', 
 	role_phoenix_emoji: process.env.ROLE_PHOENIX_EMOJI ? process.env.ROLE_PHOENIX_EMOJI : '',
 	role_ageline: process.env.ROLE_AGELINE ? process.env.ROLE_AGELINE : '',

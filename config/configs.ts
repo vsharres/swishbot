@@ -33,6 +33,7 @@ interface Keys {
   role_ravenclaw: string,
   role_hufflepuff: string,
   role_phoenix: string,
+  role_unicorn: string,
   role_patron: string,
   role_dragon: string,
   role_hippogriff: string,
