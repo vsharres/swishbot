@@ -3,9 +3,7 @@ interface Keys {
   stats_id: string,
   eric_munch_id: string,
   command_prefix: string,
-  role_admin: string,
-  role_prefect: string,
-  role_IT: string,
+
   channel_recording: string,
   channel_mod_talk: string,
   channel_bot_talk: string,
@@ -13,7 +11,6 @@ interface Keys {
   channel_voice_recording: string,
   channel_noticeboard: string,
   channel_polls: string,
-  channel_wheezes: string,
   channel_house_points: string,
   channel_trophy_room: string,
   channel_come_go: string,
@@ -21,6 +18,7 @@ interface Keys {
   channel_sorting: string,
   channel_cokes: string,
   chaos: boolean,
+  client_id: string,
   devito_height: number, // in cm
   devito_weight: number, // in Kg
   document_slythern: string,
@@ -28,6 +26,8 @@ interface Keys {
   id_megan: string,
   id_katie: string,
   id_tiff: string,
+  role_admin: string,
+  role_prefect: string,
   role_gryffindor: string,
   role_slytherin: string,
   role_ravenclaw: string,
@@ -41,10 +41,7 @@ interface Keys {
   role_ageline: string,
   emoji_addpoints: string[],
   emoji_removepoints: string[],
-  emoji_wheeze: string,
   emoji_coke: string,
-  emojis_vote_yes: string[],
-  emojis_vote_no: string[],
   emojis_negative_reactions: string[],
   slytherin_points_multiplier: number,
   slytherin_felix_chance: number, // 0-100

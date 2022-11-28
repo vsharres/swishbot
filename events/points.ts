@@ -1,24 +1,47 @@
-import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Events, Guild, MessageReaction, PartialMessageReaction, PartialUser, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { addPointsRandomHouse, AddPointsToMember } from '../tools/add_points';
 
-export class Points extends Handler {
+export class Points extends Event {
 
     hourglass_channel: TextChannel;
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, 'points', false, true);
+        super(client, 'points', Events.MessageReactionAdd, true);
 
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
-    async OnReaction(user: User, reaction: MessageReaction) {
+    async execute(reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
+
+        if (reaction.partial) {
+
+            try {
+                await reaction.fetch();
+            }
+            catch (error) {
+                logger.log('error', `[${this.name}]: Something went wrong when fetching the reaction: ${error}`);
+                return;
+            }
+        }
+
+        if (user.partial) {
+
+            try {
+                await user.fetch();
+
+            }
+            catch (error) {
+                logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
+                return;
+            }
+        }
 
         //No reactions on your own message or no points given to a bot message
         const author = reaction.message.author as User;
@@ -79,7 +102,7 @@ export class Points extends Handler {
                 stat.points.gryffindor = total_points.gryffindor;
                 stat.points.hufflepuff = total_points.hufflepuff;
                 stat.points.slytherin = total_points.slytherin;
-                stat.points.ravenclaw = total_points.ravenclaw;   
+                stat.points.ravenclaw = total_points.ravenclaw;
 
             }
             else {

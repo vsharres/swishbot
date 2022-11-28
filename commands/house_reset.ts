@@ -1,23 +1,25 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import logger from '../tools/logger';
-import { Command } from './command';
-import { Client, Guild, GuildMember, Message } from 'discord.js';
+import { Command } from '../bot-types';
+import { Client, CommandInteraction, Guild, GuildMember, SlashCommandBuilder } from 'discord.js';
 
 export class HouseReset extends Command {
 
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, ["house_reset", "reset_house"], false, false, true);
+        super(client, "house_reset");
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
         Stat.findById(Configs.stats_id).then(async stat => {
-            if (!stat)
-                return;
+            if (!stat) {
+                logger.log('error', `[${this.name}]: Error to get the stats, check the id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
+            }
 
             const saved_members = stat.listening_members;
             const guild_members = await this.guild.members.fetch();
@@ -28,9 +30,16 @@ export class HouseReset extends Command {
                 guild_member.roles.add(saved.house);
             })
 
+            return await interaction.reply({ content: `House roles reset.`, ephemeral: true });
+
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("house_reset")
+    .setDescription('Resets the house of all members in the recording channel')
+    .toJSON();
 
 export default (client: Client) => { return new HouseReset(client) };

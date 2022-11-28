@@ -89,13 +89,14 @@ async function printPoints(channel: TextChannel, points: Houses, is_print_channe
 
         const messages = await channel.messages.fetch();
         const message = messages.first();
-        if (!message) {
-            logger.log('error', 'Could not find the message in the points channel.');
-            return;
+        if (message) {
+            message.edit(reply)
+                .catch(error => logger.log('error', error));
         }
-
-        message.edit(reply)
-            .catch(error => logger.log('error', error));
+        else {
+            channel.send(reply)
+                .catch(error => logger.log('error', error));
+        }
 
     }
     else {

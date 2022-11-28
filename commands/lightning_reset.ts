@@ -1,36 +1,42 @@
 import Stat, { Lightning } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message } from 'discord.js';
+import { Client, CommandInteraction, SlashCommandBuilder } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 
 export class LightningReset extends Command {
 
     constructor(client: Client) {
-        super(client, ["lightning_reset", "reset_lightning"], false, false, true);
+        super(client, "lightning_reset");
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
+        Stat.findById(Configs.stats_id).then(async stat => {
 
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
 
             stat.lightnings = new Array<Lightning>();
 
             stat
                 .save()
-                .then(() => {
-                    logger.log('info', `[${this.names[0]}]: All of the lightning bolts are reset.`);
-                    message.channel.send(`All of the lightning bolts are reset.`);
-                })
-                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+            logger.log('info', `[${this.name}]: All of the lightning bolts are reset.`);
+
+            return await interaction.reply(`All of the lightning bolts are reset.`);
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("lightning_reset")
+    .setDescription('Resets the ⚡ questions for this recording.')
+    .toJSON();
 
 export default (client: Client) => { return new LightningReset(client); }

@@ -28,10 +28,10 @@ async function printcokes(channel: TextChannel, cokes: Cokes, is_print_channel: 
 
     sorted_cokes.forEach((coke) => {
 
-        if(coke.value === 0){
+        if (coke.value === 0) {
             reply += `${coke.owes} and ${coke.owed} are **square!**\n`;
         }
-        else{
+        else {
             reply += `${coke.owes} owes **${Math.abs(coke.value)} ${Configs.emoji_coke}** to ${coke.owed}\n`;
         }
     })
@@ -40,17 +40,19 @@ async function printcokes(channel: TextChannel, cokes: Cokes, is_print_channel: 
 
         const messages = await channel.messages.fetch();
         const message = messages.first();
-        if (!message) {
-            logger.log('error', 'Could not find the message for the cups.');
-            return;
-        }
+        if (message) {
+            message.edit(reply)
+                .then(() => {
+                    const end_time = Date.now();
+                    logger.log('info', `Time to execute: ${end_time - start_time} ms`);
 
-        message.edit(reply)
-            .then(() => {
-                const end_time = Date.now();
-                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
-            })
-            .catch(error => logger.log('error', error));
+                })
+                .catch(error => logger.log('error', error));
+        }
+        else {
+            channel.send(reply)
+                .catch(error => logger.log('error', error));
+        }
     }
     else {
         channel.send(reply)

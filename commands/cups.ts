@@ -1,31 +1,37 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, CommandInteraction, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 import { printcups } from '../tools/print_cups';
 
 export class Cups extends Command {
 
-    trophy_channel: TextChannel;
-
     constructor(client: Client) {
-        super(client, ["cups", "cup"], false, false, true);
-        this.trophy_channel = client.channels.cache.get(Configs.channel_trophy_room) as TextChannel;
+        super(client, "cups");
+
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then((stat) => {
+        Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
 
-            printcups(message.channel as TextChannel, stat.house_cups);
+            printcups(interaction.channel as TextChannel, stat.house_cups);
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+        await interaction.reply({ content: `House cups printed`, ephemeral: true });
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("cups")
+    .setDescription('Prints the cups tally')
+    .toJSON();
 
 export default (client: Client) => { return new Cups(client); }

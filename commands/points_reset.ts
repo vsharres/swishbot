@@ -1,24 +1,28 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, TextChannel, SlashCommandBuilder, CommandInteraction } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 
 export class PointsReset extends Command {
 
     hourglass_channel: TextChannel;
 
     constructor(client: Client) {
-        super(client, ["points_reset", "reset_points"], false, false, true);
+        super(client, "points_reset");
 
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
+
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
-            if (!stat) return;
+        Stat.findById(Configs.stats_id).then(async stat => {
+            if (!stat) {
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
+            }
 
             stat.points = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
 
@@ -27,14 +31,20 @@ export class PointsReset extends Command {
             stat
                 .save()
                 .then(() => {
-                    logger.log('info', `[${this.names[0]}]: All house points are reset.`);
-                    message.channel.send(` All house points are reset.`);
+                    logger.log('info', `[${this.name}]: All house points are reset.`);
                 })
-                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+            return await interaction.reply('All house points are reset.');
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("points_reset")
+    .setDescription('Resets the points of each house')
+    .toJSON();
 
 export default (client: Client) => { return new PointsReset(client) };

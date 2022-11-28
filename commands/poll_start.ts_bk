@@ -1,0 +1,97 @@
+import Stat, { Option } from '../models/Stat';
+import { Configs } from '../config/configs';
+import { Client, TextChannel, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import logger from '../tools/logger';
+import { Command } from '../bot-types';
+
+/*
+export class StartPoll extends Command {
+
+    polls_channel: TextChannel;
+    recording_channel: TextChannel;
+
+    constructor(client: Client) {
+        super(client, "start_poll");
+
+        this.polls_channel = client.channels.cache.get(Configs.channel_polls) as TextChannel;
+        this.recording_channel = client.channels.cache.get(Configs.channel_recording) as TextChannel;
+
+        this.data = new SlashCommandBuilder()
+            .setName(this.name)
+            .setDescription('Start a poll with at least 2 options, and at most 4.')
+            .addStringOption(option =>
+                option.setName('message')
+                    .setDescription('Message to send')
+                    .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('option1')
+                    .setDescription('First option')
+                    .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('option2')
+                    .setDescription('Second option')
+                    .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('option3')
+                    .setDescription('Third option')
+                    .setRequired(false)
+            )
+            .addStringOption(option =>
+                option.setName('option4')
+                    .setDescription('Fourth option')
+                    .setRequired(false)
+            )
+    }
+
+    async execute(interaction: CommandInteraction) {
+
+        let description = '';
+
+        description = description.replace('"', '');
+        description = description.replace('"', '');
+        const prompt = `**POLL\n\nVote by reacting to one of the emojis:**\n\n${description}`;
+
+        let options = new Array<Option>();
+        options.push({ emoji_id: '', votes: { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 } });
+
+
+        Stat.findById(Configs.stats_id).then(async (stat) => {
+            if (!stat) {
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
+            }
+
+            stat.polls.push({
+                poll_id: message.id,
+                question: description,
+                options: options,
+                voters: []
+
+            this.polls_channel.send(prompt)
+                .then((message) => {
+
+
+
+                    options.forEach(option => {
+                        message.react(option.emoji_id);
+                    })
+
+                    stat.save().then(() => {
+                        logger.log('info', `[${this.name}]: Poll added!`);
+                        this.recording_channel.send(`@here **A new poll started! \n\nGo to the ${this.polls_channel.toString()} channel and vote!**`);
+
+                    })
+                        .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+                });
+
+        })
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+    }
+};
+
+export default (client: Client) => { return new StartPoll(client); }
+*/

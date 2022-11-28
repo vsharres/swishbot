@@ -1,18 +1,30 @@
-import { Client, GuildMember } from 'discord.js';
+import { Client, Events, GuildMember, PartialGuildMember } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class Patreon extends Handler {
+export class Patreon extends Event {
 
     constructor(client: Client) {
-        super(client, 'patreon', false, false, false, false, true);
+        super(client, 'patreon', Events.GuildMemberUpdate, true);
     }
 
-    async OnMemberUpdate(oldMember: GuildMember, newMember: GuildMember) {
+    async execute(oldMember: GuildMember | PartialGuildMember, newMember: GuildMember) {
+
+        if (oldMember.partial) {
+
+            try {
+                await oldMember.fetch();
+            }
+            catch (error) {
+                logger.log('error', `[Index]: Something went wrong when fetching the member: ${error}`);
+                return;
+
+            }
+        }
 
         //Ignore for admins
-        if (newMember.roles.cache.has(Configs.role_prefect) || newMember.roles.cache.has(Configs.role_admin)){
+        if (newMember.roles.cache.has(Configs.role_prefect) || newMember.roles.cache.has(Configs.role_admin)) {
             return;
         }
 
@@ -25,10 +37,10 @@ export class Patreon extends Handler {
             }
 
         }
-        
+
         const is_patron = newMember.roles.cache.has(Configs.role_patron);
-        const is_hippogriff_and_up = newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_phoenix) || 
-        newMember.roles.cache.has(Configs.role_dragon) || newMember.roles.cache.has(Configs.role_hippogriff);
+        const is_hippogriff_and_up = newMember.roles.cache.has(Configs.role_unicorn) || newMember.roles.cache.has(Configs.role_phoenix) ||
+            newMember.roles.cache.has(Configs.role_dragon) || newMember.roles.cache.has(Configs.role_hippogriff);
 
         if ((!is_patron || !is_hippogriff_and_up) && newMember.roles.cache.has(Configs.role_ageline)) {
             newMember.roles.remove(Configs.role_ageline);

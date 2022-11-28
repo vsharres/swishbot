@@ -1,44 +1,55 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message } from 'discord.js';
+import { Client, CommandInteraction, Options, SlashCommandBuilder, User } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 
 export class ListUndesirables extends Command {
 
+
     constructor(client: Client) {
-        super(client, ["🙅‍♀️", 'megan_undesirables'], true, false, true);
+        super(client, "undesirables");
+
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
         Stat.findById(Configs.stats_id).then(async stat => {
+
+            const undesirable = (interaction.options as any).getString('undesirable') ?? null;
+
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
 
-            const meg = await message.client.users.fetch('663373766537117716');
-
-            let content = `${meg.toString()}'s List of Undesirables:\n\n`;
-
-            let new_item: string;
-            if (arg.length > 0) {
-
-                new_item = arg.join(' ');
-                stat.list.push(new_item);
-
+            if (undesirable) {
+                stat.list.push(undesirable)
             }
+
+            let content = `Megan's List of Undesirables:\n\n`;
 
             stat.list.forEach((item) => content += `${item} - 🙅‍♀️\n`);
 
-            message.channel.send(content);
+            await interaction.channel?.send(content);
 
-            stat.save();
+            stat.save()
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+            return await interaction.reply({ content: `List of undesirables printed.`, ephemeral: true })
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("undesirables")
+    .setDescription(`Lists Megan's undesirables.`)
+    .addStringOption(option =>
+        option.setName('undesirable')
+            .setDescription('Item do add to the undesirables list.'))
+    .toJSON();
 
 export default (client: Client) => { return new ListUndesirables(client); }

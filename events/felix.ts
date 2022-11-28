@@ -1,22 +1,22 @@
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, Events, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { addPointsToHouse } from '../tools/add_points';
 import { printPoints } from '../tools/print_points';
 
-export class Felix extends Handler {
+export class Felix extends Event {
 
     hourglass_channel: TextChannel;
 
     constructor(client: Client) {
-        super(client, 'felix', true);
+        super(client, 'felix', Events.MessageCreate, true);
 
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
     }
 
-    async OnMessage(message: Message) {
+    async execute(message: Message) {
 
         if (message.author.bot) return;
         if (message.channel.id !== Configs.channel_recording) return;

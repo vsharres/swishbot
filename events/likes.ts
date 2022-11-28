@@ -1,28 +1,51 @@
-import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Events, Guild, MessageReaction, PartialMessageReaction, PartialUser, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { AddPointsToMember } from '../tools/add_points';
 
-export class Likes extends Handler {
+export class Likes extends Event {
 
     hourglass_channel: TextChannel;
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, 'likes', false, true);
+        super(client, 'likes', Events.MessageReactionAdd, true);
 
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
-    async OnReaction(user: User, reaction: MessageReaction) {
+    async execute(reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
+
+        if (reaction.partial) {
+
+            try {
+                await reaction.fetch();
+            }
+            catch (error) {
+                logger.log('error', `[${this.name}]: Something went wrong when fetching the reaction: ${error}`);
+                return;
+            }
+        }
+
+        if (user.partial) {
+
+            try {
+                await user.fetch();
+
+            }
+            catch (error) {
+                logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
+                return;
+            }
+        }
 
         if ((reaction.message.author as User).bot) return;
 
-        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) {    
+        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) {
             return;
         }
 
@@ -31,8 +54,7 @@ export class Likes extends Handler {
                 return;
             }
 
-            if(stat.annoying_users.some((annoying)=> annoying == reaction.message.author?.id)) 
-            {
+            if (stat.annoying_users.some((annoying) => annoying == reaction.message.author?.id)) {
                 logger.log('info', `[${this.name}]: Likes from ${user.toString()} ignored. `);
                 return;
             }

@@ -1,8 +1,11 @@
-import Discord, { GuildMember, Message, MessageReaction, User } from 'discord.js';
+import { Events, GuildMember, Message, MessageReaction, User, Partials, GatewayIntentBits, PartialMessage, PartialGuildMember, PartialMessageReaction, PartialUser } from 'discord.js';
 import mongoose from 'mongoose';
+import { BotClient, Command } from './bot-types';
 import { Configs } from './config/configs';
-import { Handlers } from './handlers/handlers';
+import { Events as BotEvents } from './events';
 import logger from './tools/logger';
+import fs from 'fs';
+import path from 'node:path';
 
 mongoose
     .connect(
@@ -11,93 +14,44 @@ mongoose
     .then(() => logger.log('info', 'MongoDB Connected'))
     .catch(err => logger.log('error', err));
 
-const client = new Discord.Client({ partials: ['REACTION', 'MESSAGE', 'USER', 'GUILD_MEMBER'],  intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MEMBERS', 'GUILD_MESSAGE_REACTIONS'] });
-let handlers: Handlers;
+const client = new BotClient({
+    partials: [Partials.Reaction, Partials.Message, Partials.User, Partials.GuildMember],
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.MessageContent]
+});
 
-client.once('ready', () => {
+client.once(Events.ClientReady, () => {
     logger.log('info', 'Ready!');
-    handlers = require('./handlers/handlers')(client);
+
+    const events = new BotEvents(client);
+
+    const commandsPath = path.join(__dirname, 'commands');
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js') || file.endsWith('.ts'));
+
+    for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        const command = require(filePath).default(client) as Command;
+
+        client.Commands.set(command.name, command);
+    }
 });
-client.on('messageCreate', async message => {
 
-    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Message event caught');
+client.on(Events.InteractionCreate, async interaction => {
+    if (!interaction.isChatInputCommand()) return;
 
-    handlers.OnMessage(message);
+    const command = (interaction.client as BotClient).Commands.get(interaction.commandName);
 
-});
-
-client.on('messageDelete', async message => {
-
-    if (message.partial) {
-        try {
-            await message.fetch();
-        }
-        catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the message: ${error}`);
-            return;
-        }
+    if (!command) {
+        console.error(`No command matching ${interaction.commandName} was found.`);
+        return;
     }
 
-    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Message deleted event caught');
-
-    handlers.OnMessageDelete(message as Message);
-});
-
-client.on('guildMemberAdd', member => {
-    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Member added event caught');
-
-    handlers.OnMemberAdd(member);
-});
-
-client.on('guildMemberUpdate', async (oldMember, newMember) => {
-    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: On Member updated caught.');
-
-    if (oldMember.partial) {
-
-        try {
-            await oldMember.fetch();
-        }
-        catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the member: ${error}`);
-            return;
-
-        }
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
-
-    handlers.OnMemberUpdate(oldMember as GuildMember, newMember);
 });
-
-//Checking for reactions
-client.on('messageReactionAdd', async (reaction, user) => {
-
-    if (process.env.NODE_ENV == 'development') logger.log('info', '[Index]: Reaction add caught');
-
-    if (reaction.partial) {
-
-        try {
-            await reaction.fetch();
-        }
-        catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the reaction: ${error}`);
-            return;
-        }
-    }
-
-    if (user.partial) {
-
-        try {
-            await user.fetch();
-
-        }
-        catch (error) {
-            logger.log('error', `[Index]: Something went wrong when fetching the user: ${error}`);
-            return;
-        }
-    }
-    handlers.OnReaction(user as User, reaction as MessageReaction);
-
-});
-
 
 process.on('uncaughtException', error => logger.log('error', error));
 

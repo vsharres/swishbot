@@ -1,30 +1,36 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, CommandInteraction, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 import { printcokes } from '../tools/print_cokes';
 
 export class Cokes extends Command {
 
     constructor(client: Client) {
-        super(client, ["cokes", `${Configs.emoji_coke}`], false, false, true);
-        
+        super(client, "cokes");
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
+        Stat.findById(Configs.stats_id).then(async stat => {
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
 
-            printcokes(message.channel as TextChannel, stat.cokes);
+            printcokes(interaction.channel as TextChannel, stat.cokes);
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+        return await interaction.reply({ content: `Cokes tally printed`, ephemeral: true });
 
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("cokes")
+    .setDescription('Prints the coke tally').toJSON();
 
 export default (client: Client) => { return new Cokes(client); }

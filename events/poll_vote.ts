@@ -1,25 +1,48 @@
-import { Client, Guild, MessageReaction, TextChannel, User } from 'discord.js';
+import { Client, Events, Guild, MessageReaction, PartialMessageReaction, PartialUser, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { addPointsToHouse } from '../tools/add_points';
 
-export class PollVote extends Handler {
+export class PollVote extends Event {
 
     guild: Guild;
     hourglass_channel: TextChannel;
 
     constructor(client: Client) {
-        super(client, 'poll_votes', false, true);
+        super(client, 'poll_votes', Events.MessageReactionAdd, true);
 
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
         this.hourglass_channel = client.channels.cache.get(Configs.channel_house_points) as TextChannel;
 
     }
 
-    async OnReaction(user: User, reaction: MessageReaction) {
+    async execute(reaction: MessageReaction | PartialMessageReaction, user: User | PartialUser) {
+
+        if (reaction.partial) {
+
+            try {
+                await reaction.fetch();
+            }
+            catch (error) {
+                logger.log('error', `[${this.name}]: Something went wrong when fetching the reaction: ${error}`);
+                return;
+            }
+        }
+
+        if (user.partial) {
+
+            try {
+                await user.fetch();
+
+            }
+            catch (error) {
+                logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
+                return;
+            }
+        }
 
         //Can only vote on the poll channel and ignore bot reactions.
         if (user.bot || reaction.message.channel.id !== Configs.channel_polls) return;

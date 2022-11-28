@@ -1,26 +1,26 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message, Guild, Role } from 'discord.js';
+import { Client, CommandInteraction, Guild, GuildMember, Role, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 
 export class Lightning extends Command {
 
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, ["lightningbolts", "⚡", "lightingbolts", "lightning_bolts"], false, false, true);
+        super(client, "questions");
 
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
-
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
         Stat.findById(Configs.stats_id).then(async stat => {
 
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
 
             let reply = '';
@@ -38,35 +38,40 @@ export class Lightning extends Command {
 
                     for (let bolt = 10 * index; bolt < end; bolt++) {
 
-                        const author = await message.client.users.fetch(stat.lightnings[bolt].member);
-                        const member = await this.guild.members.fetch(stat.lightnings[bolt].member);
+                        const member = this.guild.members.cache.get(stat.lightnings[bolt].member) as GuildMember;
 
-                        let house:Role | undefined;
-                        house = member.roles.cache.find(role=> role.id === Configs.role_gryffindor || 
+                        let house: Role | undefined;
+                        house = member.roles.cache.find(role => role.id === Configs.role_gryffindor ||
                             role.id === Configs.role_slytherin ||
                             role.id === Configs.role_hufflepuff ||
-                            role.id === Configs.role_ravenclaw);                       
-                        
-                        if (author) {
-                            reply += `${author.toString()}${house ? " from " + house.toString():''} asks: ${stat.lightnings[bolt].question}\n`;
-                        }
+                            role.id === Configs.role_ravenclaw);
+
+                        reply += `${member.user.toString()}${house ? " from " + house.toString() : ''} asks: ${stat.lightnings[bolt].question}\n`;
+
 
                     }
 
-                    message.channel.send(reply);
+                    interaction.channel?.send(reply);
                     reply = '';
                 }
 
-                logger.log('info', `[${this.names[0]}]: ${stat.lightnings.length} were successfully printed.`);
+                logger.log('info', `[${this.name}]: ${stat.lightnings.length} were successfully printed.`);
             }
             else {
-                return message.channel.send(`${message.author.toString()} there are no lightning bolts yet, maybe ask the first one!`)
-                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+                return await interaction.reply({ content: `There are no lightning bolts yet`, ephemeral: true });
             }
 
+            return await interaction.reply({ content: `⚡`, ephemeral: true });
+
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("questions")
+    .setDescription('Pulls the ⚡ questions.')
+    .toJSON();
 
 export default (client: Client) => { return new Lightning(client); }

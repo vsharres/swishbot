@@ -1,20 +1,20 @@
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, Events, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 
-export class Zaps extends Handler {
+export class Zaps extends Event {
 
     bot_talk: TextChannel;
 
     constructor(client: Client) {
-        super(client, 'zaps', true);
+        super(client, 'zaps', Events.MessageCreate, true);
 
         this.bot_talk = client.channels.cache.get(Configs.channel_bot_talk) as TextChannel;
     }
 
-    async OnMessage(message: Message) {
+    async execute(message: Message) {
 
         if (!message.content.startsWith('⚡') || message.author.bot || message.content.length <= 2) return;
 

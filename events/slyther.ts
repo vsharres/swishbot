@@ -1,23 +1,23 @@
-import { Client, Guild, GuildMember, Message, VoiceChannel } from 'discord.js';
+import { Client, Events, Guild, GuildMember, Message, VoiceChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import Stat, { Listener } from '../models/Stat';
 import Slytherin from '../models/Slytherin';
 import { Configs } from '../config/configs';
 
-export class Slyther extends Handler {
+export class Slyther extends Event {
 
     members_houses: Listener[];
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, 'slyther', true);
+        super(client, 'slyther', Events.MessageCreate, true);
 
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
         this.members_houses = [];
     }
 
-    async OnMessage(message: Message) {
+    async execute(message: Message) {
 
         if (message.author.bot) return;
 
@@ -30,7 +30,7 @@ export class Slyther extends Handler {
         if (!is_prefect || !is_slytherin) return;
 
         switch (secret_command) {
-            case 'we are all slytherin':   
+            case 'we are all slytherin':
 
                 const recording_voice = await this.client.channels.fetch(Configs.channel_voice_recording) as VoiceChannel;
 

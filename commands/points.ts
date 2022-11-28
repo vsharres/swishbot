@@ -1,29 +1,38 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, TextChannel, SlashCommandBuilder, CommandInteraction } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 import { printPoints } from '../tools/print_points';
 
 export class Points extends Command {
 
     constructor(client: Client) {
-        super(client, ["points"], false, false, true);
+        super(client, "points");
+
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
+        Stat.findById(Configs.stats_id).then(async stat => {
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
 
-            printPoints(message.channel as TextChannel, stat.points);
+            printPoints(interaction.channel as TextChannel, stat.points);
+
+            return await interaction.reply({ content: `House points printed`, ephemeral: true })
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("points")
+    .setDescription('Prints the house points in the current channel.')
+    .toJSON();
 
 export default (client: Client) => { return new Points(client); }

@@ -261,7 +261,7 @@ const UnitsArray: Unit[] = [
         name: 'ounces',
         multiplier: 28.35,
         divisor: Configs.devito_weight
-    },
+    }
 
 ]
 
@@ -271,4 +271,4 @@ UnitsArray.forEach(unit => {
 
 });
 
-export { Units }
+export { Units, Unit }

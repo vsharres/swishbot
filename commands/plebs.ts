@@ -1,59 +1,54 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message, TextChannel } from 'discord.js';
+import { Client, TextChannel, SlashCommandBuilder, CommandInteraction } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 
 export class Plebs extends Command {
 
     recording_channel: TextChannel;
 
     constructor(client: Client) {
-        super(client, ["plebs", "pleb"], true, false, true);
-
+        super(client, "plebs");
         this.recording_channel = client.channels.cache.get(Configs.channel_recording) as TextChannel;
     }
 
-    async execute(message: Message, args: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then((stat) => {
+        const channel = (interaction.options as any).getChannel('channel') as TextChannel;
+        const message = (interaction.options as any).getString('message') as string;
+
+        Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
-                return logger.log('error', `[${this.names[0]}]: Error getting the stat, check the stat id`);
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
             }
-
-            let channel_to_send_message = args.shift();
-            if(!channel_to_send_message){
-                logger.log('error', `[${this.names[0]}]: We need a message to send to the plebs.`);
-                return;
-            }
-
-            channel_to_send_message = channel_to_send_message.replace(/[^a-zA-Z0-9 ]/g, "");
-
-            let channel =  this.client.channels.cache.get(channel_to_send_message) as TextChannel;
-            if(!channel){
-                logger.log('error', `[${this.names[0]}]: Could not find the channel with id ${channel_to_send_message}`);
-                return;
-            }
-
-            let plebMessage = args.join(' ');
-            if (!plebMessage) {
-                logger.log('error', `[${this.names[0]}]: We need a message to send to the plebs.`);
-                return;
-            }
-
-
 
             channel
-                    .send({
-                        content: plebMessage,
-                        attachments: Array.from(message.attachments.values())
-                    })
-                    .then(() => logger.log('info', `${plebMessage}`))
-                    .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+                .send(message)
+                .then(() => logger.log('info', `${message}`))
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+            return await interaction.reply({ content: `Message to the plebs sent in the ${channel.toString()} channel.`, ephemeral: true });
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName('plebs')
+    .setDescription('Send a message to the plebs')
+    .addChannelOption(option =>
+        option.setName('channel')
+            .setDescription('Channel to send message to')
+            .setRequired(true)
+    )
+    .addStringOption(option =>
+        option.setName('message')
+            .setDescription('Message to send')
+            .setRequired(true)
+    )
+    .toJSON();
 
 export default (client: Client) => { return new Plebs(client); }

@@ -1,20 +1,23 @@
 import Stat, { AuthorsArray, Lightning, Listener } from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, Message } from 'discord.js';
+import { Client, CommandInteraction, SlashCommandBuilder } from 'discord.js';
 import logger from '../tools/logger';
-import { Command } from './command';
+import { Command } from '../bot-types';
 
 export class Reset extends Command {
 
     constructor(client: Client) {
-        super(client, ["reset"], false, false, true);
+        super(client, "reset");
 
     }
 
-    async execute(message: Message, arg: string[]) {
+    async execute(interaction: CommandInteraction) {
 
-        Stat.findById(Configs.stats_id).then(stat => {
-            if (!stat) return;
+        Stat.findById(Configs.stats_id).then(async stat => {
+            if (!stat) {
+                logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
+                return await interaction.reply({ content: `Error to get the stats, check the id`, ephemeral: true });
+            }
 
             //stat.points = {gryffindor: 0, ravenclaw:0, slytherin:0, hufflepuff:0} ;
             stat.likes = new Map<string, AuthorsArray>();
@@ -24,15 +27,19 @@ export class Reset extends Command {
 
             stat
                 .save()
-                .then(() => {
-                    logger.log('info', `[${this.names[0]}]: Points, Likes, zaps are all reset.`);
-                    message.channel.send(`Points, Likes, zaps are all reset.`);
-                })
-                .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+                .catch(err => logger.log('error', `[${this.name}]: ${err}`));
+
+            logger.log('info', `[${this.name}]: Points, Likes, zaps are all reset.`);
+            return await interaction.reply({ content: `Points, Likes, zaps are all reset.`, ephemeral: true });
 
         })
-            .catch(err => logger.log('error', `[${this.names[0]}]: ${err}`));
+            .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
 };
+
+export const JsonData = new SlashCommandBuilder()
+    .setName("reset")
+    .setDescription('Resets the likes and lightning bolt questions.')
+    .toJSON();
 
 export default (client: Client) => { return new Reset(client) };

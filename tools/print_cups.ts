@@ -92,17 +92,18 @@ async function printcups(channel: TextChannel, cups: Houses, is_print_channel: b
 
         const messages = await channel.messages.fetch();
         const message = messages.first();
-        if (!message) {
-            logger.log('error', 'Could not find the message for the cups.');
-            return;
+        if (message) {
+            message.edit(reply)
+                .then(() => {
+                    const end_time = Date.now();
+                    logger.log('info', `Time to execute: ${end_time - start_time} ms`);
+                })
+                .catch(error => logger.log('error', error));
         }
-
-        message.edit(reply)
-            .then(() => {
-                const end_time = Date.now();
-                logger.log('info', `Time to execute: ${end_time - start_time} ms`);
-            })
-            .catch(error => logger.log('error', error));
+        else {
+            channel.send(reply)
+                .catch(error => logger.log('error', error));
+        }
     }
     else {
         channel.send(reply)

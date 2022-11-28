@@ -1,15 +1,15 @@
-import { Client, Message } from 'discord.js';
+import { Client, Events, Message } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class Kicks extends Handler {
+export class Kicks extends Event {
 
     constructor(client: Client) {
-        super(client, 'kicks', true);
+        super(client, 'kicks', Events.MessageCreate, true);
     }
 
-    async OnMessage(message: Message) {
+    async execute(message: Message) {
 
         //Only respond to messages from the eric munch bot and to messages in the mod talk channel
         if (message.author.id !== Configs.eric_munch_id ||

@@ -11,8 +11,7 @@ const StatSchema = new Schema({
         of: ArrayAuthors
     },
     list: [String],
-    desirables: [String],
-    annoying_users:[String],
+    annoying_users: [String],
     cokes: {
         tiff_megan: {
             type: Number
@@ -162,7 +161,6 @@ interface Stats {
     likes: Map<string, AuthorsArray>;
     annoying_users: string[];
     list: string[];
-    desirables: string[];
 }
 
 

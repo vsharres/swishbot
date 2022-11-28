@@ -1,20 +1,20 @@
-import { Client, Guild, Message, TextChannel } from 'discord.js';
+import { Client, Events, Guild, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Handler } from './handler';
+import { Event } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class DeleteMessage extends Handler {
+export class DeleteMessage extends Event {
 
     channel_owlzkabanned: TextChannel;
     guild: Guild;
 
     constructor(client: Client) {
-        super(client, 'delete', false, false, false, true);
+        super(client, 'deletes', Events.MessageDelete, true);
         this.channel_owlzkabanned = client.channels.cache.get(Configs.channel_banned) as TextChannel;
         this.guild = client.guilds.cache.get(Configs.guild_id) as Guild;
     }
 
-    async OnMessageDelete(message: Message) {
+    async execute(message: Message) {
 
         //Only respond to messages from the eric munch bot and to messages in the mod talk channel
         if (message.author.bot) return;
@@ -26,7 +26,7 @@ export class DeleteMessage extends Handler {
 
         const content = `${message.author.toString()}'s message: \n\n "${message.content}" \n\nDeleted from the channel: ${message.channel.toString()}`;
 
-        const files = message.attachments.map<string>(attachment=> attachment.url);
+        const files = message.attachments.map<string>(attachment => attachment.url);
         this.channel_owlzkabanned.send({
             content: content,
             files: files
@@ -37,7 +37,6 @@ export class DeleteMessage extends Handler {
     }
 
 };
-
 
 module.exports = (client: Client) => {
     return new DeleteMessage(client);
