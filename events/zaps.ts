@@ -1,10 +1,10 @@
 import { Client, Events, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 
-export class Zaps extends Event {
+export class Zaps extends BotEvent {
 
     bot_talk: TextChannel;
 

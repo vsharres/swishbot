@@ -44,4 +44,7 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the cokes tally.')
     .toJSON();
 
-export default (client: Client) => { return new CokesReset(client) };
+
+module.exports = (client: Client) => {
+    return new CokesReset(client);
+}

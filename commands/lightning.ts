@@ -74,4 +74,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Pulls the ⚡ questions.')
     .toJSON();
 
-export default (client: Client) => { return new Lightning(client); }
+module.exports = (client: Client) => {
+    return new Lightning(client);
+}

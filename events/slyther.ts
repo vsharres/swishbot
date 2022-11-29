@@ -1,11 +1,11 @@
 import { Client, Events, Guild, GuildMember, Message, VoiceChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import Stat, { Listener } from '../models/Stat';
 import Slytherin from '../models/Slytherin';
 import { Configs } from '../config/configs';
 
-export class Slyther extends Event {
+export class Slyther extends BotEvent {
 
     members_houses: Listener[];
     guild: Guild;

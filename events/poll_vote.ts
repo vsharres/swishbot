@@ -1,12 +1,12 @@
 import { Client, Events, Guild, MessageReaction, PartialMessageReaction, PartialUser, TextChannel, User } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { printPoints } from '../tools/print_points';
 import { addPointsToHouse } from '../tools/add_points';
 
-export class PollVote extends Event {
+export class PollVote extends BotEvent {
 
     guild: Guild;
     hourglass_channel: TextChannel;

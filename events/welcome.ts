@@ -1,9 +1,9 @@
 import { Client, Events, Guild, GuildMember, Role, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class Welcome extends Event {
+export class Welcome extends BotEvent {
 
     channel_come_go: TextChannel;
     channel_sorting: TextChannel;

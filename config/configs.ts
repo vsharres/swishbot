@@ -3,7 +3,6 @@ interface Keys {
   stats_id: string,
   eric_munch_id: string,
   command_prefix: string,
-
   channel_recording: string,
   channel_mod_talk: string,
   channel_bot_talk: string,

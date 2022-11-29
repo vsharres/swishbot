@@ -42,4 +42,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the likes and lightning bolt questions.')
     .toJSON();
 
-export default (client: Client) => { return new Reset(client) };
+module.exports = (client: Client) => {
+    return new Reset(client);
+}

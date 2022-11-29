@@ -47,4 +47,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the points of each house')
     .toJSON();
 
-export default (client: Client) => { return new PointsReset(client) };
+module.exports = (client: Client) => {
+    return new PointsReset(client);
+}

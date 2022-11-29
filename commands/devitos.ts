@@ -5,8 +5,6 @@ import logger from '../tools/logger';
 import { Command } from '../bot-types';
 
 export class Devitos extends Command {
-
-
     constructor(client: Client) {
         super(client, "devitos");
 
@@ -47,3 +45,7 @@ export const JsonData = new SlashCommandBuilder()
     .toJSON();
 
 export default (client: Client) => { return new Devitos(client); }
+
+module.exports = (client: Client) => {
+    return new Devitos(client);
+}

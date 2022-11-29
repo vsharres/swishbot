@@ -38,4 +38,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the polls counter.')
     .toJSON();
 
-export default (client: Client) => { return new PollsReset(client); }
+module.exports = (client: Client) => {
+    return new PollsReset(client);
+}

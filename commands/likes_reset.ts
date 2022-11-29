@@ -37,4 +37,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the likes for all messages.')
     .toJSON();
 
-export default (client: Client) => { return new LikesReset(client) };
+module.exports = (client: Client) => {
+    return new LikesReset(client);
+}

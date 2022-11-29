@@ -51,4 +51,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Prune members from the server.')
     .toJSON();
 
-export default (client: Client) => { return new Tergeo(client) };
+module.exports = (client: Client) => {
+    return new Tergeo(client);
+}

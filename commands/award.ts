@@ -78,4 +78,6 @@ export const JsonData = new SlashCommandBuilder()
                 { name: 'Hufflepuff 🦡', value: Configs.role_hufflepuff })
     ).toJSON();
 
-export default (client: Client) => { return new Award(client); }
+module.exports = (client: Client) => {
+    return new Award(client);
+}

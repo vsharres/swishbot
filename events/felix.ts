@@ -1,12 +1,12 @@
 import { Client, Events, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
 import { addPointsToHouse } from '../tools/add_points';
 import { printPoints } from '../tools/print_points';
 
-export class Felix extends Event {
+export class Felix extends BotEvent {
 
     hourglass_channel: TextChannel;
 

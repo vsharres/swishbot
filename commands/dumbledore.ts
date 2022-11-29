@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Message, TextChannel, Client, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import { TextChannel, Client, SlashCommandBuilder, CommandInteraction } from 'discord.js';
 import { printPoints } from '../tools/print_points';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
@@ -57,7 +57,7 @@ export class Dumbly extends Command {
 
             printPoints(this.hourglass_channel, stat.points, true);
             interaction.channel?.send(messageToSent);
-            return await interaction.reply({ content: `Points ${amount} ${amount > 0 ? 'awarded to' : 'removed from'} ${name}`, ephemeral: true });
+            return await interaction.reply({ content: `${amount} ${amount > 0 ? 'awarded to' : 'removed from'} ${name}`, ephemeral: true });
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
@@ -83,3 +83,7 @@ export const JsonData = new SlashCommandBuilder()
     .toJSON();
 
 export default (client: Client) => { return new Dumbly(client); }
+
+module.exports = (client: Client) => {
+    return new Dumbly(client);
+}

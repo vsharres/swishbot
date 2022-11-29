@@ -1,8 +1,7 @@
-import { Events, GuildMember, Message, MessageReaction, User, Partials, GatewayIntentBits, PartialMessage, PartialGuildMember, PartialMessageReaction, PartialUser } from 'discord.js';
+import { Events, Partials, GatewayIntentBits } from 'discord.js';
 import mongoose from 'mongoose';
-import { BotClient, Command } from './bot-types';
+import { BotClient, BotEvent, Command } from './bot-types';
 import { Configs } from './config/configs';
-import { Events as BotEvents } from './events';
 import logger from './tools/logger';
 import fs from 'fs';
 import path from 'node:path';
@@ -20,19 +19,36 @@ const client = new BotClient({
 });
 
 client.once(Events.ClientReady, () => {
-    logger.log('info', 'Ready!');
+    logger.log('info', '[INDEX]: Ready!');
 
-    const events = new BotEvents(client);
+    const eventsPath = path.join(__dirname, 'events');
+    const handler_files = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js') || file.endsWith('.ts'));
+
+    for (const file of handler_files) {
+        const filePath = path.join(eventsPath, file);
+        const event = require(filePath)(client) as BotEvent;
+        if (event.on) {
+            client.on(event.type, (...args) => event.execute(...args));
+        }
+        else if (event.once) {
+            client.once(event.type, (...args) => event.execute(...args));
+        }
+
+    }
+
+    logger.log('info', `[INDEX]: ${handler_files.length} Events succesfully loaded.`);
 
     const commandsPath = path.join(__dirname, 'commands');
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js') || file.endsWith('.ts'));
 
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command = require(filePath).default(client) as Command;
+        const command = require(filePath)(client) as Command;
 
         client.Commands.set(command.name, command);
     }
+
+    logger.log('info', `[INDEX]: ${commandFiles.length} Commands succesfully loaded.`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {

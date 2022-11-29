@@ -52,4 +52,6 @@ export const JsonData = new SlashCommandBuilder()
             .setDescription('Item do add to the undesirables list.'))
     .toJSON();
 
-export default (client: Client) => { return new ListUndesirables(client); }
+module.exports = (client: Client) => {
+    return new ListUndesirables(client);
+}

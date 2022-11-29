@@ -35,3 +35,7 @@ export const JsonData = new SlashCommandBuilder()
     .toJSON();
 
 export default (client: Client) => { return new Cups(client); }
+
+module.exports = (client: Client) => {
+    return new Cups(client);
+}

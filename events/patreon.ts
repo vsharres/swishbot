@@ -1,9 +1,9 @@
 import { Client, Events, GuildMember, PartialGuildMember } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class Patreon extends Event {
+export class Patreon extends BotEvent {
 
     constructor(client: Client) {
         super(client, 'patreon', Events.GuildMemberUpdate, true);

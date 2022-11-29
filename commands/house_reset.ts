@@ -42,4 +42,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the house of all members in the recording channel')
     .toJSON();
 
-export default (client: Client) => { return new HouseReset(client) };
+module.exports = (client: Client) => {
+    return new HouseReset(client);
+}

@@ -39,4 +39,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the ⚡ questions for this recording.')
     .toJSON();
 
-export default (client: Client) => { return new LightningReset(client); }
+module.exports = (client: Client) => {
+    return new LightningReset(client);
+}

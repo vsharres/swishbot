@@ -130,4 +130,6 @@ export const JsonData = new SlashCommandBuilder()
     )
     .toJSON();
 
-export default (client: Client) => { return new Jinx(client); }
+module.exports = (client: Client) => {
+    return new Jinx(client);
+}

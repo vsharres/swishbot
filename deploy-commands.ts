@@ -1,8 +1,7 @@
-import { REST, Routes, SlashCommandBuilder } from "discord.js";
+import { REST, Routes } from "discord.js";
 import { Configs } from "./config/configs";
 import fs from 'node:fs';
 import path from 'node:path';
-import { Command } from "./bot-types";
 
 const commands = [];
 

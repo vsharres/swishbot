@@ -1,9 +1,9 @@
 import { Client, Events, Guild, Message, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class DeleteMessage extends Event {
+export class DeleteMessage extends BotEvent {
 
     channel_owlzkabanned: TextChannel;
     guild: Guild;

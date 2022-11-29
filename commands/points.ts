@@ -35,4 +35,6 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Prints the house points in the current channel.')
     .toJSON();
 
-export default (client: Client) => { return new Points(client); }
+module.exports = (client: Client) => {
+    return new Points(client);
+}

@@ -22,7 +22,7 @@ export abstract class Command {
     async execute(interaction: any): Promise<any> { }
 }
 
-export abstract class Event {
+export abstract class BotEvent {
     client: Client;
     name: string;
     type: string;

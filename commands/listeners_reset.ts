@@ -38,4 +38,7 @@ export const JsonData = new SlashCommandBuilder()
     .setDescription('Resets the listener array.')
     .toJSON();
 
-export default (client: Client) => { return new ListenersReset(client) };
+
+module.exports = (client: Client) => {
+    return new ListenersReset(client);
+}

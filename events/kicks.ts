@@ -1,9 +1,9 @@
 import { Client, Events, Message } from 'discord.js';
 import logger from '../tools/logger';
-import { Event } from '../bot-types';
+import { BotEvent } from '../bot-types';
 import { Configs } from '../config/configs';
 
-export class Kicks extends Event {
+export class Kicks extends BotEvent {
 
     constructor(client: Client) {
         super(client, 'kicks', Events.MessageCreate, true);
