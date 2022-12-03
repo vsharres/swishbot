@@ -30,11 +30,12 @@ export class Points extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("points")
     .setDescription('Prints the house points in the current channel.')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new Points(client);
-}
+
+export { JsonData }
+
+export default (client: Client) => { return new Points(client); }

@@ -29,12 +29,10 @@ export class Cokes extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("cokes")
     .setDescription('Prints the coke tally').toJSON();
 
 export default (client: Client) => { return new Cokes(client); }
 
-module.exports = (client: Client) => {
-    return new Cokes(client);
-}
+export { JsonData }

@@ -37,11 +37,11 @@ export class HouseReset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("house_reset")
     .setDescription('Resets the house of all members in the recording channel')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new HouseReset(client);
-}
+export default (client: Client) => { return new HouseReset(client); }
+
+export { JsonData }

@@ -36,7 +36,7 @@ export class Plebs extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName('plebs')
     .setDescription('Send a message to the plebs')
     .addChannelOption(option =>
@@ -51,6 +51,6 @@ export const JsonData = new SlashCommandBuilder()
     )
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new Plebs(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new Plebs(client); }

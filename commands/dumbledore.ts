@@ -63,7 +63,7 @@ export class Dumbly extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName('dumbly')
     .setDescription('Awards/removes points from a house')
     .addNumberOption(option =>
@@ -84,6 +84,4 @@ export const JsonData = new SlashCommandBuilder()
 
 export default (client: Client) => { return new Dumbly(client); }
 
-module.exports = (client: Client) => {
-    return new Dumbly(client);
-}
+export { JsonData }

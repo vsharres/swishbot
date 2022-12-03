@@ -39,12 +39,13 @@ export class CokesReset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("cokes_reset")
     .setDescription('Resets the cokes tally.')
     .toJSON();
 
 
-module.exports = (client: Client) => {
-    return new CokesReset(client);
-}
+
+export { JsonData }
+
+export default (client: Client) => { return new CokesReset(client); }

@@ -34,11 +34,11 @@ export class LightningReset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("lightning_reset")
     .setDescription('Resets the ⚡ questions for this recording.')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new LightningReset(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new LightningReset(client); }

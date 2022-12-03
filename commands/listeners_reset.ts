@@ -33,12 +33,12 @@ export class ListenersReset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("listeners_reset")
     .setDescription('Resets the listener array.')
     .toJSON();
 
 
-module.exports = (client: Client) => {
-    return new ListenersReset(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new ListenersReset(client); }

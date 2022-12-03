@@ -32,11 +32,12 @@ export class LikesReset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("likes_reset")
     .setDescription('Resets the likes for all messages.')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new LikesReset(client);
-}
+
+export { JsonData }
+
+export default (client: Client) => { return new LikesReset(client); }

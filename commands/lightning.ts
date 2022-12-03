@@ -69,11 +69,12 @@ export class Lightning extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("questions")
     .setDescription('Pulls the ⚡ questions.')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new Lightning(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new Lightning(client); }
+

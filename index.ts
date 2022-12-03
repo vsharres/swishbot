@@ -1,4 +1,4 @@
-import { Events, Partials, GatewayIntentBits } from 'discord.js';
+import { Events, Partials, GatewayIntentBits, Client } from 'discord.js';
 import mongoose from 'mongoose';
 import { BotClient, BotEvent, Command } from './bot-types';
 import { Configs } from './config/configs';
@@ -43,7 +43,7 @@ client.once(Events.ClientReady, () => {
 
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command = require(filePath)(client) as Command;
+        const command = require(filePath).default(client) as Command;
 
         client.Commands.set(command.name, command);
     }

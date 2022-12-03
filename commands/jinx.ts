@@ -108,7 +108,7 @@ export class Jinx extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("jinx")
     .setDescription('Jinx! You owe me a coke!')
     .addStringOption(option =>
@@ -130,6 +130,6 @@ export const JsonData = new SlashCommandBuilder()
     )
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new Jinx(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new Jinx(client); }

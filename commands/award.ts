@@ -64,7 +64,7 @@ export class Award extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("award_cup")
     .setDescription('Awards cup to house')
     .addStringOption(option =>
@@ -78,6 +78,6 @@ export const JsonData = new SlashCommandBuilder()
                 { name: 'Hufflepuff 🦡', value: Configs.role_hufflepuff })
     ).toJSON();
 
-module.exports = (client: Client) => {
-    return new Award(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new Award(client); }

@@ -44,7 +44,7 @@ export class ListUndesirables extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("undesirables")
     .setDescription(`Lists Megan's undesirables.`)
     .addStringOption(option =>
@@ -52,6 +52,6 @@ export const JsonData = new SlashCommandBuilder()
             .setDescription('Item do add to the undesirables list.'))
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new ListUndesirables(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new ListUndesirables(client); }

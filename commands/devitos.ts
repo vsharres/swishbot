@@ -31,7 +31,7 @@ export class Devitos extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("devitos")
     .setDescription('Converts a measure to devitos.')
     .addNumberOption(option =>
@@ -46,6 +46,4 @@ export const JsonData = new SlashCommandBuilder()
 
 export default (client: Client) => { return new Devitos(client); }
 
-module.exports = (client: Client) => {
-    return new Devitos(client);
-}
+export { JsonData }

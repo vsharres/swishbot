@@ -37,11 +37,11 @@ export class Reset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("reset")
     .setDescription('Resets the likes and lightning bolt questions.')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new Reset(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new Reset(client); }

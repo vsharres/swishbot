@@ -29,13 +29,11 @@ export class Cups extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("cups")
     .setDescription('Prints the cups tally')
     .toJSON();
 
 export default (client: Client) => { return new Cups(client); }
 
-module.exports = (client: Client) => {
-    return new Cups(client);
-}
+export { JsonData }

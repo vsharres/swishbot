@@ -42,11 +42,11 @@ export class PointsReset extends Command {
     }
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("points_reset")
     .setDescription('Resets the points of each house')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new PointsReset(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new PointsReset(client); }

@@ -46,11 +46,11 @@ export class Tergeo extends Command {
 
 };
 
-export const JsonData = new SlashCommandBuilder()
+const JsonData = new SlashCommandBuilder()
     .setName("tergeo")
     .setDescription('Prune members from the server.')
     .toJSON();
 
-module.exports = (client: Client) => {
-    return new Tergeo(client);
-}
+export { JsonData }
+
+export default (client: Client) => { return new Tergeo(client); }
