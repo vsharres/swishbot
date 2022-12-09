@@ -47,6 +47,4 @@ export class Zaps extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new Zaps(client);
-}
+export default (client: Client) => { return new Zaps(client); }

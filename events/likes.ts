@@ -108,6 +108,4 @@ export class Likes extends BotEvent {
 }
 
 
-module.exports = (client: Client) => {
-    return new Likes(client);
-}
+export default (client: Client) => { return new Likes(client); }

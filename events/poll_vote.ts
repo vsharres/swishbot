@@ -115,7 +115,4 @@ export class PollVote extends BotEvent {
     }
 }
 
-
-module.exports = (client: Client) => {
-    return new PollVote(client);
-}
+export default (client: Client) => { return new PollVote(client); }

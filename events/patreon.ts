@@ -51,6 +51,4 @@ export class Patreon extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new Patreon(client);
-}
+export default (client: Client) => { return new Patreon(client); }

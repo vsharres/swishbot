@@ -30,7 +30,7 @@ export class Reset extends Command {
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
             logger.log('info', `[${this.name}]: Points, Likes, zaps are all reset.`);
-            return await interaction.reply({ content: `Points, Likes, zaps are all reset.`, ephemeral: true });
+            return await interaction.reply({ content: `Points, Likes, zaps are all reset.`, ephemeral: false });
 
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));

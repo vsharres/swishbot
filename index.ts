@@ -1,4 +1,4 @@
-import { Events, Partials, GatewayIntentBits, Client } from 'discord.js';
+import { Events, Partials, GatewayIntentBits } from 'discord.js';
 import mongoose from 'mongoose';
 import { BotClient, BotEvent, Command } from './bot-types';
 import { Configs } from './config/configs';
@@ -26,7 +26,7 @@ client.once(Events.ClientReady, () => {
 
     for (const file of handler_files) {
         const filePath = path.join(eventsPath, file);
-        const event = require(filePath)(client) as BotEvent;
+        const event = require(filePath).default(client) as BotEvent;
         if (event.on) {
             client.on(event.type, (...args) => event.execute(...args));
         }

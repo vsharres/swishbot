@@ -48,7 +48,7 @@ export class Dumbly extends Command {
                     return;
             }
 
-            const messageToSent = `**${amount} points** ${amount > 0 ? 'to' : 'from'} <@&${house_id}>!!`;
+            const messageToSent = `**${amount} points** ${amount > 0 ? 'to' : 'from'} <@&${house_id}>!`;
 
             stat
                 .save()

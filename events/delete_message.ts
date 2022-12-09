@@ -38,6 +38,4 @@ export class DeleteMessage extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new DeleteMessage(client);
-}
+export default (client: Client) => { return new DeleteMessage(client); }

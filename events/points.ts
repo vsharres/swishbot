@@ -131,6 +131,4 @@ export class Points extends BotEvent {
 };
 
 
-module.exports = (client: Client) => {
-    return new Points(client);
-}
+export default (client: Client) => { return new Points(client); }

@@ -22,6 +22,4 @@ export class Kicks extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new Kicks(client);
-}
+export default (client: Client) => { return new Kicks(client); }

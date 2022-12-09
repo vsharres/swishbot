@@ -32,7 +32,6 @@ export class Felix extends BotEvent {
         let change_hufflepuff = false;
         let log_message = '';
 
-
         if (chance_slytherin < Configs.slytherin_felix_chance) {
             change_slytherin = true;
         }
@@ -113,6 +112,4 @@ export class Felix extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new Felix(client);
-}
+export default (client: Client) => { return new Felix(client); }

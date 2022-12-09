@@ -124,6 +124,4 @@ export class Slyther extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new Slyther(client);
-}
+export default (client: Client) => { return new Slyther(client); }

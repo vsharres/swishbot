@@ -31,6 +31,4 @@ export class Welcome extends BotEvent {
 
 };
 
-module.exports = (client: Client) => {
-    return new Welcome(client);
-}
+export default (client: Client) => { return new Welcome(client); }
