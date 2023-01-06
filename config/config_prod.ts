@@ -44,6 +44,8 @@ export const keys: Keys = {
 	role_ageline: process.env.ROLE_AGELINE ? process.env.ROLE_AGELINE : '',
 	role_admin: process.env.ADMIN_ROLE_ID ? process.env.ADMIN_ROLE_ID : '',
 	role_prefect: process.env.PREFECT_ROLE ? process.env.PREFECT_ROLE : '',
+	role_X: process.env.ROLE_X ? process.env.ROLE_X : '',
+	role_XX: process.env.ROLE_XX ? process.env.ROLE_XX : '',
 	slytherin_points_multiplier: process.env.SLYTHERIN_MULT ? parseFloat(process.env.SLYTHERIN_MULT) : 1.0,
 	slytherin_felix_chance: process.env.SLYTHERIN_FELIX_CHANCE ? parseFloat(process.env.SLYTHERIN_FELIX_CHANCE) : -1,
 	ravenclaw_points_multiplier: process.env.RAVENCLAW_MULT ? parseFloat(process.env.RAVENCLAW_MULT) : 1.0,

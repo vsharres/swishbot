@@ -5,6 +5,12 @@ import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { printPoints } from '../tools/print_points';
 
+const JsonData = new SlashCommandBuilder()
+    .setName("points")
+    .setDescription('Prints the house points in the current channel.')
+    .toJSON();
+
+
 export class Points extends Command {
 
     constructor(client: Client) {
@@ -29,12 +35,6 @@ export class Points extends Command {
 
     }
 };
-
-const JsonData = new SlashCommandBuilder()
-    .setName("points")
-    .setDescription('Prints the house points in the current channel.')
-    .toJSON();
-
 
 export { JsonData }
 

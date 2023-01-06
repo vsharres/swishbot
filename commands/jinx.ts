@@ -1,9 +1,31 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { TextChannel, Client, Guild, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import { TextChannel, Client, Guild, SlashCommandBuilder, CommandInteraction, CommandInteractionOptionResolver } from 'discord.js';
 import { printcokes } from '../tools/print_cokes';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
+
+const JsonData = new SlashCommandBuilder()
+    .setName("jinx")
+    .setDescription('Jinx! You owe me a coke!')
+    .addStringOption(option =>
+        option.setName('owes')
+            .setDescription('Who owes')
+            .setRequired(true)
+            .addChoices(
+                { name: "Megan", value: "0" },
+                { name: "Katie", value: "1" },
+                { name: "Tiff", value: "3" }))
+    .addStringOption(option =>
+        option.setName('owed')
+            .setDescription('To whom they owe')
+            .setRequired(true)
+            .addChoices(
+                { name: "Megan", value: "0" },
+                { name: "Katie", value: "1" },
+                { name: "Tiff", value: "3" })
+    )
+    .toJSON();
 
 export class Jinx extends Command {
 
@@ -20,8 +42,8 @@ export class Jinx extends Command {
     //TODO: finish this function
     async execute(interaction: CommandInteraction) {
 
-        let owes_id = (interaction.options as any).getString('owes') as string;
-        let owed_id = (interaction.options as any).getString('owed') as string;
+        let owes_id = (interaction.options as CommandInteractionOptionResolver).getString('owes') as string;
+        let owed_id = (interaction.options as CommandInteractionOptionResolver).getString('owed') as string;
 
         if (owed_id === owes_id) {
             logger.log('error', `[${this.name}]: They can't owe a coke to themselves.`);
@@ -108,27 +130,7 @@ export class Jinx extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("jinx")
-    .setDescription('Jinx! You owe me a coke!')
-    .addStringOption(option =>
-        option.setName('owes')
-            .setDescription('Who owes')
-            .setRequired(true)
-            .addChoices(
-                { name: "Megan", value: "0" },
-                { name: "Katie", value: "1" },
-                { name: "Tiff", value: "3" }))
-    .addStringOption(option =>
-        option.setName('owed')
-            .setDescription('To whom they owe')
-            .setRequired(true)
-            .addChoices(
-                { name: "Megan", value: "0" },
-                { name: "Katie", value: "1" },
-                { name: "Tiff", value: "3" })
-    )
-    .toJSON();
+
 
 export { JsonData }
 

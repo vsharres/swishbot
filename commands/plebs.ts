@@ -1,8 +1,23 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, TextChannel, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import { Client, TextChannel, SlashCommandBuilder, CommandInteraction, CommandInteractionOptionResolver } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
+
+const JsonData = new SlashCommandBuilder()
+    .setName('plebs')
+    .setDescription('Send a message to the plebs')
+    .addChannelOption(option =>
+        option.setName('channel')
+            .setDescription('Channel to send message to')
+            .setRequired(true)
+    )
+    .addStringOption(option =>
+        option.setName('message')
+            .setDescription('Message to send')
+            .setRequired(true)
+    )
+    .toJSON();
 
 export class Plebs extends Command {
 
@@ -15,8 +30,8 @@ export class Plebs extends Command {
 
     async execute(interaction: CommandInteraction) {
 
-        const channel = (interaction.options as any).getChannel('channel') as TextChannel;
-        const message = (interaction.options as any).getString('message') as string;
+        const channel = (interaction.options as CommandInteractionOptionResolver).getChannel('channel') as TextChannel;
+        const message = (interaction.options as CommandInteractionOptionResolver).getString('message') as string;
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
             if (!stat) {
@@ -35,21 +50,6 @@ export class Plebs extends Command {
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }
 };
-
-const JsonData = new SlashCommandBuilder()
-    .setName('plebs')
-    .setDescription('Send a message to the plebs')
-    .addChannelOption(option =>
-        option.setName('channel')
-            .setDescription('Channel to send message to')
-            .setRequired(true)
-    )
-    .addStringOption(option =>
-        option.setName('message')
-            .setDescription('Message to send')
-            .setRequired(true)
-    )
-    .toJSON();
 
 export { JsonData }
 

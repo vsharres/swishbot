@@ -5,6 +5,10 @@ import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { printcokes } from '../tools/print_cokes';
 
+const JsonData = new SlashCommandBuilder()
+    .setName("cokes")
+    .setDescription('Prints the coke tally').toJSON();
+
 export class Cokes extends Command {
 
     constructor(client: Client) {
@@ -29,9 +33,6 @@ export class Cokes extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("cokes")
-    .setDescription('Prints the coke tally').toJSON();
 
 export default (client: Client) => { return new Cokes(client); }
 

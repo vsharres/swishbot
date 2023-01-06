@@ -3,6 +3,12 @@ import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { Configs } from '../config/configs';
 
+const JsonData = new SlashCommandBuilder()
+    .setName("tergeo")
+    .setDescription('Prune members from the server.')
+    .toJSON();
+
+
 export class Tergeo extends Command {
     guild: Guild;
 
@@ -21,7 +27,7 @@ export class Tergeo extends Command {
             if (!member.roles.cache.has(Configs.role_prefect) && !member.roles.cache.has(Configs.role_admin)) {
 
                 if (member.roles.cache.has(Configs.role_phoenix_emoji)) {
-                    const is_phoenix_or_up = member.roles.cache.has(Configs.role_phoenix) || member.roles.cache.has(Configs.role_unicorn) || member.roles.cache.has(Configs.role_hippogriff);
+                    const is_phoenix_or_up = member.roles.cache.has(Configs.role_phoenix) || member.roles.cache.has(Configs.role_unicorn) || member.roles.cache.has(Configs.role_hippogriff) || member.roles.cache.has(Configs.role_XX);
 
                     if (!is_phoenix_or_up) {
                         member.roles.remove(Configs.role_phoenix_emoji);
@@ -31,7 +37,8 @@ export class Tergeo extends Command {
                 }
 
                 const is_patron = member.roles.cache.has(Configs.role_patron);
-                const is_dragon_or_up = member.roles.cache.has(Configs.role_phoenix) || member.roles.cache.has(Configs.role_unicorn) || member.roles.cache.has(Configs.role_hippogriff) || member.roles.cache.has(Configs.role_dragon);
+                const is_dragon_or_up = member.roles.cache.has(Configs.role_phoenix) || member.roles.cache.has(Configs.role_unicorn) || member.roles.cache.has(Configs.role_hippogriff) || member.roles.cache.has(Configs.role_dragon)
+                    || member.roles.cache.has(Configs.role_XX) || member.roles.cache.has(Configs.role_X);
 
                 if ((!is_patron || !is_dragon_or_up) && member.roles.cache.has(Configs.role_ageline)) {
                     member.roles.remove(Configs.role_ageline);
@@ -45,11 +52,6 @@ export class Tergeo extends Command {
     }
 
 };
-
-const JsonData = new SlashCommandBuilder()
-    .setName("tergeo")
-    .setDescription('Prune members from the server.')
-    .toJSON();
 
 export { JsonData }
 

@@ -36,6 +36,8 @@ interface Keys {
   role_patron: string,
   role_dragon: string,
   role_hippogriff: string,
+  role_X: string,
+  role_XX: string,
   role_phoenix_emoji: string,
   role_ageline: string,
   emoji_addpoints: string[],

@@ -1,8 +1,16 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, CommandInteraction, Options, SlashCommandBuilder, User } from 'discord.js';
+import { Client, CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
+
+const JsonData = new SlashCommandBuilder()
+    .setName("undesirables")
+    .setDescription(`Lists Megan's undesirables.`)
+    .addStringOption(option =>
+        option.setName('undesirable')
+            .setDescription('Item do add to the undesirables list.'))
+    .toJSON();
 
 export class ListUndesirables extends Command {
 
@@ -16,7 +24,7 @@ export class ListUndesirables extends Command {
 
         Stat.findById(Configs.stats_id).then(async stat => {
 
-            const undesirable = (interaction.options as any).getString('undesirable') ?? null;
+            const undesirable = (interaction.options as CommandInteractionOptionResolver).getString('undesirable') ?? null;
 
             if (!stat) {
                 logger.log('error', `[${this.name}]: Error getting the stat, check the stat id`);
@@ -43,14 +51,6 @@ export class ListUndesirables extends Command {
 
     }
 };
-
-const JsonData = new SlashCommandBuilder()
-    .setName("undesirables")
-    .setDescription(`Lists Megan's undesirables.`)
-    .addStringOption(option =>
-        option.setName('undesirable')
-            .setDescription('Item do add to the undesirables list.'))
-    .toJSON();
 
 export { JsonData }
 

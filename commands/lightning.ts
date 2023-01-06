@@ -1,8 +1,13 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, CommandInteraction, Guild, GuildMember, Role, SlashCommandBuilder, TextChannel } from 'discord.js';
+import { Client, CommandInteraction, Guild, Role, SlashCommandBuilder } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
+
+const JsonData = new SlashCommandBuilder()
+    .setName("questions")
+    .setDescription('Pulls the ⚡ questions.')
+    .toJSON();
 
 export class Lightning extends Command {
 
@@ -38,7 +43,8 @@ export class Lightning extends Command {
 
                     for (let bolt = 10 * index; bolt < end; bolt++) {
 
-                        const member = this.guild.members.cache.get(stat.lightnings[bolt].member) as GuildMember;
+                        const member = this.guild.members.cache.get(stat.lightnings[bolt].member);
+                        if (!member) continue;
 
                         let house: Role | undefined;
                         house = member.roles.cache.find(role => role.id === Configs.role_gryffindor ||
@@ -69,10 +75,6 @@ export class Lightning extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("questions")
-    .setDescription('Pulls the ⚡ questions.')
-    .toJSON();
 
 export { JsonData }
 

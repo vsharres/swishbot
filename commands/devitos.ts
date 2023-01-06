@@ -1,8 +1,21 @@
 import { Configs } from '../config/configs';
 import { Units, Unit } from '../config/units';
-import { Client, CommandInteraction, SlashCommandBuilder } from 'discord.js'
+import { Client, CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder } from 'discord.js'
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
+
+const JsonData = new SlashCommandBuilder()
+    .setName("devitos")
+    .setDescription('Converts a measure to devitos.')
+    .addNumberOption(option =>
+        option.setName('amount')
+            .setDescription('Amount to be converted')
+            .setRequired(true))
+    .addStringOption(option =>
+        option.setName('unit')
+            .setDescription('Unit to convert from')
+            .setRequired(true))
+    .toJSON();
 
 export class Devitos extends Command {
     constructor(client: Client) {
@@ -12,8 +25,8 @@ export class Devitos extends Command {
 
     async execute(interaction: CommandInteraction) {
 
-        const amount = (interaction.options as any).getNumber('amount') as number;
-        let unit = (interaction.options as any).getString('unit') as string;
+        const amount = (interaction.options as CommandInteractionOptionResolver).getNumber('amount') as number;
+        let unit = (interaction.options as CommandInteractionOptionResolver).getString('unit') as string;
         unit = unit.toLowerCase();
 
         if (!Units.has(unit)) {
@@ -31,18 +44,7 @@ export class Devitos extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("devitos")
-    .setDescription('Converts a measure to devitos.')
-    .addNumberOption(option =>
-        option.setName('amount')
-            .setDescription('Amount to be converted')
-            .setRequired(true))
-    .addStringOption(option =>
-        option.setName('unit')
-            .setDescription('Unit to convert from')
-            .setRequired(true))
-    .toJSON();
+
 
 export default (client: Client) => { return new Devitos(client); }
 

@@ -1,9 +1,23 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, CommandInteraction, Role, SlashCommandBuilder, TextChannel } from 'discord.js';
+import { Client, CommandInteraction, CommandInteractionOptionResolver, Role, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { printcups } from '../tools/print_cups';
+
+const JsonData = new SlashCommandBuilder()
+    .setName("award_cup")
+    .setDescription('Awards cup to house')
+    .addStringOption(option =>
+        option.setName('house')
+            .setDescription('House to award the cup to.')
+            .setRequired(true)
+            .addChoices(
+                { name: 'Gryffindor 🦁', value: Configs.role_gryffindor },
+                { name: 'Slytherin 🐍', value: Configs.role_slytherin },
+                { name: 'Ravenclaw 🦅', value: Configs.role_ravenclaw },
+                { name: 'Hufflepuff 🦡', value: Configs.role_hufflepuff })
+    ).toJSON();
 
 export class Award extends Command {
 
@@ -18,7 +32,7 @@ export class Award extends Command {
 
     async execute(interaction: CommandInteraction) {
 
-        const house_id = (interaction.options as any).getString('house') as string;
+        const house_id = (interaction.options as CommandInteractionOptionResolver).getString('house') as string;
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
 
@@ -64,19 +78,6 @@ export class Award extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("award_cup")
-    .setDescription('Awards cup to house')
-    .addStringOption(option =>
-        option.setName('house')
-            .setDescription('House to award the cup to.')
-            .setRequired(true)
-            .addChoices(
-                { name: 'Gryffindor 🦁', value: Configs.role_gryffindor },
-                { name: 'Slytherin 🐍', value: Configs.role_slytherin },
-                { name: 'Ravenclaw 🦅', value: Configs.role_ravenclaw },
-                { name: 'Hufflepuff 🦡', value: Configs.role_hufflepuff })
-    ).toJSON();
 
 export { JsonData }
 

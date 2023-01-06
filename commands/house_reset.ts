@@ -4,6 +4,11 @@ import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { Client, CommandInteraction, Guild, GuildMember, SlashCommandBuilder } from 'discord.js';
 
+const JsonData = new SlashCommandBuilder()
+    .setName("house_reset")
+    .setDescription('Resets the house of all members in the recording channel')
+    .toJSON();
+
 export class HouseReset extends Command {
 
     guild: Guild;
@@ -37,10 +42,6 @@ export class HouseReset extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("house_reset")
-    .setDescription('Resets the house of all members in the recording channel')
-    .toJSON();
 
 export default (client: Client) => { return new HouseReset(client); }
 

@@ -1,9 +1,28 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { TextChannel, Client, SlashCommandBuilder, CommandInteraction } from 'discord.js';
+import { TextChannel, Client, SlashCommandBuilder, CommandInteraction, CommandInteractionOptionResolver } from 'discord.js';
 import { printPoints } from '../tools/print_points';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
+
+const JsonData = new SlashCommandBuilder()
+    .setName('dumbly')
+    .setDescription('Awards/removes points from a house')
+    .addNumberOption(option =>
+        option.setName('amount')
+            .setDescription('Amount of points to be awarded/removed')
+            .setRequired(true))
+    .addStringOption(option =>
+        option.setName('house')
+            .setDescription('House to award/remove points')
+            .setRequired(true)
+            .addChoices(
+                { name: 'Gryffindor 🦁', value: Configs.role_gryffindor },
+                { name: 'Slytherin 🐍', value: Configs.role_slytherin },
+                { name: 'Ravenclaw 🦅', value: Configs.role_ravenclaw },
+                { name: 'Hufflepuff 🦡', value: Configs.role_hufflepuff }
+            ))
+    .toJSON();
 
 export class Dumbly extends Command {
 
@@ -16,8 +35,8 @@ export class Dumbly extends Command {
 
     async execute(interaction: CommandInteraction) {
 
-        const amount = (interaction.options as any).getNumber('amount') as number;
-        const house_id = (interaction.options as any).getString('house') as string;
+        const amount = (interaction.options as CommandInteractionOptionResolver).getNumber('amount') as number;
+        const house_id = (interaction.options as CommandInteractionOptionResolver).getString('house') as string;
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
 
@@ -63,24 +82,7 @@ export class Dumbly extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName('dumbly')
-    .setDescription('Awards/removes points from a house')
-    .addNumberOption(option =>
-        option.setName('amount')
-            .setDescription('Amount of points to be awarded/removed')
-            .setRequired(true))
-    .addStringOption(option =>
-        option.setName('house')
-            .setDescription('House to award/remove points')
-            .setRequired(true)
-            .addChoices(
-                { name: 'Gryffindor 🦁', value: Configs.role_gryffindor },
-                { name: 'Slytherin 🐍', value: Configs.role_slytherin },
-                { name: 'Ravenclaw 🦅', value: Configs.role_ravenclaw },
-                { name: 'Hufflepuff 🦡', value: Configs.role_hufflepuff }
-            ))
-    .toJSON();
+
 
 export default (client: Client) => { return new Dumbly(client); }
 

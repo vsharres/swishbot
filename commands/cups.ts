@@ -5,6 +5,11 @@ import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { printcups } from '../tools/print_cups';
 
+const JsonData = new SlashCommandBuilder()
+    .setName("cups")
+    .setDescription('Prints the cups tally')
+    .toJSON();
+
 export class Cups extends Command {
 
     constructor(client: Client) {
@@ -29,10 +34,6 @@ export class Cups extends Command {
     }
 };
 
-const JsonData = new SlashCommandBuilder()
-    .setName("cups")
-    .setDescription('Prints the cups tally')
-    .toJSON();
 
 export default (client: Client) => { return new Cups(client); }
 
