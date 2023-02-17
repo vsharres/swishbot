@@ -25,6 +25,11 @@ const JsonData = new SlashCommandBuilder()
                 { name: "Katie", value: "1" },
                 { name: "Tiff", value: "3" })
     )
+    .addNumberOption(option =>
+        option.setName('amount')
+            .setDescription('To whom they owe')
+            .setRequired(false)
+    )
     .toJSON();
 
 export class Jinx extends Command {
@@ -44,6 +49,7 @@ export class Jinx extends Command {
 
         let owes_id = (interaction.options as CommandInteractionOptionResolver).getString('owes') as string;
         let owed_id = (interaction.options as CommandInteractionOptionResolver).getString('owed') as string;
+        let amount = (interaction.options as CommandInteractionOptionResolver).getNumber('amount') ?? 1;
 
         if (owed_id === owes_id) {
             logger.log('error', `[${this.name}]: They can't owe a coke to themselves.`);
@@ -63,11 +69,11 @@ export class Jinx extends Command {
                     {
                         switch (owed_id) {
                             case "1":
-                                ++cokes.megan_katie;
+                                cokes.megan_katie += amount;
                                 owed_id = Configs.id_katie;
                                 break;
-                            case "2":
-                                --cokes.tiff_megan;
+                            case "3":
+                                cokes.tiff_megan -= amount;
                                 owed_id = Configs.id_tiff;
                                 break;
 
@@ -79,11 +85,11 @@ export class Jinx extends Command {
                     {
                         switch (owed_id) {
                             case "0":
-                                --cokes.megan_katie;
+                                cokes.megan_katie -= amount;
                                 owed_id = Configs.id_megan;
                                 break;
-                            case "2":
-                                --cokes.tiff_katie;
+                            case "3":
+                                cokes.tiff_katie -= amount;
                                 owed_id = Configs.id_tiff;
                                 break;
 
@@ -91,15 +97,15 @@ export class Jinx extends Command {
                         owes_id = Configs.id_katie;
                     }
                     break;
-                case "2":
+                case "3":
                     {
                         switch (owed_id) {
                             case "0":
-                                ++cokes.tiff_megan;
+                                cokes.tiff_megan += amount;
                                 owed_id = Configs.id_megan;
                                 break;
                             case "1":
-                                ++cokes.tiff_katie;
+                                cokes.tiff_katie += amount;
                                 owed_id = Configs.id_katie;
                                 break;
 
@@ -113,9 +119,9 @@ export class Jinx extends Command {
             stat.cokes.tiff_katie = cokes.tiff_katie;
             stat.cokes.tiff_megan = cokes.tiff_megan;
 
-            const owed_member = this.guild.members.cache.get(owed_id);
-            const owes_member = this.guild.members.cache.get(owes_id);
-            const messageToSent = `${owes_member?.toString()} owes a ${Configs.emoji_coke} to ${owed_member?.toString()}!https://tenor.com/view/%D0%BC%D0%B0%D0%BB%D1%8B%D1%88%D0%BF%D1%8C%D0%B5%D1%82-drink-smile-sour-gif-16234538`;
+            const owed_member = await this.guild.members.fetch(owed_id);
+            const owes_member = await this.guild.members.fetch(owes_id);
+            const messageToSent = `${owes_member?.toString()} owes ${amount > 1 ? 'a' : amount} ${Configs.emoji_coke} to ${owed_member?.toString()}!https://tenor.com/view/%D0%BC%D0%B0%D0%BB%D1%8B%D1%88%D0%BF%D1%8C%D0%B5%D1%82-drink-smile-sour-gif-16234538`;
 
             stat
                 .save()

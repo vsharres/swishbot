@@ -31,6 +31,12 @@ export class Likes extends BotEvent {
             }
         }
 
+        if ((reaction.message.author as User).bot) return;
+
+        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) {
+            return;
+        }
+
         if (user.partial) {
 
             try {
@@ -41,12 +47,6 @@ export class Likes extends BotEvent {
                 logger.log('error', `[${this.name}]: Something went wrong when fetching the user: ${error}`);
                 return;
             }
-        }
-
-        if ((reaction.message.author as User).bot) return;
-
-        if (Configs.emojis_negative_reactions.some(emoji => reaction.emoji.toString() === emoji)) {
-            return;
         }
 
         Stat.findById(Configs.stats_id).then(async (stat) => {
