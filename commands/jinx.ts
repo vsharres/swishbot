@@ -129,8 +129,7 @@ export class Jinx extends Command {
             logger.log('info', `[${this.name}]: ${messageToSent}`);
 
             printcokes(this.cokes_channel, stat.cokes, true);
-            interaction.channel?.send(messageToSent)
-            return await interaction.reply({ content: messageToSent, ephemeral: true });
+            return await interaction.reply({ content: messageToSent, ephemeral: false });
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }

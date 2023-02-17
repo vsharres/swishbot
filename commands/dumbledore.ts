@@ -75,8 +75,7 @@ export class Dumbly extends Command {
             logger.log('info', `[${this.name}]: ${messageToSent}`);
 
             printPoints(this.hourglass_channel, stat.points, true);
-            interaction.channel?.send(messageToSent);
-            return await interaction.reply({ content: `${amount} ${amount > 0 ? 'awarded to' : 'removed from'} ${name}`, ephemeral: true });
+            return await interaction.reply({ content: `${amount} ${amount > 0 ? 'awarded to' : 'removed from'} ${name}`, ephemeral: false });
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
     }

@@ -10,12 +10,12 @@
     "start": "tsc && node build/index.js"
   },
   "engines": {
-    "node": "18.x"
+    "node": "19.x"
   },
   "author": "Vinicius Harres",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.6.0",
+    "discord.js": "^14.7.1",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.39",
     "mongoose": "^6.7.3",

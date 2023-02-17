@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder } from 'discord.js';
+import { Client, CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
 
@@ -39,7 +39,7 @@ export class ListUndesirables extends Command {
 
             stat.list.forEach((item) => content += `${item} - 🙅‍♀️\n`);
 
-            await interaction.channel?.send(content);
+            await (interaction.channel as TextChannel).send(content);
 
             stat.save()
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));

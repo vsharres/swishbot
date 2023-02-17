@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, CommandInteraction, Guild, Role, SlashCommandBuilder } from 'discord.js';
+import { Client, CommandInteraction, Guild, Role, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
 
@@ -57,7 +57,7 @@ export class Lightning extends Command {
 
                     }
 
-                    interaction.channel?.send(reply);
+                    (interaction.channel as TextChannel).send(reply);
                     reply = '';
                 }
 
