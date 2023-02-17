@@ -1,6 +1,6 @@
 import Stat from '../models/Stat';
 import { Configs } from '../config/configs';
-import { Client, CommandInteraction, CommandInteractionOptionResolver, Role, SlashCommandBuilder, TextChannel } from 'discord.js';
+import { Client, CommandInteraction, CommandInteractionOptionResolver, SlashCommandBuilder, TextChannel } from 'discord.js';
 import logger from '../tools/logger';
 import { Command } from '../bot-types';
 import { printcups } from '../tools/print_cups';
@@ -8,7 +8,7 @@ import { printcups } from '../tools/print_cups';
 const JsonData = new SlashCommandBuilder()
     .setName("award_cup")
     .setDescription('Awards cup to house')
-    .addStringOption(option =>
+    .addStringOption((option: any) =>
         option.setName('house')
             .setDescription('House to award the cup to.')
             .setRequired(true)
@@ -77,7 +77,6 @@ export class Award extends Command {
 
     }
 };
-
 
 export { JsonData }
 
