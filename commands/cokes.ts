@@ -28,7 +28,7 @@ export class Cokes extends Command {
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-        return await interaction.reply({ content: `Cokes tally printed`, ephemeral: true });
+        return await interaction.reply({ content: `Cokes tally`, ephemeral: false });
 
     }
 };

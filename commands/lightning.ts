@@ -67,7 +67,7 @@ export class Lightning extends Command {
                 return await interaction.reply({ content: `There are no lightning bolts yet`, ephemeral: true });
             }
 
-            return await interaction.reply({ content: `⚡`, ephemeral: true });
+            return await interaction.reply({ content: `⚡`, ephemeral: false });
 
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));

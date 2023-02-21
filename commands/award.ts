@@ -73,7 +73,7 @@ export class Award extends Command {
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-        return await interaction.reply({ content: `House cup awarded to <@&${house_id}>!`, ephemeral: true });
+        return await interaction.reply({ content: `House cup awarded to <@&${house_id}>!`, ephemeral: false });
 
     }
 };

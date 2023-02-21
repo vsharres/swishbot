@@ -44,7 +44,7 @@ export class ListUndesirables extends Command {
             stat.save()
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-            return await interaction.reply({ content: `List of undesirables printed.`, ephemeral: true })
+            return await interaction.reply({ content: `List of undesirables.`, ephemeral: false })
 
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));

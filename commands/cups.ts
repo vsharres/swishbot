@@ -30,7 +30,7 @@ export class Cups extends Command {
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-        await interaction.reply({ content: `House cups printed`, ephemeral: true });
+        await interaction.reply({ content: `House cups`, ephemeral: false });
     }
 };
 

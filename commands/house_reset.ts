@@ -35,7 +35,7 @@ export class HouseReset extends Command {
                 guild_member.roles.add(saved.house);
             })
 
-            return await interaction.reply({ content: `House roles reset.`, ephemeral: true });
+            return await interaction.reply({ content: `House roles reset.`, ephemeral: false });
 
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));

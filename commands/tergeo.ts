@@ -48,7 +48,7 @@ export class Tergeo extends Command {
 
         });
 
-        return await interaction.reply({ content: `Members were successfully pruned.`, ephemeral: true })
+        return await interaction.reply({ content: `Members were successfully pruned.`, ephemeral: false })
     }
 
 };

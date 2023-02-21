@@ -44,7 +44,7 @@ export class Plebs extends Command {
                 .then(() => logger.log('info', `${message}`))
                 .catch(err => logger.log('error', `[${this.name}]: ${err}`));
 
-            return await interaction.reply({ content: `Message to the plebs sent in the ${channel.toString()} channel.`, ephemeral: true });
+            return await interaction.reply({ content: `Message to the plebs sent in the <#${channel.toString()}> channel.`, ephemeral: false });
 
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
