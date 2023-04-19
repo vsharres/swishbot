@@ -28,7 +28,7 @@ export class Points extends Command {
 
             printPoints(interaction.channel as TextChannel, stat.points);
 
-            return await interaction.reply({ content: '', ephemeral: true })
+            return await interaction.reply({ content: 'Points', ephemeral: true })
 
         })
             .catch(err => logger.log('error', `[${this.name}]: ${err}`));
